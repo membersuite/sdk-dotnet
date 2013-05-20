@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- The file is used by the ResolverFactory to pull up resolvers on demand -->
+<configuration>
+  <configSections>
+    <section name="unity"
+              type="Microsoft.Practices.Unity.Configuration.UnityConfigurationSection,
+                 Microsoft.Practices.Unity.Configuration" />
+  </configSections>
+  <unity>
+    <typeAliases>
+
+      <!-- Lifetime manager types -->
+      <typeAlias alias="singleton"
+           type="Microsoft.Practices.Unity.ContainerControlledLifetimeManager,
+               Microsoft.Practices.Unity" />
+      <typeAlias alias="perThread"
+           type="Microsoft.Practices.Unity.PerThreadLifetimeManager,
+               Microsoft.Practices.Unity" />
+      <typeAlias alias="external"
+           type="Microsoft.Practices.Unity.ExternallyControlledLifetimeManager,
+               Microsoft.Practices.Unity" />
+
+      <!-- User-defined type aliases -->
+
+    </typeAliases>
+    <containers>
+      <container>
+        <types>
+          <type type="ClassDescriber" mapTo="MemberSuite.Domain.Infrastructure.Description.ObjectDescribers.ClassDescriber_resolver, 
+                MemberSuite.Domain.Infrastructure.Description"  >
+            <lifetime type="singleton" />
+          </type>
+        </types>
+      </container>
+
+    </containers>
+
+  </unity>
+
+</configuration>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MemberSuite.SDK.Searching.SearchOperation" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoABEAAAAAAAgAAAAAAAQAAAAACAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Searching\SearchOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.SearchOperationGroup" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEEAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAgAAAQAA=</HashCode>
+      <FileName>Searching\SearchOperationGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Search" Collapsed="true">
+    <Position X="2" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACBAAAUgAAAAAKAAAAAQAYiAAQAABAQQAACIAAABA=</HashCode>
+      <FileName>Searching\Search.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.Contains" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\Contains.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.ContainsOneOfTheFollowing" Collapsed="true">
+    <Position X="7" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\ContainsOneOfTheFollowing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.DoesNotContain" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\DoesNotContain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.DoesNotContainOneOfTheFollowing" Collapsed="true">
+    <Position X="9.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\DoesNotContainOneOfTheFollowing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.DoesNotEqual" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\DoesNotEqual.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.Equals" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\Equals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsBetween" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsBetween.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsBlank" Collapsed="true">
+    <Position X="7" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsBlank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsGreaterThan" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsGreaterThan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsGreaterThanOrEqualTo" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsGreaterThanOrEqualTo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsLessThan" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsLessThan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsLessThanOrEqual" Collapsed="true">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsLessThanOrEqual.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsNotBetween" Collapsed="true">
+    <Position X="9.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsNotBetween.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsNotBlank" Collapsed="true">
+    <Position X="9.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsNotBlank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsNotOneOfTheFollowing" Collapsed="true">
+    <Position X="9.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsNotOneOfTheFollowing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.Operations.IsOneOfTheFollowing" Collapsed="true">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Searching\Operations\IsOneOfTheFollowing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

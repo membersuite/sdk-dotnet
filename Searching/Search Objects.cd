@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MemberSuite.SDK.Searching.Search">
+    <Position X="8" Y="6.25" Width="1.75" />
+    <Members>
+      <Field Name="_orderByParser" Hidden="true" />
+      <Method Name="AddCriteria" Hidden="true" />
+      <Method Name="AddOutputColumn" Hidden="true" />
+      <Method Name="AddSortColumn" Hidden="true" />
+      <Method Name="CalculateSearchHashCode" Hidden="true" />
+      <Method Name="CalculateSearchHint" Hidden="true" />
+      <Method Name="Clone" Hidden="true" />
+      <Method Name="FromManifest" Hidden="true" />
+      <Method Name="ParseOrderBy" Hidden="true" />
+      <Method Name="registerKnownTypes" Hidden="true" />
+      <Method Name="Search" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CAAiBgAAMwAAAAAKAAAAAQAYiAAQAABAQQAACIAAABA=</HashCode>
+      <FileName>Searching\Search.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="OutputColumns" />
+      <Property Name="SortColumns" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.SearchOperation">
+    <Position X="8" Y="1" Width="2" />
+    <Members>
+      <Field Name="_parent" Hidden="true" />
+      <Method Name="Accept" Hidden="true" />
+      <Method Name="CalculateSearchHashCode" Hidden="true" />
+      <Method Name="Clean" Hidden="true" />
+      <Method Name="GetMergeCriteriaFields" Hidden="true" />
+      <Method Name="HasCriteriaForField" Hidden="true" />
+      <Method Name="HasCriteriaWithValue" Hidden="true" />
+      <Method Name="PostSerializationCleanse" Hidden="true" />
+      <Method Name="ReplaceCriteriaValue" Hidden="true" />
+      <Method Name="SearchOperation" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CoABEAAAIAAAgAgAAAAAaAAQYACAAAAAAAAAIAAAQAA=</HashCode>
+      <FileName>Searching\SearchOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.SearchOperationGroup">
+    <Position X="8" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="_getParameterizedOperatoinHelper" Hidden="true" />
+      <Method Name="Accept" Hidden="true" />
+      <Method Name="CalculateSearchHashCode" Hidden="true" />
+      <Method Name="Clean" Hidden="true" />
+      <Method Name="FindOperation" Hidden="true" />
+      <Method Name="GetMergeCriteriaFields" Hidden="true" />
+      <Method Name="GetParameterizedOperations" Hidden="true" />
+      <Method Name="HasCriteriaForField" Hidden="true" />
+      <Method Name="HasCriteriaWithValue" Hidden="true" />
+      <Method Name="PostSerializationCleanse" Hidden="true" />
+      <Method Name="RemoveOperation" Hidden="true" />
+      <Method Name="ReplaceCriteriaValue" Hidden="true" />
+      <Method Name="SearchOperationGroup" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CIAAEEAAIAAAEAkAAAAAAAAASACAAAAAAAAAoAAAQAA=</HashCode>
+      <FileName>Searching\SearchOperationGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.SearchOutputColumn" Collapsed="true">
+    <Position X="5" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgEAAAAAAAAAAAAEAAAAQAAAAAAgAAAAAAAAAEABA=</HashCode>
+      <FileName>Searching\SearchOutputColumn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemberSuite.SDK.Searching.SearchSortColumn" Collapsed="true">
+    <Position X="11.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAABA=</HashCode>
+      <FileName>Searching\SearchSortField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

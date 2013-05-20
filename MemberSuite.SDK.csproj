@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C680047-90EB-4BE5-865C-1BD3502F9BBB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MemberSuite.SDK</RootNamespace>
+    <AssemblyName>MemberSuite.SDK</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBuild|AnyCPU'">
+    <OutputPath>bin\ReleaseBuild\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\MemberSuite.SDK.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.runtime">
+      <HintPath>..\..\lib\Spring.Net\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\lib\Spring.Net\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\api\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\api\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\..\lib\Spring.Net\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Concierge\ConciergeAPIProxyGenerator.cs" />
+    <Compile Include="Concierge\ConciergeClaimTypes.cs" />
+    <Compile Include="Concierge\ConciergeClaimValues.cs" />
+    <Compile Include="Concierge\ConciergeClientException.cs" />
+    <Compile Include="Concierge\ConciergeClientExtensions.cs" />
+    <Compile Include="Concierge\ConciergeMessageHeader.cs" />
+    <Compile Include="Concierge\ConciergeRequestHeader.cs" />
+    <Compile Include="Concierge\ConciergeError.cs" />
+    <Compile Include="Concierge\ConciergeErrorCode.cs" />
+    <Compile Include="Concierge\ConciergeResponseHeader.cs" />
+    <Compile Include="Concierge\IConciergeAPIProxyExtensions.cs" />
+    <Compile Include="Concierge\IConciergeAPIService.cs" />
+    <Compile Include="Constants\BuiltInEmailTemplates.cs" />
+    <Compile Include="Constants\OrderLineItemOptions.cs" />
+    <Compile Include="DataLoader\DataImportProgressPhase.cs" />
+    <Compile Include="DataLoader\FileTransmissionInstructions.cs" />
+    <Compile Include="DataLoader\IDataLoaderService.cs" />
+    <Compile Include="DataLoader\IDataLoaderServiceCallback.cs" />
+    <Compile Include="DataLoader\MarkerCache.cs" />
+    <Compile Include="DuplicateDetection\DuplicateDectectionRule.cs" />
+    <Compile Include="DuplicateDetection\DuplicateDetectionField.cs" />
+    <Compile Include="DuplicateDetection\DuplicateDetectionFieldMatchMode.cs" />
+    <Compile Include="ExhibitBoothInfo.cs" />
+    <Compile Include="GLAccountType.cs" />
+    <Compile Include="Interfaces\IExtensionService.cs" />
+    <Compile Include="Jobs\MassAssignEntitlementsManifest.cs" />
+    <Compile Include="Jobs\SubscriptionFulfillmentJobManifest.cs" />
+    <Compile Include="Jobs\SubscriptionRenewalJobManifest.cs" />
+    <Compile Include="Manifests\Command\CommandDefinition.cs" />
+    <Compile Include="Manifests\Command\PartialSearchDefinition.cs" />
+    <Compile Include="Manifests\Command\PartialCommandDefinition.cs" />
+    <Compile Include="Manifests\Command\PartialObjectDefinition.cs" />
+    <Compile Include="Manifests\Command\PartialReportDefinition.cs" />
+    <Compile Include="Manifests\Command\ViewMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\DashboardMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\Data360ViewMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\DataEntryViewMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\PageLayoutEditorMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\SectionLayoutMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\TabularDataViewMetadata.cs" />
+    <Compile Include="Manifests\Console\ConsoleMetadata.cs" />
+    <Compile Include="Manifests\Console\QuickSearch.cs" />
+    <Compile Include="Manifests\Console\QuickSearchColumn.cs" />
+    <Compile Include="Manifests\Console\Tab.cs" />
+    <Compile Include="Manifests\CustomField\CustomFieldCreationPacket.cs" />
+    <Compile Include="Manifests\MetadataBase.cs" />
+    <Compile Include="Manifests\Reporting\ChartDefinition.cs" />
+    <Compile Include="Manifests\Reporting\ChartManifest.cs" />
+    <Compile Include="Manifests\Reporting\KPIDefinition.cs" />
+    <Compile Include="Manifests\Reporting\ReportManifest.cs" />
+    <Compile Include="Manifests\Reporting\WidgetDefinition.cs" />
+    <Compile Include="Manifests\Resource\StringResource.cs" />
+    <Compile Include="Manifests\Searching\SearchManifest.cs" />
+    <Compile Include="Manifests\Searching\ShortenedSearchManifest.cs" />
+    <Compile Include="MemberSuiteObjects.cs" />
+    <Compile Include="Results\AddressValidationResult.cs" />
+    <Compile Include="Results\AutoNumberSeedInfo.cs" />
+    <Compile Include="Results\BulkAddressValidationReport.cs" />
+    <Compile Include="Results\ColumnMetadataDictionary.cs" />
+    <Compile Include="Results\ConciergeResult.cs" />
+    <Compile Include="Results\ConciergeResultTyped.cs" />
+    <Compile Include="Types\MemberSuiteVersion.cs" />
+    <Compile Include="Results\MSQLResult.cs" />
+    <Compile Include="Results\ObjectSearchResult.cs" />
+    <Compile Include="Results\QueryResult.cs" />
+    <Compile Include="Results\Data360Packet.cs" />
+    <Compile Include="Results\DataTableResult.cs" />
+    <Compile Include="Results\LoginResult.cs" />
+    <Compile Include="Results\SearchResult.cs" />
+    <Compile Include="Searching\Operations\DoesNotEndWithOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\EndsWithOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\DoesNotStartWithOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\StartsWithOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\DoesNotEndWith.cs" />
+    <Compile Include="Searching\Operations\DoesNotStartWith.cs" />
+    <Compile Include="Searching\Operations\EndsWith.cs" />
+    <Compile Include="Searching\Operations\StartsWith.cs" />
+    <Compile Include="Types\DatabaseServer.cs" />
+    <Compile Include="Types\EntitlementReport.cs" />
+    <Compile Include="Types\ExhibitorRegistrationPermissionPacket.cs" />
+    <Compile Include="Types\JobManifests.cs" />
+    <Compile Include="Types\MemberSuiteFieldsDictionary.cs" />
+    <Compile Include="Types\FileInfo.cs" />
+    <Compile Include="Types\FolderInfo.cs" />
+    <Compile Include="Types\PortalFormsManifest.cs" />
+    <Compile Include="Types\VolunteerMatch.cs" />
+    <Compile Include="Utilities\Binary.cs" />
+    <Compile Include="Utilities\CompressionManager.cs" />
+    <Compile Include="Utilities\EmbeddedResource.cs" />
+    <Compile Include="Utilities\EventUtilities.cs" />
+    <Compile Include="Utilities\MethodProfiler.cs" />
+    <Compile Include="Utilities\OrderUtilities.cs" />
+    <Compile Include="Utilities\PriceComparer.cs" />
+    <Compile Include="Utilities\RegularExpressions.cs" />
+    <Compile Include="Utilities\SearchUtilities.cs" />
+    <Compile Include="Utilities\SpringExpression.cs" />
+    <Compile Include="Types\ZipCodeRadius.cs" />
+    <Compile Include="Searching\BuiltInSearch.cs" />
+    <Compile Include="Searching\BuiltInSearchOutputTypes.cs" />
+    <Compile Include="Searching\ISeachOperationVisitor.cs" />
+    <Compile Include="Searching\Operations\Contains.cs" />
+    <Compile Include="Searching\Operations\ContainsOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\NoKeyword.cs" />
+    <Compile Include="Searching\Operations\DoesNotContain.cs" />
+    <Compile Include="Searching\Operations\DoesNotContainOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\DoesNotEqual.cs" />
+    <Compile Include="Searching\Operations\Expr.cs" />
+    <Compile Include="Searching\Operations\IsBetween.cs" />
+    <Compile Include="Searching\Operations\IsBlank.cs" />
+    <Compile Include="Searching\Operations\Equals.cs" />
+    <Compile Include="Searching\Operations\IsGreaterThan.cs" />
+    <Compile Include="Searching\Operations\IsGreaterThanOrEqualTo.cs" />
+    <Compile Include="Searching\Operations\IsLessThan.cs" />
+    <Compile Include="Searching\Operations\IsLessThanOrEqual.cs" />
+    <Compile Include="Searching\Operations\IsNotBetween.cs" />
+    <Compile Include="Searching\Operations\IsNotBlank.cs" />
+    <Compile Include="Searching\Operations\IsNotOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\IsOneOfTheFollowing.cs" />
+    <Compile Include="Searching\Operations\Keyword.cs" />
+    <Compile Include="Searching\Operations\SpecialOperation.cs" />
+    <Compile Include="Searching\Operations\WhereClause.cs" />
+    <Compile Include="Searching\Search.cs" />
+    <Compile Include="Searching\SearchBuilder.cs" />
+    <Compile Include="Searching\SearchOperation.cs" />
+    <Compile Include="Searching\SearchOperationGroup.cs" />
+    <Compile Include="Searching\SearchOperationGroupType.cs" />
+    <Compile Include="Searching\SearchOuputAggregate.cs" />
+    <Compile Include="Searching\SearchOutputColumn.cs" />
+    <Compile Include="Searching\SearchSortField.cs" />
+    <Compile Include="Types\Address.cs" />
+    <Compile Include="Types\BatchOperation.cs" />
+    <Compile Include="Types\BatchPostingResult.cs" />
+    <Compile Include="Types\BatchReadinessReport.cs" />
+    <Compile Include="Types\BatchStatus.cs" />
+    <Compile Include="Types\BillingScheduleEntryStatus.cs" />
+    <Compile Include="Types\ClassMetadataOverride.cs" />
+    <Compile Include="Types\CommandPreferences.cs" />
+    <Compile Include="Types\CommandShortcut.cs" />
+    <Compile Include="Types\CompetitionEntryInformation.cs" />
+    <Compile Include="Types\CreditCard.cs" />
+    <Compile Include="Types\CustomFieldValueHolder.cs" />
+    <Compile Include="Types\DataTransferObjects.cs" />
+    <Compile Include="Types\EmailTemplate.cs" />
+    <Compile Include="Types\EnumeratedValues.cs" />
+    <Compile Include="Types\EventManifest.cs" />
+    <Compile Include="Types\FieldCalculationRule.cs" />
+    <Compile Include="Types\FieldDataType.cs" />
+    <Compile Include="Types\FieldDisplayType.cs" />
+    <Compile Include="Types\FieldMetadata.cs" />
+    <Compile Include="Types\FieldMetadataOverride.cs" />
+    <Compile Include="Types\MemberSuitePermissions.cs" />
+    <Compile Include="Types\MetadataTypeResolver.cs" />
+    <Compile Include="Types\PortalInformation.cs" />
+    <Compile Include="Types\PortalSkin.cs" />
+    <Compile Include="Types\PreProcessedOrderPacket.cs" />
+    <Compile Include="Types\IMemberSuiteComponent.cs" />
+    <Compile Include="Types\KeyChain.cs" />
+    <Compile Include="Types\KPIs\KPI.cs" />
+    <Compile Include="Types\KPIs\KPIPeriod.cs" />
+    <Compile Include="Types\KPIs\KPIType.cs" />
+    <Compile Include="Types\Language.cs" />
+    <Compile Include="Types\MailMergeOutputFormat.cs" />
+    <Compile Include="Types\MemberSuiteFile.cs" />
+    <Compile Include="Types\MemberSuiteObject.cs" />
+    <Compile Include="Types\ClassMetadata.cs" />
+    <Compile Include="Types\MemberSuiteObjectValueAccessor.cs" />
+    <Compile Include="Types\NameValuePair.cs" />
+    <Compile Include="Types\NameValueStringPair.cs" />
+    <Compile Include="Types\OrderStatus.cs" />
+    <Compile Include="Types\PaymentAdjustmentInstruction.cs" />
+    <Compile Include="Types\PaymentProcessorResponse.cs" />
+    <Compile Include="Types\PaymentTypes.cs" />
+    <Compile Include="Types\PickListEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\FinancialRecurrenceTemplate.cs" />
+    <Compile Include="Types\ProductInfo.cs" />
+    <Compile Include="Types\RelationshipMultiplicity.cs" />
+    <Compile Include="Types\RelativeDate.cs" />
+    <Compile Include="Types\ScheduledSearchRecurrence.cs" />
+    <Compile Include="Types\SDKException.cs" />
+    <Compile Include="Types\SealedValue.cs" />
+    <Compile Include="Types\SearchSpecificationOverride.cs" />
+    <Compile Include="Types\SecurityLock.cs" />
+    <Compile Include="Types\SecurityLockAccessLevel.cs" />
+    <Compile Include="Types\SecurityLockParticipant.cs" />
+    <Compile Include="Types\SerializableDictionary.cs" />
+    <Compile Include="Types\SharedStorageLocation.cs" />
+    <Compile Include="Types\ShippingCalculationMethod.cs" />
+    <Compile Include="Types\ShortGuid.cs" />
+    <Compile Include="Types\TaskStatus.cs" />
+    <Compile Include="Types\ValidationRule.cs" />
+    <Compile Include="Utilities\AssemblyManager.cs" />
+    <Compile Include="Utilities\CryptoManager.cs" />
+    <Compile Include="Utilities\DateUtils.cs" />
+    <Compile Include="Utilities\PaymentUtils.cs" />
+    <Compile Include="Utilities\ReaderWriterLockManager.cs" />
+    <Compile Include="Utilities\RunOnce.cs" />
+    <Compile Include="Utilities\StringUtil.cs" />
+    <Compile Include="Utilities\TimeZoneUtils.cs" />
+    <Compile Include="Utilities\TypeResolution\Resolver.cs" />
+    <Compile Include="Utilities\TypeResolution\ResolverAttribute.cs" />
+    <Compile Include="Utilities\TypeResolution\ResolverException.cs" />
+    <Compile Include="Utilities\TypeResolution\ResolverFactory.cs" />
+    <Compile Include="Utilities\Xml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Utilities\TypeResolution\Resolvers.unity.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.config.transform">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="web.config.transform">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Searching\Search Objects.cd" />
+    <None Include="Searching\Searching.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Manifests\View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>
