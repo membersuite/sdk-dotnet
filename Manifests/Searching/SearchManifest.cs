@@ -70,6 +70,9 @@ namespace MemberSuite.SDK.Manifests.Searching
         public List<SearchOutputColumn> DefaultQuickSearchColumns { get; set; }
 
         [DataMember]
+        public List<string> DefaultQuickSearchCriteria { get; set; }
+
+        [DataMember]
         public List<SearchOutputColumn> DefaultFindColumns { get; set; }
         
         /// <summary>

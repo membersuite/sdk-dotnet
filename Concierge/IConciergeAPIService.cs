@@ -1459,7 +1459,7 @@ namespace MemberSuite.SDK.Concierge
         /// <returns></returns>
         /// <remarks></remarks>
         [OperationContract]
-        ConciergeResult WipeProFormaInvoices(DateTime wipeInvoicesBefore);
+        ConciergeResult WipeProFormaInvoices(DateTime? wipeInvoicesBefore, DateTime? wipeInvoicesAfter);
 
         /// <summary>
         /// Cancels an invoice.
@@ -1681,6 +1681,16 @@ namespace MemberSuite.SDK.Concierge
         #endregion
 
         #region Order Processing
+
+        /// <summary>
+        /// Calculates the expiration date for a given product and reference date
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="referenceDate"></param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<DateTime?> CalculateExpirationDate(string productID, DateTime referenceDate);
+        
 
         /// <summary>
         /// Voids the specified order.
@@ -2455,6 +2465,13 @@ namespace MemberSuite.SDK.Concierge
 
         [OperationContract]
         ConciergeResult ModifyAndSendOutRenewalInvoices(string overrideEmail, string orderID);
-        
+
+        /// <summary>
+        /// Gets the association that a specific object belongs to
+        /// </summary>
+        /// <param name="objectID">The object ID to examine</param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<string> GetAssociationFromObjectIdentifier(string objectID);
     }
 }

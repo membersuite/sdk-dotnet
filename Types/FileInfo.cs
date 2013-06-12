@@ -34,7 +34,7 @@ namespace MemberSuite.SDK.Types
             fi.CreatedDate = Convert.ToDateTime(dr["CreatedDate"]);
             fi.LastModifiedByName = Convert.ToString(dr["LastModifiedBy_Name"]);
             fi.LastModifiedDate = Convert.ToDateTime(dr["LastModifiedDate"]);
-            fi.NumberOfBytes= Convert.ToInt32( dr["ContentLength"]);
+            if ( dr["ContentLength"] != DBNull.Value ) fi.NumberOfBytes= Convert.ToInt32( dr["ContentLength"]);
             fi.FileExtension = Convert.ToString( dr["Extension"]);
             fi.FileSize = Convert.ToString(dr["FileSize"]);
 

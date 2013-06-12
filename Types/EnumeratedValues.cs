@@ -568,4 +568,11 @@ namespace MemberSuite.SDK.Types
         Both
     }
 
+    public enum TermType
+    {
+        Days = 0,
+        
+        Months = 2,
+        Years = 3
+    }
 }

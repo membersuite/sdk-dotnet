@@ -35,6 +35,9 @@ namespace MemberSuite.SDK.Types
         public PortalSkin PortalSkin { get; set; }
 
         [DataMember]
+        public string PortalLoginRedirect { get; set; }
+
+        [DataMember]
         public string Css { get; set; }
 
         [DataMember]
