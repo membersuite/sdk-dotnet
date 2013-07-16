@@ -756,6 +756,9 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult MassAssignEntitlements(MemberSuiteObject msoEntitlement, List<string> idsToAssign);
 
+        [OperationContract]
+        ConciergeResult ScheduleAssociationDataExport( DateTime dateToExecute, string confirmationEmail );
+
         #endregion
 
         #region Seach Service
@@ -1594,7 +1597,7 @@ namespace MemberSuite.SDK.Concierge
         /// <returns></returns>
         /// <remarks></remarks>
         [OperationContract]
-        ConciergeResult<PaymentProcessorResponse> VoidPayment(string paymentID);
+        ConciergeResult<PaymentProcessorResponse> VoidPayment(string paymentID, bool ignoreElectronicPaymentProcessorFailure);
 
         /// <summary>
         /// Edits a revenue recognition schedule.

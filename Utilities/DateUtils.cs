@@ -153,7 +153,18 @@ namespace MemberSuite.SDK.Utilities
             return new DateTime(Year, (int)Month,
                DateTime.DaysInMonth(Year, (int)Month), 23, 59, 59, 999);
         }
- 
+
+        /// <summary>
+        /// Gets the number of months in between two dates, irrespective of the day
+        /// </summary>
+        /// <param name="firstDate">The first date.</param>
+        /// <param name="secondDate">The second date.</param>
+        /// <returns>System.Int32.</returns>
+        public static int GetMonthDiff(DateTime firstDate, DateTime secondDate)
+        {
+            return ((secondDate.Year - firstDate.Year) * 12) + secondDate.Month - firstDate.Month;
+        }
+
         #endregion
 
         #region Years

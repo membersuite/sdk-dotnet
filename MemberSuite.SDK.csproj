@@ -103,7 +103,6 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -127,6 +126,7 @@
     <Compile Include="Concierge\IConciergeAPIProxyExtensions.cs" />
     <Compile Include="Concierge\IConciergeAPIService.cs" />
     <Compile Include="Constants\BuiltInEmailTemplates.cs" />
+    <Compile Include="Constants\BuiltInReports.cs" />
     <Compile Include="Constants\OrderLineItemOptions.cs" />
     <Compile Include="DataLoader\DataImportProgressPhase.cs" />
     <Compile Include="DataLoader\FileTransmissionInstructions.cs" />

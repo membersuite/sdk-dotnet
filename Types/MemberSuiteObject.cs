@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
+using MemberSuite.DataLoader.Common;
 using MemberSuite.SDK.Concierge;
 using MemberSuite.SDK.DuplicateDetection;
 using MemberSuite.SDK.Manifests.Command;
@@ -330,7 +331,8 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(Address));
             allowableTypes.Add(typeof(SecurityLock));
             allowableTypes.Add(typeof(RecommendationStatus));
-
+            allowableTypes.Add( typeof( DataImportProgressPhase ));
+            allowableTypes.Add(typeof(TermType));
 
             allowableTypes.Add(typeof(SealedValue));
             allowableTypes.Add(typeof(BatchType));
