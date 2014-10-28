@@ -67,6 +67,14 @@ namespace MemberSuite.SDK.Manifests.Command{
         [DataMember]
         public bool AllowNullContext { get; set; }
 
+
+        /// <summary>
+        /// The url of the help topic for this command
+        /// </summary>
+        /// <value>The redirect.</value>
+        [DataMember]
+        public string HelpTopic { get; set; }
+
         /// <summary>
         /// Gets or sets the redirect.
         /// </summary>

@@ -45,7 +45,7 @@ namespace MemberSuite.SDK.Types.KPIs
             if (period == KPIPeriod.Today || period == KPIPeriod.Current)
                 return period.ToString();
 
-            string periodName = RegularExpressions.GetFriendlyName(period.ToString());
+            string periodName = Formats.GetFriendlyName(period.ToString());
 
             switch (index)
             {

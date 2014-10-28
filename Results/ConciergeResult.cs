@@ -56,6 +56,20 @@ namespace MemberSuite.SDK.Results
         public List<ConciergeError> Errors { get; set; }
 
         /// <summary>
+        /// If the request results in a workflow being run, this is the
+        /// workflow ID
+        /// </summary>
+         [DataMember]
+        public string WorkflowExecutionID { get; set; }
+
+        /// <summary>
+        /// If the request results in a workflow being run, this is the 
+        /// Run ID (a workflow may be run multiple times)
+        /// </summary>
+         [DataMember]
+        public string WorkflowRunID { get; set; }
+
+        /// <summary>
         /// Gets the first error message.
         /// </summary>
         /// <remarks></remarks>

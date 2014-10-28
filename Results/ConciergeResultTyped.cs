@@ -18,6 +18,8 @@ namespace MemberSuite.SDK.Results
         [DataMember]
         public T ResultValue { get; set; }
 
+      
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConciergeResult&lt;T&gt;"/> class.
         /// </summary>

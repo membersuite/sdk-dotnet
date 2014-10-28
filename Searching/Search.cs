@@ -9,6 +9,7 @@ using MemberSuite.SDK.Manifests.Searching;
 using MemberSuite.SDK.Searching.Operations;
 using MemberSuite.SDK.Types;
 using MemberSuite.SDK.Utilities;
+using System.Transactions;
 
 namespace MemberSuite.SDK.Searching
 {
@@ -63,11 +64,25 @@ namespace MemberSuite.SDK.Searching
             OutputColumns = new List<SearchOutputColumn>();
             SortColumns = new List<SearchSortColumn>();
         }
+        
         public Search(string type)
             : this()
         {
             Type = type;
         }
+
+        //public Search(IsolationLevel isolationLevel)
+        //    : this()
+        //{
+        //    IsolationLevel = isolationLevel;
+        //}
+
+        //public Search(IsolationLevel isolationLevel, string type)
+        //    : this()
+        //{
+        //    Type = type;
+        //    IsolationLevel = isolationLevel;
+        //}
 
         //public Search(string type, string whereClause)
         //    : this(type)
@@ -157,6 +172,8 @@ namespace MemberSuite.SDK.Searching
        [XmlArrayItem("Command")]
        [DataMember]
        public List<CommandShortcut> Commands { get; set; }
+
+       //public IsolationLevel? IsolationLevel { get; set; }
 
        /// <summary>
        /// Gets or sets a value indicating whether this <see cref="Search"/> is override.
@@ -252,11 +269,6 @@ namespace MemberSuite.SDK.Searching
             return types.ToArray();
         }
 
-        /// <summary>
-        /// Used to parse the order by
-        /// </summary>
-        private static Regex _orderByParser = new Regex(@"(.+?)( DESC)?(?x:,|$)", RegexOptions.Compiled);
-
 
         /// <summary>
         /// Takes an order by string (i.e., FirstName DESC, ID) and 
@@ -270,7 +282,7 @@ namespace MemberSuite.SDK.Searching
 
             if (SortColumns == null)
                 SortColumns = new List<SearchSortColumn>();
-            foreach (Match m in _orderByParser.Matches(orderBy))
+            foreach (Match m in Regex.Matches(orderBy, RegularExpressions.OrderByParserRegex, RegexOptions.Compiled))
             {
                 SearchSortColumn ss = new SearchSortColumn();
                 ss.Name = m.Groups[1].Value.Trim();
@@ -311,6 +323,11 @@ namespace MemberSuite.SDK.Searching
         public void AddOutputColumn(string columnName)
         {
             OutputColumns.Add(new SearchOutputColumn { Name = columnName });
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Search of type '{0}' with ID '{1}'", Type, ID);
         }
     }
 }

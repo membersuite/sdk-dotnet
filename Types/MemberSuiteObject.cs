@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using MemberSuite.DataLoader.Common;
 using MemberSuite.SDK.Concierge;
 using MemberSuite.SDK.DuplicateDetection;
+using MemberSuite.SDK.Manifests;
 using MemberSuite.SDK.Manifests.Command;
 using MemberSuite.SDK.Manifests.Command.Views;
 using MemberSuite.SDK.Manifests.Console;
@@ -31,6 +32,7 @@ using MemberSuite.SDK.Types.KPIs;
 using MemberSuite.SDK.Utilities;
 using Spring.Core;
 using Spring.Expressions;
+using Spring.Objects.Factory.Support;
 
 namespace MemberSuite.SDK.Types
 {
@@ -42,6 +44,14 @@ namespace MemberSuite.SDK.Types
     [DataContract]
     public class MemberSuiteObject : IPropertyOrFieldNodeOverrideable, ICustomTypeDescriptor
     {
+
+        [ThreadStatic] public static TimeZoneInfo CurrentTimeZone;
+
+        public static TimeZoneInfo GetCurrentTimeZone()
+        {
+            return CurrentTimeZone ?? TimeZoneInfo.Local;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberSuiteObject"/> class.
         /// </summary>
@@ -180,10 +190,6 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// The _characters that necessitate spring
-        /// </summary>
-        private static Regex _charactersThatNecessitateSpring = new Regex(@"\.|\[|\]", RegexOptions.Compiled);
-        /// <summary>
         /// Sets the value, swallowing any exceptions.
         /// </summary>
         /// <param name="expression">The expression.</param>
@@ -202,7 +208,7 @@ namespace MemberSuite.SDK.Types
                 return false;
 
             // optimization - Parse is expensive, let's avoid it if we can
-            if (!_charactersThatNecessitateSpring.IsMatch(expression))
+            if (!Regex.IsMatch(expression, RegularExpressions.CharactersThatNecessitateSpringRegex, RegexOptions.Compiled))
             {
                 Fields[expression] = newValue;
                 return true;
@@ -261,14 +267,7 @@ namespace MemberSuite.SDK.Types
                     return ((string)obj).ToEnum<T>();
             }
 
-            try
-            {
-                return (T)obj;
-            }
-            catch
-            {
-                return default(T);
-            }
+            return obj is T ? (T) obj : default(T);
         }
 
         #region Static Methods
@@ -320,6 +319,14 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(decimal));
             allowableTypes.Add(typeof(float));
             allowableTypes.Add(typeof(DateTime));
+            allowableTypes.Add(typeof(SavedPaymentMethodType));
+            allowableTypes.Add(typeof (SavePaymentMethodSetting));
+            allowableTypes.Add(typeof (BillingRunActivityType));
+            allowableTypes.Add(typeof (SubscriptionFeeType));
+            allowableTypes.Add(typeof(TenantLevel));
+            allowableTypes.Add(typeof (RealtorSubscriptionType));
+            allowableTypes.Add(typeof(RelevantAnnouncementType));
+            allowableTypes.Add(typeof(DataExportFormat));
             allowableTypes.Add(typeof(DataEntryViewMetadata));
             allowableTypes.Add(typeof(Data360ViewMetadata));
             allowableTypes.Add(typeof(CustomerStatus));
@@ -333,10 +340,15 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(RecommendationStatus));
             allowableTypes.Add( typeof( DataImportProgressPhase ));
             allowableTypes.Add(typeof(TermType));
+            allowableTypes.Add(typeof(CreditCard));
+            allowableTypes.Add(typeof(ElectronicCheck));
+            
+            allowableTypes.Add(typeof(OrderPayload));
+            allowableTypes.Add(typeof(OrderPayloadEntitlementAdjustments));
+
 
             allowableTypes.Add(typeof(SealedValue));
             allowableTypes.Add(typeof(BatchType));
-            allowableTypes.Add(typeof(ShippingCarrier));
             allowableTypes.Add(typeof(NameValuePair));
             allowableTypes.Add(typeof(NameValueStringPair));
             allowableTypes.Add(typeof(RelationshipMultiplicity));
@@ -365,6 +377,7 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(FinancialRecurrenceTemplate));
 
             allowableTypes.Add(typeof(DiscussionPostStatus));
+            allowableTypes.Add(typeof(JobPostingStatus));
             allowableTypes.Add(typeof(Quarter));
             allowableTypes.Add(typeof(PortalAccessibility));
             allowableTypes.Add(typeof(Month));
@@ -375,6 +388,12 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(ShippingCalculationMethod));
             allowableTypes.Add(typeof(MailMergeOutputFormat));
             allowableTypes.Add(typeof(TaskStatus));
+
+            allowableTypes.Add(typeof(BillingRunMemberStatus));
+            allowableTypes.Add(typeof(BillingRunCandidateType));
+            allowableTypes.Add(typeof(BillingCycleProductAction));
+            allowableTypes.Add(typeof(BillingRunStatus));
+            allowableTypes.Add(typeof(BillingRunMode));
             allowableTypes.Add(typeof(RecurrenceType));
             allowableTypes.Add(typeof(FieldDisplayType));
             allowableTypes.Add(typeof(RelativeDateTimeUnitType));
@@ -425,9 +444,9 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(GiftType));
             allowableTypes.Add(typeof(ExhibitorRegistrationMode));
             allowableTypes.Add(typeof(HistoricalTransactionType));
-            allowableTypes.Add(typeof(ScheduledSearchRecurrence));
-            allowableTypes.Add(typeof(ScheduledSearchRecurrenceType));
-            allowableTypes.Add(typeof(ScheduledSearchRecurrenceEndType));
+            allowableTypes.Add(typeof(AutomatedProcessRecurrence));
+            allowableTypes.Add(typeof(AutomatedProcessRecurrenceType));
+            allowableTypes.Add(typeof(AutomatedProcessRecurrenceEndType));
             allowableTypes.Add(typeof(CustomFieldValueHolder));
             allowableTypes.Add(typeof(byte[]));
             allowableTypes.Add(typeof(PortalLinkType));
@@ -458,6 +477,35 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(DaysOfWeek));
             allowableTypes.Add(typeof(VolunteerTraitMatchMode));
             allowableTypes.Add(typeof(CertificationsSelfReportingMode));
+
+            allowableTypes.Add(typeof(IsolationLevel));
+
+            allowableTypes.Add(typeof(eKeyProviderType));
+            allowableTypes.Add(typeof (ListingSubscriptionProviderType));
+            allowableTypes.Add(typeof(RealtorProductCategory));
+            allowableTypes.Add(typeof(RealtorRelationshipDesignation));
+            allowableTypes.Add(typeof(RealtorSubscriptionFeeType));
+            allowableTypes.Add(typeof(NRDSAssociationStatus));
+            allowableTypes.Add(typeof(NRDSAssociationType));
+            allowableTypes.Add(typeof(NRDSDemographicPaymentCodeType));
+            allowableTypes.Add(typeof(NRDSEducationDeliveryMethodType));
+            allowableTypes.Add(typeof(NRDSEducationPaymentCodeType));
+            allowableTypes.Add(typeof(NRDSEducationTestMailingAddressType));
+            allowableTypes.Add(typeof(NRDSEducationTestStatus));
+            allowableTypes.Add(typeof(NRDSFinancialContributionType));
+            allowableTypes.Add(typeof(NRDSFinancialSource));
+            allowableTypes.Add(typeof(NRDSMemberGender));
+            allowableTypes.Add(typeof(NRDSMemberPreferredFax));
+            allowableTypes.Add(typeof(NRDSMemberAddressType));
+            allowableTypes.Add(typeof(NRDSMemberPreferredPhone));
+            allowableTypes.Add(typeof(NRDSMemberStatus));
+            allowableTypes.Add(typeof(NRDSMemberSupplementalStatus));
+            allowableTypes.Add(typeof(NRDSMemberType));
+            allowableTypes.Add(typeof(NRDSOfficeBranchType));
+            allowableTypes.Add(typeof(NRDSOfficeStatus));
+            allowableTypes.Add(typeof(NRDSPrimaryIndicator));
+
+            allowableTypes.Add(typeof(EngagementCyclePeriodicity));
 
             return allowableTypes;
         }
@@ -576,7 +624,7 @@ namespace MemberSuite.SDK.Types
                     case FieldDataType.Time:
                     case FieldDataType.DateTime:
                         if (string.Equals(defaultVal, "@@Now"))
-                            return DateTime.Now;
+                            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, GetCurrentTimeZone());
 
                         if (string.Equals(defaultVal, "@@Today"))
                             return DateTime.Today;

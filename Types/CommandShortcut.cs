@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using MemberSuite.SDK.Utilities;
 
 namespace MemberSuite.SDK.Types
 {
@@ -43,6 +44,10 @@ namespace MemberSuite.SDK.Types
         [XmlAttribute]
         [DataMember]
         public string Name { get; set; }
+
+        [XmlAttribute]
+        [DataMember]
+        public string NavigateBackName { get; set; }
 
         [XmlAttribute]
         [DataMember]
@@ -96,7 +101,7 @@ namespace MemberSuite.SDK.Types
             if ( Name == null )
                 return null;
 
-            var m = regexTranistion.Match( Name );
+            var m = Regex.Match(Name, RegularExpressions.TransitionRegex, RegexOptions.Compiled);
 
             if ( ! m.Success )
                 return null;
@@ -104,9 +109,6 @@ namespace MemberSuite.SDK.Types
             return m.Groups[1].Value;
         }
 
-        private static readonly Regex regexTranistion = new Regex( @"Transition:(\w+)", RegexOptions.Compiled );
-     
-       
         public CommandShortcut RedirectTo(string newState)
         {
             CommandShortcut cmd = (CommandShortcut) this.MemberwiseClone();

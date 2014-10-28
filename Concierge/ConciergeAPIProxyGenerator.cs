@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Security;
@@ -44,8 +45,8 @@ namespace MemberSuite.SDK.Concierge
         /// <summary>
         /// The _channel factory
         /// </summary>
-        private static Dictionary<string, ChannelFactory<IConciergeAPIService>> _channelFactory =
-            new Dictionary<string, ChannelFactory<IConciergeAPIService>>();
+        private static ConcurrentDictionary<string, ChannelFactory<IConciergeAPIService>> _channelFactory =
+            new ConcurrentDictionary<string, ChannelFactory<IConciergeAPIService>>();
 
         /// <summary>
         /// Gets or sets the _session ID provider.
@@ -196,7 +197,16 @@ namespace MemberSuite.SDK.Concierge
         /// Gets or sets the secret access key.
         /// </summary>
         /// <value>The secret access key.</value>
-        private static SecureString SecretAccessKey { get; set; }
+        private static SecureString SecretAccessKey
+        {
+            get { return _secretAccessKey; }
+            set
+            {
+                if (_secretAccessKey != null)
+                    throw new ApplicationException("You can only set the secret access key once.");
+                _secretAccessKey = value;
+            }
+        }
 
         /// <summary>
         /// Creates the request header.
@@ -205,21 +215,32 @@ namespace MemberSuite.SDK.Concierge
         /// <returns>MessageHeader.</returns>
         public static MessageHeader CreateRequestHeader(Message request)
         {
+            var messageSignature = CryptoManager.GetMessageSignature(SecretAccessKey, request.Headers.Action, SessionID, AssociationId);
+
+           // if (messageSignature == null)
+               // throw new ApplicationException("No message signature was caluclated");
+
             ConciergeRequestHeader headerValue = new ConciergeRequestHeader
                                                     {
                                                         AccessKeyId = _accessKeyId,
                                                         Signature = 
-                                                            CryptoManager.GetMessageSignature(SecretAccessKey,
-                                                                                              request.Headers.Action,
-                                                                                              SessionID, AssociationId), // Sign the message using the Secret Access Key - this will eventually be in a security token along with a signature from the STS
+                                                            messageSignature, // Sign the message using the Secret Access Key - this will eventually be in a security token along with a signature from the STS
                                                         AssociationId = AssociationId, // Add Association ID - this will eventually be moved to a claim on the security token
                                                         SessionId = SessionID,
                                                         BrowserId = BrowserId
                                                     };
+
+            
             
             MessageHeader result = MessageHeader.CreateHeader(ConciergeRequestHeader.HeaderName,
                                                               ConciergeRequestHeader.HeaderNamespace, headerValue);
             return result;
+        }
+
+        public static bool IsSecretAccessKeySet
+        {
+            get { return _isSecretAccessKeySet; }
+             
         }
 
         /// <summary>
@@ -235,6 +256,7 @@ namespace MemberSuite.SDK.Concierge
                 secretAccessKey = StringUtil.PadBase64String(secretAccessKey);
 
                 SecretAccessKey = new SecureString();
+                _isSecretAccessKeySet = true;
 
                 foreach (char c in secretAccessKey)
                     SecretAccessKey.AppendChar(c);
@@ -373,6 +395,9 @@ namespace MemberSuite.SDK.Concierge
         }
 
 
+        private static object lockChannelCreation = new object();
+        private static SecureString _secretAccessKey;
+        private static bool _isSecretAccessKeySet;
 
         /// <summary>
         /// Gets the channel factory.
@@ -385,11 +410,21 @@ namespace MemberSuite.SDK.Concierge
 
             if (_channelFactory.TryGetValue(instanceName, out api))
                 return api;
+            lock (lockChannelCreation)
+            {
+                // double check, one more time
+                if (_channelFactory.TryGetValue(instanceName, out api))
+                    return api;
 
-            var cf = _buildChannelFactory(instanceName);
-            _channelFactory[instanceName] = cf;
+                var cf = _buildChannelFactory(instanceName);
 
-            return cf;
+                _channelFactory.TryAdd(instanceName, cf);
+
+                return cf;
+
+            }
+
+            
         }
 
 
@@ -413,7 +448,8 @@ namespace MemberSuite.SDK.Concierge
                     ConciergeUri = "https://api.membersuite.com";
 
                 // we have to build it up - hard coded here
-                EndpointAddress ea = new EndpointAddress(ConciergeUri);
+                string upn = ConfigurationManager.AppSettings[instanceName + "_ConciergeUpn"];
+                EndpointAddress ea = string.IsNullOrWhiteSpace(upn) ? new EndpointAddress(ConciergeUri) : new EndpointAddress(new Uri(ConciergeUri), EndpointIdentity.CreateUpnIdentity(upn));
 
                 cf.Endpoint.Address = ea;
                 Binding binding = generateBindingFor(ConciergeUri);
@@ -463,7 +499,7 @@ namespace MemberSuite.SDK.Concierge
             b.MaxReceivedMessageSize = 65536000;
             b.ReaderQuotas.MaxStringContentLength = 88880000;
             b.ReliableSession.InactivityTimeout = TimeSpan.FromHours(1);
-            b.Security.Mode = SecurityMode.None;
+            b.Security.Mode = SecurityMode.Transport;
             return b;
 
         }

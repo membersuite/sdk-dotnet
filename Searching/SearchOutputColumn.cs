@@ -22,6 +22,9 @@ namespace MemberSuite.SDK.Searching
             if (Name != null)
                 hashCode += Name.GetHashCode();
 
+            if (DisplayName != null)
+                hashCode += DisplayName.GetHashCode();
+
             hashCode += AggregateFunction.GetHashCode();
 
             return hashCode;
@@ -69,6 +72,15 @@ namespace MemberSuite.SDK.Searching
                            Hidden = Hidden,
                            Name = Name
                        };
+        }
+
+        public override string ToString()
+        {
+            if (Name == null) return base.ToString();
+            if (DisplayName == null) return Name;
+
+            return string.Format("{0} <{1}>", DisplayName, Name );
+            
         }
     }
 }

@@ -105,6 +105,12 @@ namespace MemberSuite.SDK.Manifests.Command
 
             [DataMember]
             public DashboardMetadata DashboardMetadata { get; set; }
+
+            [DataMember]
+            public SearchViewMetadata SearchViewMetadata { get; set; }
+
+            [DataMember]
+            public ShowAnnouncementViewMetadata ShowAnnouncementViewMetadata { get; set; }
         }
 
         [XmlType(Namespace = "http://membersuite.com/schemas/")]
@@ -312,6 +318,12 @@ namespace MemberSuite.SDK.Manifests.Command
             BuiltInSearch
         }
 
+        public Data360ViewMetadata Get360Metadata()
+        {
+            if (this.SpecificViewMetadata == null) return null;
+            return SpecificViewMetadata.Data360ViewMetadata;
+        }
+
 
     }
 
@@ -471,9 +483,12 @@ namespace MemberSuite.SDK.Manifests.Command
                                              PortalAccessibility =  fieldMetadata.PortalAccessibility,
                                              ReferenceType = fieldMetadata.ReferenceType,
                                              ReferenceContext = fieldMetadata.ReferenceTypeContext,
-                                             DataSourceExpression = RegularExpressions.GetSafeFieldName(fieldMetadata.Name)
+                                             DataSourceExpression = Formats.GetSafeFieldName(fieldMetadata.Name)
                                          };
             return result;
         }
+
+       
+
     }
 }

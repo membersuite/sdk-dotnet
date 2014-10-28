@@ -68,6 +68,8 @@ namespace MemberSuite.SDK.Results
         /// <remarks></remarks>
         public msUserPreferencesContainer UserPreferences { get; set; }
 
+        public string Locale { get; set; }
+
         /// <summary>
         /// Gets or sets the key chain.
         /// </summary>

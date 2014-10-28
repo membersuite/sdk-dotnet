@@ -10,6 +10,7 @@ namespace MemberSuite.SDK.Types
         FreeShipping = 0,
         ByOrderWeight = 10,
         ByOrderValue = 20,
-        ByOrderQuantity = 30
+        ByOrderQuantity = 30,
+        IntegrateWithCarrier = 40
     }
 }

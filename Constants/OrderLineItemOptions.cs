@@ -30,5 +30,18 @@ namespace MemberSuite.SDK.Constants
             public const string GroupId = "GroupID";
         }
 
+        public static class Membership
+        {
+            public const string MembershipDirectoryOptOut = "MembershipDirectoryOptOut";
+            public const string DoNotPassAlongUnitPriceOverride = "DoNotPassAlongUnitPriceOverride ";
+
+            public const string PriceIncreaseCap = "PriceIncreaseCap ";
+        }
+
+        public static class Billing
+        {
+            public const string DoNotRenew = "DoNotRenew";
+            public const string AutomaticallyPayForRenewal = "AutomaticallyPayForRenewal";
+        }
     }
 }

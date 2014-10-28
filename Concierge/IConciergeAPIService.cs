@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using MemberSuite.SDK.Concierge.Parameters;
 using MemberSuite.SDK.DuplicateDetection;
 using MemberSuite.SDK.Jobs;
+using MemberSuite.SDK.Manifests;
 using MemberSuite.SDK.Manifests.Command;
 using MemberSuite.SDK.Manifests.Command.Views;
 using MemberSuite.SDK.Manifests.Console;
@@ -18,9 +20,8 @@ namespace MemberSuite.SDK.Concierge
 {
 
     /// <summary>
-    /// 
+    /// Interface IConciergeAPIService
     /// </summary>
-    /// <remarks></remarks>
     [ServiceContract(Namespace = "http://membersuite.com/contracts")]
     public interface IConciergeAPIService : IDisposable
     {
@@ -378,6 +379,14 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult<MemberSuiteObject> GetUserPreferences();
 
         /// <summary>
+        /// Generates an ID for a specific type of object
+        /// </summary>
+        /// <param name="typeOfObjec"></param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<string> GenerateIdentifer(string typeOfObject);
+
+        /// <summary>
         /// Gets the definition for a command.
         /// </summary><type>Metadata</type>
         /// <param name="commandName">Name of the command.</param>
@@ -559,6 +568,18 @@ namespace MemberSuite.SDK.Concierge
         #endregion
 
         #region Database
+
+
+        /// <summary>
+        /// Gets the maximum number of allowed contacts for a given organization based on organization 
+        /// contact restriction records. Designed primarily for portal use.
+        /// </summary>
+        /// <param name="organizationID">The organization ID.</param>
+        /// <param name="relationshipTypeID">The relationship type ID (optional).</param>
+        /// <returns>ConciergeResult{System.Nullable{System.Int32}}.</returns>
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GetApplicableOrganizationContactRestriction( string organizationID, string relationshipTypeID);
+
 
         /// <summary>
         /// Saves the specified MemberSuite object to the database.
@@ -757,9 +778,17 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult MassAssignEntitlements(MemberSuiteObject msoEntitlement, List<string> idsToAssign);
 
         [OperationContract]
-        ConciergeResult ScheduleAssociationDataExport( DateTime dateToExecute, string confirmationEmail );
+        ConciergeResult ScheduleAssociationDataExport( DateTime dateToExecute, DataExportFormat exportFormat, string confirmationEmail );
 
         #endregion
+
+#region Billing
+
+        [OperationContract]
+        ConciergeResult InitiateBillingRun(string billingRunID);
+
+
+#endregion
 
         #region Seach Service
 
@@ -935,6 +964,22 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult<string> GetRawSQLForSearch(Search searchToConvert);
 
+        /// <summary>
+        /// Converts a search to a textual representation
+        /// </summary>
+        /// <param name="searchToConvert"></param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<string> ConvertSearchToText(Search searchToConvert);
+
+        /// <summary>
+        /// Converts a search to a textual representation
+        /// </summary>
+        /// <param name="searchToConvert"></param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<List<FlattenedSearchCriterion>> FlattenSearch(Search searchToConvert);
+
         #endregion
 
         #region GIS Service
@@ -967,6 +1012,22 @@ namespace MemberSuite.SDK.Concierge
         #endregion
 
         #region Messaging
+
+        /// <summary>
+        /// Gets the announcements for a user
+        /// </summary>
+        /// <param name="getFrontDoorType"></param>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<List<RelevantAnnouncement>> GetRelevantAnnouncements(TenantLevel tenantLevelForAnnouncements);
+
+        /// <summary>
+        /// Dismisses an announcement, so that it is no longer shown to the user
+        /// </summary>
+        /// <param name="announcementID"></param>
+        /// <returns></returns>
+     [OperationContract]
+     ConciergeResult DismissAnnouncement(string announcementID);
 
         /// <summary>
         /// Previews an email blast.
@@ -1364,6 +1425,17 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult<List<MemberSuiteObject>> GetRelatedPaymentsForInvoice(string invoiceID);
 
         /// <summary>
+        /// Generates a forecast of all billings in an Excel spreadsheet
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        ConciergeResult<string> GenerateBillingScheduleForecast();
+
+         [OperationContract]
+        ConciergeResult<string> GenerateRevenueRecognitionScheduleForecast();
+
+
+        /// <summary>
         /// Gets all open batches that are accessible to the currently logged in user.
         /// </summary><type>Financial</type>
         /// <returns></returns>
@@ -1447,6 +1519,24 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult<List<string>> GetAllProductsInBatch(List<string> batchIDs);
 
         /// <summary>
+        /// Renders an invoice, using the associatoin specific rules for doing so.
+        /// </summary>
+        /// <param name="invoiceID">The invoice ID.</param>
+        /// <returns>ConciergeResult{System.String}.</returns>
+        [OperationContract]
+        ConciergeResult<string> RenderInvoice( string invoiceID);
+
+        /// <summary>
+        /// Renders invoices to PDF based on the results of a search.
+        /// </summary>
+        /// <param name="searchToUse">The search to use.</param>
+        /// <remarks>Any search can be used, provided it has only one output column - the output column
+        /// that will represent the invoice ID.</remarks>
+        /// <returns>ConciergeResult{System.String}.</returns>
+        [OperationContract]
+        ConciergeResult<string> RenderInvoices(Search searchToUse, int? waitTime);
+
+        /// <summary>
         /// Adjusts a refund.
         /// </summary><type>Financial</type>
         /// <param name="refund">The refund.</param>
@@ -1472,6 +1562,15 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult CancelInvoice(string invoiceID);
+
+        [OperationContract]
+        ConciergeResult<PortalPaymentMethods> DetermineAllowableInvoicePaymentMethods(MemberSuiteObject payment);
+
+        [OperationContract]
+        ConciergeResult<PortalPaymentMethods> DetermineAllowableOrderPaymentMethods(MemberSuiteObject order);
+
+        [OperationContract]
+        ConciergeResult<PortalPaymentMethods> DetermineAllowableGiftPaymentMethods(MemberSuiteObject gift);
 
         /// <summary>
         /// Posts a batch.
@@ -1533,14 +1632,14 @@ namespace MemberSuite.SDK.Concierge
 
         /// <summary>
         /// Processes a credit card payment.
-        /// </summary><type>Financial</type>
+        /// </summary>
         /// <param name="paymentToRecord">The payment to record.</param>
-        /// <param name="creditCardToProcess">The credit card to process.</param>
+        /// <param name="paymentToProcess">The payment to process.</param>
         /// <param name="antiDuplicationKey">The anti duplication key.</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
+        /// <returns>ConciergeResult{PaymentProcessorResponse}.</returns>
+        /// <type>Financial</type>
         [OperationContract]
-        ConciergeResult<PaymentProcessorResponse> ProcessCreditCardPayment(MemberSuiteObject paymentToRecord, CreditCard creditCardToProcess, string antiDuplicationKey);
+        ConciergeResult<PaymentProcessorResponse> ProcessCreditCardPayment(MemberSuiteObject paymentToRecord, ElectronicPaymentManifest paymentToProcess, string antiDuplicationKey);
 
         /// <summary>
         /// Adjusts a payment.
@@ -1627,6 +1726,16 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult<MemberSuiteObject> CancelBillingSchedule(string billingScheduleId);
 
+
+        /// <summary>
+        /// Reinstates a cancelled billing schedule.
+        /// </summary><type>Financial</type>
+        /// <param name="billingScheduleId">The billing schedule ID to cancel.</param>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> ReinstateBillingSchedule(string billingScheduleId);
+
         /// <summary>
         /// Processes the billing schedule entry.
         /// </summary><type>Financial</type>
@@ -1655,7 +1764,7 @@ namespace MemberSuite.SDK.Concierge
         /// <returns></returns>
         /// <remarks></remarks>
         [OperationContract]
-        ConciergeResult ClosePeriod(string fiscalYearID, int periodNumber);
+        ConciergeResult<string> ClosePeriod(string fiscalYearID, int periodNumber);
 
         /// <summary>
         /// Reopens a fiscal period.
@@ -1737,6 +1846,16 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult<string> ProcessOrder(MemberSuiteObject msOrderToProcess, string antiDuplicationKey);
 
         /// <summary>
+        /// Processes the order with payload - objects that are saved when the order is processed.
+        /// </summary>
+        /// <param name="msOrderToProcess">The ms order to process.</param>
+        /// <param name="payload">The payload.</param>
+        /// <param name="antiDuplicationKey">The anti duplication key.</param>
+        /// <returns>ConciergeResult{System.String}.</returns>
+        [OperationContract]
+        ConciergeResult<string> ProcessOrderWithPayload(MemberSuiteObject msOrderToProcess, OrderPayload payload, string antiDuplicationKey);
+
+        /// <summary>
         /// Checks the status of a long running task such as order processing.
         /// </summary><type>Order Processing</type>
         /// <param name="taskTracingID">The task tracing ID.</param>
@@ -1758,16 +1877,11 @@ namespace MemberSuite.SDK.Concierge
         /// Updates the order billing info.
         /// </summary>
         /// <param name="orderID">The order ID.</param>
-        /// <param name="ccNumber">The cc number.</param>
-        /// <param name="ccvCode">The CCV code.</param>
-        /// <param name="expDate">The exp date.</param>
-        /// <param name="billingAddress">The billing address.</param>
-        /// <returns></returns>
+        /// <param name="paymentInfo">The payment info.</param>
+        /// <returns>ConciergeResult.</returns>
         /// <type>Order Processing</type>
-        /// <remarks></remarks>
         [OperationContract]
-        ConciergeResult UpdateOrderBillingInfo(string orderID, string ccNumber, string ccvCode,
-            DateTime? expDate, Address billingAddress);
+        ConciergeResult UpdateOrderBillingInfo(string orderID,  ElectronicPaymentManifest paymentInfo);
 
         /// <summary>
         /// Allows modification of billing information on an invoice even if it is already posted.
@@ -1884,6 +1998,29 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult<MemberSuiteObject> ProcessInventoryTransaction(MemberSuiteObject inventoryTransaction);
 
+        ///// <summary>
+        ///// Processes an exchange.
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns>ProcessExchangeResult.</returns>
+        //[OperationContract]
+        //ProcessExchangeResult ProcessExchange(ProcessExchangeRequest request);
+
+        ///// <summary>
+        ///// Previews an exchange, allowing a user to under  what the amounts involved will be
+        ///// </summary>
+        ///// <param name="request">The request.</param>
+        ///// <returns>ProcessExchangeResult.</returns>
+        //[OperationContract]
+        //PreviewExchangeResult ProcessExchange(PreviewExchangeRequest request);
+
+        /// <summary>
+        /// Retrieves available services for selected carrier account.
+        /// </summary>
+        /// <param name="carrierAccoountID">Carrier account ID</param>
+        /// <returns>MemberSuiteObject</returns>
+        [OperationContract]
+        ConciergeResult<ShippingCarrierServicesInfo> RetrieveAvailableShippingServices(string carrierAccoountID);
 
         #endregion
 
@@ -1910,22 +2047,7 @@ namespace MemberSuite.SDK.Concierge
 
         #region Membership
 
-        /// <summary>
-        /// Processes membership renewals.
-        /// </summary><type>Membership</type>
-        /// <param name="membershipOrganizationID">The membership organization ID.</param>
-        /// <param name="batchID">The batch ID.</param>
-        /// <param name="renewalBatchName">Name of the batch.</param>
-        /// <param name="searchToUse">The search to use.</param>
-        /// <param name="sendOutEmails">if set to <c>true</c> [send out emails].</param>
-        /// <param name="jobStatusNotificationEmail">The job status notification email.</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        [OperationContract]
-        ConciergeResult<string> ProcessRenewals(string membershipOrganizationID,
-           string batchID, string renewalBatchName, Search searchToUse, bool sendOutEmails, string jobStatusNotificationEmail);
-
-    
+         
 
         /// <summary>
         /// Gets the primary membership for an entity
@@ -1938,6 +2060,17 @@ namespace MemberSuite.SDK.Concierge
         ConciergeResult<MemberSuiteObject> GetPrimaryMembership(string membershipOrganizationID, string entityID);
 
         /// <summary>
+        /// Gets the default Organizational Layer product for a specific membership type
+        /// </summary><type>Membership</type>
+        /// <param name="membershipTypeID">The membership type ID.</param>
+        /// <param name="organizationalLayerID">The Organizational Layer ID.</param>
+        /// <returns>Either the applicable Organizational Layer Dues Product or null if the supplied Membership Type does not match a product</returns>
+        /// <remarks>If no dues product is defined for the supplied Membership Type, this method will return null</remarks>
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GetDefaultOrganizationalLayerProduct(string membershipTypeID,
+                                                                                string organizationalLayerID);
+
+        /// <summary>
         /// Gets the default chapter product for a specific membership type
         /// </summary><type>Membership</type>
         /// <param name="membershipTypeID">The membership type ID.</param>
@@ -1946,6 +2079,9 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult<MemberSuiteObject> GetDefaultChapterProduct(string membershipTypeID, string chapterID);
+
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GetDefaultChapterProduct2( string entityToCheck, string membershipTypeID, string chapterID);
 
         /// <summary>
         /// Gets the default section product for a specific membership type.
@@ -1956,6 +2092,16 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult<MemberSuiteObject> GetDefaultSectionProduct(string membershipTypeID, string sectionID);
+
+        /// <summary>
+        /// Gets the default section product for a specific membership type.
+        /// </summary><type>Membership</type>
+        /// <param name="membershipTypeID">The membership type ID.</param>
+        /// <param name="sectionID">The section ID.</param>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GetDefaultSectionProduct2( string entityToCheck, string membershipTypeID, string sectionID);
 
         /// <summary>
         /// Gets the applicable membership dues products for a customer.
@@ -2186,16 +2332,9 @@ namespace MemberSuite.SDK.Concierge
         /// <returns></returns>
         /// <remarks></remarks>
         [OperationContract]
-        ConciergeResult<MemberSuiteObject> CreateGift(MemberSuiteObject msoGiftToCreate);
+        ConciergeResult<MemberSuiteObject> CreateGift(MemberSuiteObject msoGiftToCreate, ElectronicPaymentManifest paymentInfo);
 
-        /// <summary>
-        /// Edits the gift.
-        /// </summary><type>Fundraising</type>
-        /// <param name="msoGiftToEdit">The gift to edit.</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        [OperationContract]
-        ConciergeResult<MemberSuiteObject> EditGift(MemberSuiteObject msoGiftToEdit);
+         
 
         /// <summary>
         /// Voids the gift.
@@ -2215,6 +2354,14 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult<string> ProcessPremiums(string giftToProcess, string batchID);
+
+        /// <summary>
+        /// Processes installment
+        /// </summary>
+        /// <param name="giftId">The gift id.</param>
+        /// <param name="installmentToProcess">Installment to process</param>
+        [OperationContract]
+        ConciergeResult<string> ProcessGiftInstallment(string giftId, string installmentToProcess);
         #endregion
 
         #region Exhibits
@@ -2268,6 +2415,9 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult<MemberSuiteObject> CheckForExhibitorContactRestriction(string exhibitorID, string contactTypeID);
+
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> CloneExhibitShow(CloneExhibitShowRequest req);
         #endregion
 
         #region Subscriptions
@@ -2281,14 +2431,7 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult FulfillSubscriptions(SubscriptionFulfillmentJobManifest jobManifest);
 
-        /// <summary>
-        /// Renews the subscriptions in the system based on the manifest.
-        /// </summary><type>Subscriptions</type>
-        /// <param name="jobManifest">The job manifest.</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        [OperationContract]
-        ConciergeResult RenewSubscriptions(SubscriptionRenewalJobManifest jobManifest);
+      
         #endregion
 
         #region Volunteers
@@ -2435,6 +2578,15 @@ namespace MemberSuite.SDK.Concierge
 
         #endregion
 
+        #region Success
+
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GetMostRecentNetPromoterScore();
+
+        [OperationContract]
+        ConciergeResult SubmitNetPromoterScore( short score, string comments );
+
+        #endregion
         /// <summary>
         /// Gets the appropriate rate card.
         /// </summary>
@@ -2466,9 +2618,7 @@ namespace MemberSuite.SDK.Concierge
 
         #endregion
 
-        [OperationContract]
-        ConciergeResult ModifyAndSendOutRenewalInvoices(string overrideEmail, string orderID);
-
+       
         /// <summary>
         /// Gets the association that a specific object belongs to
         /// </summary>
@@ -2476,5 +2626,34 @@ namespace MemberSuite.SDK.Concierge
         /// <returns></returns>
         [OperationContract]
         ConciergeResult<string> GetAssociationFromObjectIdentifier(string objectID);
+
+         [OperationContract]
+        ConciergeResult AutoAssignChaptersToMemberships(string jobName, List<string> membershipIDs);
+
+        #region Billing
+
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> GenerateBillingRunFromTemplate(string recurringBillingRunID, DateTime dtReferenceDate);
+
+        [OperationContract]
+        ConciergeResult<MemberSuiteObject> UpdateBillingInfo(string objectToUpdate, ElectronicPaymentManifest paymentInfo);
+
+        [OperationContract]
+        ConciergeResult UpdateBillingRunActivity(string activityID, bool? isCancelled );
+        #endregion
+
+        #region Workflow
+        [OperationContract]
+        ConciergeResult<string> ShowWorkflowArgs(string str);
+
+        #endregion
+
+        #region Engagement
+        [OperationContract]
+        ConciergeResult ReprocessEngagementRawScores();
+        #endregion
+
+        [OperationContract]
+        ConciergeResult RecordForcedLogout(string userID, string description);
     }
 }

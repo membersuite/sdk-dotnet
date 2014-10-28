@@ -26,13 +26,23 @@ namespace MemberSuite.SDK.Utilities
             if (searchToRun == null) throw new ArgumentNullException("searchToRun");
 
             // let's get that first search result
-            SearchResult sr = api.ExecuteSearch(searchToRun, 0, null).ResultValue;
+            var conciergeResult = api.ExecuteSearch(searchToRun, 0, null);
+
+            if (!conciergeResult.Success)
+                throw new ApplicationException(conciergeResult.FirstErrorMessage);
+
+            SearchResult sr = conciergeResult.ResultValue;
 
             while (sr.Table.Rows.Count < sr.TotalRowCount)
             {
                 // run the search again, starting from where we left off
-                var intermediateResult = api.ExecuteSearch(searchToRun,
-                    sr.Table.Rows.Count, null).ResultValue.Table;
+                var intermediateExecuteSearchResult = api.ExecuteSearch(searchToRun,
+                    sr.Table.Rows.Count, null);
+
+                if (!intermediateExecuteSearchResult.Success)
+                    throw new ApplicationException(intermediateExecuteSearchResult.FirstErrorMessage);
+
+                var intermediateResult = intermediateExecuteSearchResult.ResultValue.Table;
 
                 // now, take all the result,s add them to the table
                 foreach (DataRow dr in intermediateResult.Rows)

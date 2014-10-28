@@ -77,7 +77,7 @@ namespace MemberSuite.SDK.Types
                                                                       RelativeDateTimeReferencePointType.RightNow
                                                                           ? "the "
                                                                           : "",
-                                                                      RegularExpressions.GetFriendlyName(
+                                                                      Formats.GetFriendlyName(
                                                                           ReferencePoint.ToString()).ToLower());
 
                     if (Units == 0) // then its just the thing
@@ -115,7 +115,12 @@ namespace MemberSuite.SDK.Types
         BeginningOfTheFiscalYear = 5,
         SpecificDate = 6,
         SpecificDateTime = 7,
-        SpecificTime = 8
+        SpecificTime = 8,
+        EndOfTheDay = 9,
+        EndOfTheWeek = 10,
+        EndOfTheMonth = 11,
+        EndOfTheYear = 12 ,
+        EndOfTheFiscalYear = 13 
     }
 
     

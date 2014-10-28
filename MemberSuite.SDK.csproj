@@ -12,10 +12,14 @@
     <AssemblyName>MemberSuite.SDK</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -43,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\lib\shared\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,14 +58,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\lib\shared\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBuild|AnyCPU'">
-    <OutputPath>bin\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\lib\shared\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -84,10 +88,10 @@
       <HintPath>..\..\lib\Spring.Net\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
-      <HintPath>..\..\api\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
-      <HintPath>..\..\api\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\..\lib\Spring.Net\Spring.Core.dll</HintPath>
@@ -103,6 +107,7 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -125,6 +130,12 @@
     <Compile Include="Concierge\ConciergeResponseHeader.cs" />
     <Compile Include="Concierge\IConciergeAPIProxyExtensions.cs" />
     <Compile Include="Concierge\IConciergeAPIService.cs" />
+    <Compile Include="Concierge\Parameters\CloneExhibitShowRequest.cs" />
+    <Compile Include="Concierge\Parameters\ConciergeRequest.cs" />
+    <Compile Include="Concierge\Parameters\PreviewExchangeRequest.cs" />
+    <Compile Include="Concierge\Parameters\PreviewExchangeResult.cs" />
+    <Compile Include="Concierge\Parameters\ProcessExchangeRequest.cs" />
+    <Compile Include="Concierge\Parameters\ProcessExchangeResult.cs" />
     <Compile Include="Constants\BuiltInEmailTemplates.cs" />
     <Compile Include="Constants\BuiltInReports.cs" />
     <Compile Include="Constants\OrderLineItemOptions.cs" />
@@ -148,11 +159,13 @@
     <Compile Include="Manifests\Command\PartialObjectDefinition.cs" />
     <Compile Include="Manifests\Command\PartialReportDefinition.cs" />
     <Compile Include="Manifests\Command\ViewMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\SearchViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\DashboardMetadata.cs" />
     <Compile Include="Manifests\Command\Views\Data360ViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\DataEntryViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\PageLayoutEditorMetadata.cs" />
     <Compile Include="Manifests\Command\Views\SectionLayoutMetadata.cs" />
+    <Compile Include="Manifests\Command\Views\ShowAnnouncementViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\TabularDataViewMetadata.cs" />
     <Compile Include="Manifests\Console\ConsoleMetadata.cs" />
     <Compile Include="Manifests\Console\QuickSearch.cs" />
@@ -160,6 +173,7 @@
     <Compile Include="Manifests\Console\Tab.cs" />
     <Compile Include="Manifests\CustomField\CustomFieldCreationPacket.cs" />
     <Compile Include="Manifests\MetadataBase.cs" />
+    <Compile Include="Manifests\OrderPayload.cs" />
     <Compile Include="Manifests\Reporting\ChartDefinition.cs" />
     <Compile Include="Manifests\Reporting\ChartManifest.cs" />
     <Compile Include="Manifests\Reporting\KPIDefinition.cs" />
@@ -175,6 +189,13 @@
     <Compile Include="Results\ColumnMetadataDictionary.cs" />
     <Compile Include="Results\ConciergeResult.cs" />
     <Compile Include="Results\ConciergeResultTyped.cs" />
+    <Compile Include="Searching\FlattenedSearchCriterion.cs" />
+    <Compile Include="Types\AutomatedProcessRecurrence.cs" />
+    <Compile Include="Types\ElectronicCheck.cs" />
+    <Compile Include="Types\ElectronicPaymentManifest.cs" />
+    <Compile Include="Types\MemberSuiteConstants.cs" />
+    <Compile Include="Types\BillingRunCandidate.cs" />
+    <Compile Include="Types\MemberSuiteObject2.cs" />
     <Compile Include="Types\MemberSuiteVersion.cs" />
     <Compile Include="Results\MSQLResult.cs" />
     <Compile Include="Results\ObjectSearchResult.cs" />
@@ -198,13 +219,21 @@
     <Compile Include="Types\MemberSuiteFieldsDictionary.cs" />
     <Compile Include="Types\FileInfo.cs" />
     <Compile Include="Types\FolderInfo.cs" />
+    <Compile Include="Types\NonElectronicPayment.cs" />
     <Compile Include="Types\PortalFormsManifest.cs" />
+    <Compile Include="Types\PortalPaymentMethods.cs" />
+    <Compile Include="Types\RelevantAnnouncement.cs" />
+    <Compile Include="Types\SavedPaymentInfo.cs" />
+    <Compile Include="Types\ShippingCarrierServices.cs" />
     <Compile Include="Types\VolunteerMatch.cs" />
     <Compile Include="Utilities\Binary.cs" />
     <Compile Include="Utilities\CompressionManager.cs" />
+    <Compile Include="Utilities\CreditCardUtils.cs" />
     <Compile Include="Utilities\EmbeddedResource.cs" />
     <Compile Include="Utilities\EventUtilities.cs" />
+    <Compile Include="Utilities\Formats.cs" />
     <Compile Include="Utilities\MethodProfiler.cs" />
+    <Compile Include="Utilities\UIOptimizer.cs" />
     <Compile Include="Utilities\OrderUtilities.cs" />
     <Compile Include="Utilities\PriceComparer.cs" />
     <Compile Include="Utilities\RegularExpressions.cs" />
@@ -292,7 +321,6 @@
     <Compile Include="Types\ProductInfo.cs" />
     <Compile Include="Types\RelationshipMultiplicity.cs" />
     <Compile Include="Types\RelativeDate.cs" />
-    <Compile Include="Types\ScheduledSearchRecurrence.cs" />
     <Compile Include="Types\SDKException.cs" />
     <Compile Include="Types\SealedValue.cs" />
     <Compile Include="Types\SearchSpecificationOverride.cs" />
@@ -331,9 +359,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="web.config.transform">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Searching\Search Objects.cd" />
     <None Include="Searching\Searching.cd" />
   </ItemGroup>
@@ -369,5 +394,13 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

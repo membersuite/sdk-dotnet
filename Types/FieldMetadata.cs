@@ -27,8 +27,8 @@ namespace MemberSuite.SDK.Types
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [Serializable]
-    [DataContract(Name="FieldMetadata")]
-    public class FieldMetadata 
+    [DataContract(Name = "FieldMetadata")]
+    public class FieldMetadata
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldMetadata"/> class.
@@ -37,7 +37,7 @@ namespace MemberSuite.SDK.Types
         {
             PickListEntries = new List<PickListEntry>();
             Type = FieldType.BuiltIn;
-            Sortable = true;    // by default
+            Sortable = true; // by default
             Displayable = true;
             AccessLevel = SecurityLockAccessLevel.ReadWrite;
             Precision = 2;
@@ -152,10 +152,12 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public string DeclaringType
         {
-            get {
+            get
+            {
                 if (_declaringType == null)
-                    return Name;    // this
-                return _declaringType; }
+                    return Name; // this
+                return _declaringType;
+            }
             set { _declaringType = value; }
         }
 
@@ -182,6 +184,7 @@ namespace MemberSuite.SDK.Types
         [XmlAttribute]
         [DataMember]
         public string RelationshipTypeID { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="FieldMetadata" /> is sortable.
         /// </summary>
@@ -334,7 +337,22 @@ namespace MemberSuite.SDK.Types
         [XmlAttribute]
         [DataMember]
         public int Precision { get; set; }
-       
+
+        /// <summary>
+        /// Suppresses default value assignment
+        /// </summary>
+        [XmlAttribute]
+        [DataMember]
+        public bool SuppressDefaultValue { get; set; }
+
+        [XmlAttribute]
+        [DataMember]
+        public string StartingYear { get; set; }
+
+        [XmlAttribute]
+        [DataMember]
+        public string EndingYear { get; set; }
+
 
         #region Methods
 
@@ -384,7 +402,7 @@ namespace MemberSuite.SDK.Types
             foreach (string pickListEntry in parts)
             {
                 // can we match to the regular expression?
-                Match m = parser.Match(pickListEntry);
+                Match m = Regex.Match(pickListEntry, RegularExpressions.ParserRegex, RegexOptions.Compiled);
 
                 // nope, keep it moving
                 if (!m.Success)
@@ -399,7 +417,7 @@ namespace MemberSuite.SDK.Types
                 if (String.IsNullOrEmpty(pe.Value))
                     pe.Value = pe.Text; // if no value specified
 
-                if (String.IsNullOrEmpty(pe.Text.Trim()))// nothing to do
+                if (String.IsNullOrEmpty(pe.Text.Trim())) // nothing to do
                     continue;
                 pe.Text = pe.Text.Trim();
                 pe.Value = pe.Value.Trim();
@@ -434,11 +452,6 @@ namespace MemberSuite.SDK.Types
             return entries;
         }
 
-        /// <summary>
-        /// The parser
-        /// </summary>
-        private static Regex parser = new Regex(@"([^\^\|\[\{]*)(?:\|([^\^\|\[\{]*))?(?:(?:\[(.*)\])|(?:\{(.*)\}))?(?:\^([+-]?\d+))?", RegexOptions.Compiled);
-
 
         /// <summary>
         /// Converts a list of pick list entries to a string
@@ -451,7 +464,7 @@ namespace MemberSuite.SDK.Types
             if (entries == null || entries.Count == 0)
                 return null;
 
-         
+
             // fire up the builder!
             StringBuilder sb = new StringBuilder();
 
@@ -459,15 +472,15 @@ namespace MemberSuite.SDK.Types
             foreach (var entry in entries)
             {
                 if (entry.WasFromLookupTable)
-                    continue;   // we don't want to show those
+                    continue; // we don't want to show those
 
                 string entryLine;
-                if (entry.Text == entry.Value || String.IsNullOrEmpty(entry.Value ) )
+                if (entry.Text == entry.Value || String.IsNullOrEmpty(entry.Value))
                     entryLine = entry.Text; // just add the raw text
                 else
                     entryLine = string.Format("{0}|{1}", entry.Text, entry.Value); // separate text|value
 
-                if ( entry.CascadingDropDownParentValues != null &&  entry.CascadingDropDownParentValues.Count > 0)
+                if (entry.CascadingDropDownParentValues != null && entry.CascadingDropDownParentValues.Count > 0)
                 {
                     StringBuilder sbCacascadingFields = new StringBuilder();
                     foreach (string cascadingField in entry.CascadingDropDownParentValues)
@@ -493,7 +506,7 @@ namespace MemberSuite.SDK.Types
         /// <returns>Type.</returns>
         public static Type GetTypeFor(FieldDataType dataType)
         {
-           
+
             switch (dataType)
             {
                 case FieldDataType.Text:
@@ -506,7 +519,7 @@ namespace MemberSuite.SDK.Types
                     return typeof (string);
 
                 case FieldDataType.Address:
-                    return typeof(Address);
+                    return typeof (Address);
 
                 case FieldDataType.Boolean:
                     return typeof (bool);
@@ -589,7 +602,16 @@ namespace MemberSuite.SDK.Types
                 default:
                     return string.Empty;
             }
-             
+
+        }
+
+        [DataMember]
+        public string ApplicableType { get; set; }
+
+        public static bool IsReferenceable(FieldDataType typeToCheck)
+        {
+            return typeToCheck == FieldDataType.Reference || typeToCheck == FieldDataType.Document ||
+                   typeToCheck == FieldDataType.Image;
         }
     }
 

@@ -8,10 +8,10 @@ namespace MemberSuite.SDK.Manifests.Command.Views
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("Data360ViewMetadata", Namespace = "http://membersuite.com/schemas/",
-       IsNullable = false)]
+        IsNullable = false)]
     [Serializable]
     [DataContract]
-    public class Data360ViewMetadata : ISectionLayoutMetadata 
+    public class Data360ViewMetadata : ISectionLayoutMetadata
     {
         [DataMember]
         public string Name { get; set; }
@@ -39,6 +39,12 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [DataMember]
         public List<Search> Searches { get; set; }
 
+        [DataMember]
+        public bool DisableAjax { get; set; }
+
+        [DataMember]
+        public string SelectedSection { get; set; }
+
 
         public bool ContainsField(string fieldName)
         {
@@ -59,21 +65,47 @@ namespace MemberSuite.SDK.Manifests.Command.Views
                 // first, let's assign numbers if they are not there
                 for (int i = 0; i < Sections.Count; i++)
                     if (Sections[i].DisplayOrder == default(int))
-                        Sections[i].DisplayOrder = (i + 1) * 10;
+                        Sections[i].DisplayOrder = (i + 1)*10;
 
                 // now sort
                 Sections.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
 
                 // now, set them to what they should be
                 for (int i = 0; i < Sections.Count; i++)
-                    Sections[i].DisplayOrder = (i + 1) * 10;
+                    Sections[i].DisplayOrder = (i + 1)*10;
 
-                }
+            }
 
             if (Searches != null)
                 foreach (var s in Searches)
                     if (string.IsNullOrWhiteSpace(s.ID))
                         s.ID = Guid.NewGuid().ToString();
+        }
+
+        public string DetermineDefaultOneClick()
+        {
+
+            var defaultOneClick = DefaultOneClick;
+
+            if (!string.IsNullOrWhiteSpace(defaultOneClick) && !
+                                                               Searches.Exists(
+                                                                   s =>
+                                                                   s.ID == defaultOneClick || s.Type == defaultOneClick))
+                defaultOneClick = null; // it's not there, so it's null
+
+            if (defaultOneClick == null) // assign it
+            {
+                defaultOneClick = Searches[0].ID;
+
+                if (Searches.Count > 1 && defaultOneClick.Contains("AuditLogs")) // don't start with the audit!!
+                    defaultOneClick = Searches[1].ID;
+
+                return defaultOneClick;
+
+
+            }
+
+            return defaultOneClick;
         }
     }
 }

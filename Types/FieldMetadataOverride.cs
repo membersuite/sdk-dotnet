@@ -124,6 +124,10 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public bool? DoNotDescribe { get; set; }
 
+        [XmlIgnore]
+        [DataMember]
+        public bool? SuppressDefaultValue { get; set; }
+
         [DataMember]
         public SecurityLock SecurityLock { get; set; }
     
@@ -137,14 +141,8 @@ namespace MemberSuite.SDK.Types
             get { return DataType != null ? DataType.ToString() : null; }
             set
             {
-                try
-                {
-                    DataType = (FieldDataType)Enum.Parse(typeof(FieldDataType), value);
-                }
-                catch
-                {
-                    DataType = null;
-                }
+                FieldDataType fieldDataType;
+                DataType = Enum.TryParse(value, out fieldDataType) ? fieldDataType : default(FieldDataType?);
             }
         }
 
@@ -176,14 +174,8 @@ namespace MemberSuite.SDK.Types
             get { return DisplayType != null ? DisplayType.ToString() : null; }
             set
             {
-                try
-                {
-                    DisplayType = (FieldDisplayType)Enum.Parse(typeof(FieldDisplayType), value);
-                }
-                catch
-                {
-                    DisplayType = null;
-                }
+                FieldDisplayType fieldDisplayType;
+                DisplayType = Enum.TryParse(value, out fieldDisplayType) ? fieldDisplayType : default(FieldDisplayType?);
             }
         }
 
@@ -240,14 +232,8 @@ namespace MemberSuite.SDK.Types
             get { return PortalAccessibility != null ? PortalAccessibility.ToString() : null; }
             set
             {
-                try
-                {
-                    PortalAccessibility = (PortalAccessibility)Enum.Parse(typeof(PortalAccessibility), value);
-                }
-                catch
-                {
-                    PortalAccessibility = null;
-                }
+                PortalAccessibility portalAccessibility;
+                PortalAccessibility = Enum.TryParse(value, out portalAccessibility) ? portalAccessibility : default(PortalAccessibility?);
             }
         }
 
@@ -371,6 +357,9 @@ namespace MemberSuite.SDK.Types
 
             if (Namespace != null)
                 originalField.Namespace = Namespace;
+
+            if (SuppressDefaultValue != null)
+                originalField.SuppressDefaultValue = SuppressDefaultValue.Value;
 
             originalField.IsOverriden = true;
         }

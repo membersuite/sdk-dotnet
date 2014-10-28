@@ -35,6 +35,12 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public bool ShippingMethodRequired { get; set; }
 
+        [DataMember]
+        public bool ShippingCarrierError { get; set; }
+
+        [DataMember]
+        public string ShippingCarrierErrorMessage { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether [customer can pay later].
         /// </summary>

@@ -68,5 +68,12 @@ namespace MemberSuite.SDK.Types
             if (template.HtmlBody.Trim() == string.Empty) return true;
             return false;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="EmailTemplate"/> is disabled.
+        /// </summary>
+        /// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
+        [DataMember]
+        public bool Disabled { get; set; }
     }
 }

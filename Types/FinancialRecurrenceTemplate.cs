@@ -49,6 +49,9 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public short BillForNextPeriodAfter { get; set; }
+
+        [DataMember]
+        public bool UseOrderDateAsReference { get; set; }
     }
 
     [Serializable]

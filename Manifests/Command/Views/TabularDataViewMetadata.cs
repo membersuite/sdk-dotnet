@@ -36,6 +36,9 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [DataMember]
         public bool DisablePaging { get; set; }
 
+        [DataMember]
+        public bool DisableFiltering { get; set; }
+
         [XmlArrayItem("Command")]
         [DataMember]
         public List<CommandShortcut> RowLevelCommands { get; set; }

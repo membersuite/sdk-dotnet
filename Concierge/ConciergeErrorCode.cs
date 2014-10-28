@@ -35,6 +35,7 @@
         DiscountCodeNotAuthorized,
         DiscountCodeUsageLimitExceeded,
         MSQLSyntaxError,
-        SimulatedException
+        SimulatedException,
+        PaymentDeclined
     }
 }

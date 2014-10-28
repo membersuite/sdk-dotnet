@@ -42,5 +42,13 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public string InvoiceID { get; set; }
+
+
+        [DataMember]
+        public string WorkflowExecutionID { get; set; }
+
+
+        [DataMember]
+        public string WorkflowRunID { get; set; }
     }
 }

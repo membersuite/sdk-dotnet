@@ -182,12 +182,12 @@ namespace MemberSuite.SDK.Types
         /// <returns></returns>
         public static string Encode(Guid guid)
         {
-            return guid.ToString(); // for now - it's too tough to read these guids
-            //string encoded = Convert.ToBase64String(guid.ToByteArray());
-            //encoded = encoded
-            //    .Replace("/", "_")
-            //    .Replace("+", "-");
-            //return encoded.Substring(0, 22);
+            //return guid.ToString(); // for now - it's too tough to read these guids
+            string encoded = Convert.ToBase64String(guid.ToByteArray());
+            encoded = encoded
+                .Replace("/", "_")
+                .Replace("+", "-");
+            return encoded.Substring(0, 22);
         }
 
         #endregion

@@ -21,6 +21,8 @@ namespace MemberSuite.SDK.Types
     {
         Regular = 0,
         DeferredRevenue = 5,
-        COGS = 10
+        COGS = 10,
+        Billing = 15
+       
     }
 }

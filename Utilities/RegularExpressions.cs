@@ -1,311 +1,120 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace MemberSuite.SDK.Utilities
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public static class RegularExpressions
     {
+        public const int REGEX_CACHE_SIZE_MAX = 200;
+        public const string ASSOCIATION_TYPE_HINT = "0004";
+        public const string FILE_TYPE_HINT = "001C";
+        public const string PREFIX_FOR_SERIALIZATION = "@@SERIALIZEDOBJECT@@";
+        private const string EVENT_MERCHANDISE_TYPE_HINT = "008C";
+        private const string ORGANIZATIONAL_LAYER_TYPE_HINT = "006B";
+        private const string MERCHANDISE_HINT = "0076";
 
-        public const string EmailRegEx = @"^([a-zA-Z0-9'_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+ *$";
-        public static string MultipleEmail = @"^(([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+( )*(;|,)?( )*)+$";
+        ///<summary>Regexes for parsing request path.  Uses [A-Fa-f0-9] for GUID characters instead of \w because we want to be very particular with the path and don't want to match _</summary>
+        public static string DynamicImageDetectorRegex = String.Format(@"/(?<AssociationHint>[A-Fa-f0-9]{{8}})-{0}-(?<AssociationIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}})/(?<PartitionKey>\d+)/\k<AssociationHint>-{1}-(?<FileIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}}$)", ASSOCIATION_TYPE_HINT, FILE_TYPE_HINT);
+        public static string PathRegex = string.Format(@"^/(?<AssociationHint>[A-Fa-f0-9]{{8}})-{0}-(?<AssociationIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}})/(?<PartitionKey>\d+)/\k<AssociationHint>-{1}-(?<FileIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}}$)", ASSOCIATION_TYPE_HINT, FILE_TYPE_HINT);
+        public static readonly string TypeCreatedRegex = @"\w+\.(\w+)\.\w+";
+        public static readonly string FrontDoorRegex = @"Console.(\w+).FrontDoor";
+        public static readonly string EliminateMultipleBreaksRegex = @"(<br\s*\/?>\s*)+";
+        public static readonly string ShortcutParserRegex = @"(console|portal)(.(\w+))+";
+        public static readonly string ExpressionDetectorRegex = @"\#\#([^\#]+?)\#\#";
+        public static readonly string DataRowFinderRegex = @"\['(.*?)'\].((\w|\.)*)";
+        public static readonly string IndexerReplacerRegex = @"\[(.*?)\]";
+        public static readonly string UrlParserRegex = @"http.*?/app/(console|portal)(/(\w+))+";
+        public static readonly string FileParserRegex = @"/file/([A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12})";
+        public static readonly string DefaultPageDetectorRegex = @"/default";
+        public static readonly string TelerikDetector1Regex = @"Telerik.Web.UI";
+        public static readonly string TelerikDetector2Regex = @"\.axd";
+        public static readonly string FileNameIdRegex = string.Format(@"_(?<FileId>[A-F0-9]{{8}}-{0}-[A-F0-9]{{4}}-[A-F0-9]{{4}}-[A-F0-9]{{12}}).", FILE_TYPE_HINT);
+        public static readonly string MessageOpenDetectorRegex = @"/emarketing/omd.gif";
+        public static readonly string MessageOpenDetectorUrlRegex = @"/emod.gif";
+        public static readonly string ClickThruDetectorRegex = @"/ct?";
+        public static readonly string ClickThruDetectorUrlRegex = @"/clickthru";
+        public static readonly string MultipleEmailRegex = @"^(([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+( )*(;|,)?( )*)+$";
+        public static readonly string NodeBolderRegex = @"\<\w+ name=""(\w+?)"".*?/\>";
+        public static readonly string ProcessorRegex = @"(\%(\w|\:|\.)+\%)";
+        public static readonly string AccountCodeRegex = @"(.*)-(\d*)";
+        public static readonly string ZipCodeRegex = @"(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)";
+        public static readonly string AddressRegex = @"(.+)_Address_(.+)";
+        public static readonly string PhoneRegex = @"(.+)_PhoneNumber";
+        public static readonly string OrganizationalLayerTypeFieldNameRegex = String.Format(@"^_OrgLayer_(?<Segment1>[A-Fa-f0-9]{{8}})(?<Segment2>{0})(?<Segment3>[A-Fa-f0-9]{{4}})(?<Segment4>[A-Fa-f0-9]{{4}})(?<Segment5>[A-Fa-f0-9]{{12}})$", ORGANIZATIONAL_LAYER_TYPE_HINT);
+        public static readonly string AddOnFieldNameRegex = String.Format(@"^_AddOn_(?<Segment1>[A-Fa-f0-9]{{8}})(?<Segment2>{0})(?<Segment3>[A-Fa-f0-9]{{4}})(?<Segment4>[A-Fa-f0-9]{{4}})(?<Segment5>[A-Fa-f0-9]{{12}})", MERCHANDISE_HINT);
+        public static readonly string PortalSelfHostRegex = "^http(s?)://";
+        public static readonly string SerializedObjectDetectorRegex = PREFIX_FOR_SERIALIZATION + @"\|\|\|(.*?)\|\|\|(.*)";
+        public static readonly string FirstLetterBreakerRegex = @"(\w)\w+";
+        public static readonly string SearchResultTokenRegex = @"\[SearchResult\](\w+)";
+        public static readonly string SectionTextFieldTokenRegex = @"\{(.*?)\}";
+        public static readonly string MemberParserRegex = @"M:MemberSuite.SDK.Concierge.IConciergeAPIService.(\w+)(\((.*?)\))?";
+        public static readonly string PhoneNumberRegex = @"\d";
+        public static readonly string MerchandiseFieldNameRegex = String.Format(@"^_(?<Segment1>[A-Fa-f0-9]{{8}})(?<Segment2>{0})(?<Segment3>[A-Fa-f0-9]{{4}})(?<Segment4>[A-Fa-f0-9]{{4}})(?<Segment5>[A-Fa-f0-9]{{12}})_Purchase(?<AggregateType>Total|Count)$", EVENT_MERCHANDISE_TYPE_HINT);
+        public static readonly string BankRoutingNumberRegex = @"^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$";
+        public static readonly string MultiObjectRegex = @"objects\((.*?)\)";
+        public static readonly string SinglequotesRegex = @"^'(.*?)'$";
+        public static readonly string InvalidFileCharactersRegex = @"[?:\\/*""<>|\.,]";
+        public static readonly string ModuleGuesserRegex = @".(\w+)";
+        public static readonly string BaseUrlReplacerRegex = @"http://localhost";
+        public static readonly string ImagesReplacerRegex = @"\$imageserver\$";
+        public static readonly string MemberSuiteVersion1GuidRegex = "[A-F0-9]{8}-0[0-1][A-F0-9]{2}-4[A-F0-9]{3}-[A-F0-9]{4}-[A-F0-9]{12}";
+        public static readonly string MemberSuiteVersion1AssociationGuidRegex = "[A-F0-9]{8}-0{3}4-4[A-F0-9]{3}-[A-F0-9]{4}-[A-F0-9]{12}";
+        public static readonly string MemberSuiteVersion1SystemGuidRegex = "0{8}-0[0-1][A-F0-9]{2}-4[A-F0-9]{3}-[A-F0-9]{4}-[A-F0-9]{12}";
+        public static readonly string UniqueIndexViolationDetectedRegex = @"((UC|UX|IX|PK)_\w+)";
+        public static readonly string ForeignKeyViolationDetectedRegex = @"(FK_\w+)";
+        public static readonly string IntegrationLinkRegex = @"console.(\w+).view";
+        public static readonly string CustomFieldDetectorRegex = @"^CustomField:(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$";
+        public static readonly string CustomFieldRegex = @"CustomField:(.*)";
+        public static readonly string SkinContentPlaceholderRegex = @"\$\$\s*CONTENT\s*\$\$";
+        public static readonly string SkinValidationRegex = @"(\<form)|(\<\/form\>)|(\<body)|(\<\/body\>)|(\<head)|(\<\/head\>)|(\<html)|(\<\/html\>)";
+        public static readonly string CssValidationRegex = @"(\<style)|(\<\/style\>)";
+        public static readonly string WhitespaceRegex = "\\s*";
+        public static readonly string AddressTypeRegex = @"(.*)_Address";
+        public static readonly string FieldDetectorRegex = @"\#\#([^\#].*?)(\{(?<Option>\w+):(?<Value>.*?)\})*?\#\#";
+        public static readonly string SubSearchDetectorRegex = @"\<!--SubSearch_(?<SubSearchId>\w+)\>(?<SubSearchTemplate>[\w\W]*)\<\/SubSearch_\k<SubSearchId>--\>";
+        public static readonly string UpdateWhereClauseRegex = @"ID *= *'([A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12})'";
+        public static readonly string SingleObjectRegex = @"object\((.*?)\)";
+        public static readonly string SinglequotesDateRegex = @"^'\[d\](.*?)'$";
+        public static readonly string PercentagesRegex = @"^%(.*?)%$";
+        public static readonly string BracketsRegex = @"^\[(.*?)\]$";
+        public static readonly string DoublequotesRegex = "^\"(.*?)\"$";
+        public static readonly string MinRegex = @"min\((.*?)\)";
+        public static readonly string MaxRegex = @"max\((.*?)\)";
+        public static readonly string AvgRegex = @"avg\((.*?)\)";
+        public static readonly string SumRegex = @"sum\((.*?)\)";
+        public static readonly string CountRegex = @"count\((.*?)\)";
+        public static readonly string TopNRegex = @"^select +top +(\d+) ";
+        public static readonly string TableNameAndContextRegex = @"^(.*?)\(\'?(.*?)\'?\)$";
+        public static readonly string CalculatedFieldsRegex = @"{(.*?)}";
+        public static readonly string JoinedColumnRegex = @"(\w+?)\.(.*)";
+        public static readonly string SqlInjectionDetectorRegex = @";|\(|\)|'|%|\+|\-| ";
+        public static readonly string StartingJoinParserRegex = @"(.*)\.(\w+)";
+        public static readonly string DetectSimpleDiscriminatorRegex = @"select \* from (\w+) where PartitionKey=\d* and ClassType='\w+'";
+        public static readonly string PrefixRegex = @"(.*)\.";
+        public static readonly string MessageCategoryRegex = @"EmailForMessageCategory_(.*)";
+        public static readonly string SessionFieldNameRegex = @"Session_(.*)";
+        public static readonly string OrderByParserRegex = @"(.+?)( DESC)?(?x:,|$)";
+        public static readonly string TransitionRegex = @"Transition:(\w+)";
+        public static readonly string ParserRegex = @"([^\^\|\[\{]*)(?:\|([^\^\|\[\{]*))?(?:(?:\[(.*)\])|(?:\{(.*)\}))?(?:\^([+-]?\d+))?";
+        public static readonly string CharactersThatNecessitateSpringRegex = @"\.|\[|\]";
+        public static readonly string CardTestRegex = "^(?:(?<Visa>4\\d{3})|(?<MasterCard>5[1-5]\\d{2})|(?<Discover>6011)|(?<DinersClub>(?:3[68]\\d{2})|(?:30[0-5]\\d))|(?<Amex>3[47]\\d{2}))([ -]?)(?(DinersClub)(?:\\d{6}\\1\\d{4})|(?(Amex)(?:\\d{6}\\1\\d{5})|(?:\\d{4}\\1\\d{4}\\1\\d{4})))$";
+        public static readonly string GuidRegex = @"^[a-fA-F\d]{8}-([a-fA-F\d]{4}-){3}[a-fA-F\d]{12}$";
+        public static readonly string PostalCodeRegex = @"(^\d{5}$)|(^\d{5}-\d{4}$)";
+        public static readonly string PathSplitterRegex = @"(.*)\\(.*)";
+        public static readonly string OldConnectionStringParserRegex = @"server=(.*?);database=(.*?);(UID=(.*?);Password=(.*))?"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase );
+        public static readonly string NewConnectionStringParserRegex = @"Data Source=(.*?);Initial Catalog=(.*?);"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public static Regex GuidRegex = new Regex("^[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$");
+        //uncached, accomodate within the default 15
+        public static Func<string, string> GetDefaultPortalUrlRegex = protocol => String.Format(@"{0}://customer(?<PartitionKey>\d+)(?<Last4>[A-Fa-f0-9]{{4,}})", protocol);
+        //caller caches appdomain-wide
+        public static Func<string, Regex> GetCompiledRegex = x => new Regex(x, RegexOptions.Compiled);
 
-        public static string FormatWebSiteAsUrl(string urlToFormat)
+        static RegularExpressions()
         {
-            if (String.IsNullOrWhiteSpace(urlToFormat)) return null;
-
-           
-            if (urlToFormat.Contains("://")) //it's already a URI, so leave it
-                return urlToFormat ;
-
-            return "http://" + urlToFormat;
+            Func<FieldInfo, bool> regexes = x => x.FieldType == typeof(string) && x.Name.EndsWith("Regex");
+            Regex.CacheSize += typeof(RegularExpressions).GetFields().Count(regexes);
         }
-
-        public static string GetQueryString(NameValueCollection queryStringParameters, IEnumerable<string> parametersToRemove)
-        {
-            string result = "?";
-
-            if (queryStringParameters == null)
-                return result;
-
-            foreach (var param in parametersToRemove)
-            {
-                queryStringParameters.Remove(param);
-            }
-
-            if (queryStringParameters.Count == 0)
-                return result;
-
-            return queryStringParameters.Cast<string>().Aggregate(result, (current, parameter) => string.Format("{0}{1}={2}&", current, parameter, queryStringParameters[parameter]));
-        }
-
-        /// <summary>
-        /// Gets the friendly, formatted name of a bunched together noun
-        /// </summary>
-        /// <param name="variableName">Name of the variable.</param>
-        /// <returns></returns>
-        public static string GetFriendlyName(string variableName)
-        {
-            if (variableName == null)
-                return null;
-
-            return Regex.Replace(variableName, "([A-Z])", " $1").Trim()
-                .Replace( "G L A", "GL A")
-                .Replace("A P I", "API")
-                .Replace("C O G S", "COGS")
-                .Replace("C E U", "CEU")
-                .Replace("C R M", "CRM")
-                .Replace("Y T D", "YTD")
-                .Replace("I D", "ID");
-
-        }
-
-        /// <summary>
-        /// Gets the friendly, formatted plural name of a bunched together noun
-        /// </summary>
-        /// <param name="variableName">Name of the variable.</param>
-        /// <returns></returns>
-        public static string GetFriendlyPluralName(string variableName)
-        {
-            if (variableName == null)
-                return null;
-
-            string name = GetFriendlyName(variableName);
-            return MakePlural(name);
-        }
-
-        /// <summary>
-        /// Gets the name of the safe field.
-        /// </summary>
-        /// <param name="fieldName">Name of the original field.</param>
-        /// <returns></returns>
-        public static string GetSafeFieldName(string fieldName)
-        {
-            if (fieldName == null)
-                return null;
-
-            return GetSafeFieldName(fieldName, false).Trim();
-        }
-
-        public static string GetSafeFieldName(string fieldName, bool canBeginWithNumber)
-        {
-            return GetSafeFieldName(fieldName, canBeginWithNumber, false);
-        }
-
-        public static string GetSafeFieldName(string fieldName, bool canBeginWithNumber, bool ignorePeriods)
-        {
-            if ( String.IsNullOrEmpty( fieldName ))
-                return fieldName;
-
-            if (!canBeginWithNumber)
-            {
-                char firstLetter = fieldName[0];
-
-                if (
-                    firstLetter == '0' ||
-                    firstLetter == '1' ||
-                    firstLetter == '2' ||
-                    firstLetter == '3' ||
-                    firstLetter == '4' ||
-                    firstLetter == '5' ||
-                    firstLetter == '6' ||
-                    firstLetter == '7' ||
-                    firstLetter == '8' ||
-                    firstLetter == '9'
-                    )
-                    fieldName = "F_" + fieldName;
-            }
-
-            if (!ignorePeriods)
-                fieldName = fieldName.Replace(".", "_");
-
-            return fieldName
-                .Replace(" ", "_")
-                .Replace("-", "_")
-                
-                .Replace("*", "_")
-                .Replace("/", "_")
-                .Replace("(", "_")
-                .Replace(")", "_")
-                .Replace("#", "")
-                .Replace(":", "_")
-                .Replace("&", "_")
-                .Replace("'", "_")
-                .Replace("?", "_")
-                .Replace("+", "_")
-                .Replace(",", "_")
-                .Replace("\"", "_")
-                .Replace("%", "_");
-                
-        }
-
-        public static string MakePlural(string name)
-        {
-            if ( name.EndsWith( "ch" )  || name.EndsWith("s") )
-                name += "es";
-            else if (name.EndsWith("y") && !name.EndsWith("ay"))
-                name = name.Substring(0, name.Length - 1) + "ies";
-            else
-                name += "s";
-
-            return name;
-        }
-
-        private static readonly Regex _phoneNumberRegex = new Regex(@"\d",
-            RegexOptions.Compiled);
-
-        public static string CleanPhoneNumber(string phoneNumber)
-        {
-              
-            if (phoneNumber == null) return null;
-            var matches = _phoneNumberRegex.Matches(phoneNumber);
-            if ( matches.Count != 10 ) return phoneNumber;  // don't even bother
-
-            phoneNumber = String.Format("({0}{1}{2}) {3}{4}{5}-{6}{7}{8}{9}",
-                matches[0].Groups[0].Value,
-                matches[1].Groups[0].Value,
-                matches[2].Groups[0].Value,
-                matches[3].Groups[0].Value,
-                matches[4].Groups[0].Value,
-                matches[5].Groups[0].Value,
-                matches[6].Groups[0].Value,
-                matches[7].Groups[0].Value,
-                matches[8].Groups[0].Value,
-                matches[9].Groups[0].Value);
-            // else Commenting out via MS-1030
-                //phoneNumber = string.Format("({0}) {1}-{2} ext. {3}", m.Groups[1].Value, m.Groups[2].Value, m.Groups[3].Value,
-                //    m.Groups[4].Value);
-                
-
-            return phoneNumber;
-        
-        }
-
-        public static string ReplaceNonEnglishCharacters(string sourceString)
-        {
-            //Use string builder because there's going to be multiple replacements on the same string
-            //and they're case sensitive - better performance than string.replace or regex.replace
-            StringBuilder result = new StringBuilder(sourceString);
-
-            //Lowercase a
-            result.Replace('à', 'a');
-            result.Replace('á', 'a');
-            result.Replace('â', 'a');
-            result.Replace('ã', 'a');
-            result.Replace('ä', 'a');
-            result.Replace('å', 'a');
-            result.Replace('æ', 'a');
-
-            //Uppercase A
-            result.Replace('À', 'A');
-            result.Replace('Á', 'A');
-            result.Replace('Â', 'A');
-            result.Replace('Ä', 'A');
-            result.Replace('Ã', 'A');
-            result.Replace('Å', 'A');
-            result.Replace('Æ', 'A');
-
-            //Lowercase e
-            result.Replace('è', 'e');
-            result.Replace('é', 'e');
-            result.Replace('ê', 'e');
-            result.Replace('ë', 'e');
-
-            //Uppercase E
-            result.Replace('È', 'E');
-            result.Replace('É', 'E');
-            result.Replace('Ê', 'E');
-            result.Replace('Ë', 'E');
-
-            //Lowercase i
-            result.Replace('ì', 'i');
-            result.Replace('í', 'i');
-            result.Replace('î', 'i');
-            result.Replace('ï', 'i');
-
-            //Uppercase I
-            result.Replace('Ì', 'I');
-            result.Replace('Í', 'I');
-            result.Replace('Î', 'I');
-            result.Replace('Ï', 'I');
-
-            //Lowercase o
-            result.Replace('ò', 'o');
-            result.Replace('ó', 'o');
-            result.Replace('ô', 'o');
-            result.Replace('õ', 'o');
-            result.Replace('ö', 'o');
-            result.Replace('œ', 'o');
-            result.Replace('ø', 'o');
-
-            //Uppercase O
-            result.Replace('Ò', 'O');
-            result.Replace('Ó', 'O');
-            result.Replace('Ô', 'O');
-            result.Replace('Õ', 'O');
-            result.Replace('Ö', 'O');
-            result.Replace('Œ', 'O');
-            result.Replace('Ø', 'O');
-
-            //Lowercase u
-            result.Replace('ù', 'u');
-            result.Replace('ú', 'u');
-            result.Replace('û', 'u');
-            result.Replace('ü', 'u');
-
-            //Uppercase U
-            result.Replace('Ù', 'U');
-            result.Replace('Ú', 'U');
-            result.Replace('Û', 'U');
-            result.Replace('Ü', 'U');
-
-            //Lowercase y
-            result.Replace('ý', 'y');
-            result.Replace('ÿ', 'y');
-
-            //Uppercase Y
-            result.Replace('Ý', 'Y');
-            result.Replace('Ÿ', 'Y');
-
-            //Lowercase n
-            result.Replace('ñ', 'n');
-
-            //Uppercase N
-            result.Replace('Ñ', 'N');
-
-            //Lowercase c
-            result.Replace('ç', 'c');
-
-            //Uppercase C
-            result.Replace('Ç', 'C');
-
-            //Lowercase d
-            result.Replace('ð', 'd');
-
-            //Uppercase D
-            result.Replace('Ð', 'D');
-
-            //Lowercase s
-            result.Replace('ß', 's');
-            result.Replace('š', 's');
-
-            //?
-            result.Replace('¿', '?');
-
-            //!
-            result.Replace('¡', '!');
-
-            return result.ToString();
-        }
-
-        public static Regex InvalidFileCharacters = new Regex(@"[?:\\/*""<>|\.,]"); 
     }
 }

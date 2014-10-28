@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
@@ -200,10 +201,50 @@ namespace MemberSuite.SDK.Types
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Generates an HTMl friendly address
+        /// </summary>
+        /// <returns></returns>
+        public string ToNonHtmlString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (!String.IsNullOrEmpty(Company))
+                sb.AppendFormat("{0}\r\n", Company);
+
+            if (!String.IsNullOrEmpty(Line1))
+                sb.AppendFormat("{0}\r\n", Line1);
+
+            if (!String.IsNullOrEmpty(Line2))
+                sb.AppendFormat("{0}\r\n", Line2);
+
+            //if (!String.IsNullOrEmpty(Line3))
+            //    sb.AppendFormat("{0}\r\n", Line3);
+
+            if (!String.IsNullOrEmpty(City))
+                sb.AppendFormat("{0}, ", City);
+
+            if (!String.IsNullOrEmpty(State))
+                sb.AppendFormat("{0} ", State);
+
+            if (!String.IsNullOrEmpty(PostalCode))
+                sb.AppendFormat("{0} ", PostalCode);
+
+            if (!String.IsNullOrEmpty(Country))
+                sb.AppendFormat("{0} ", Country);
+
+            return sb.ToString();
+        }
+
         public string ToRawPropertyString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var pi in GetType().GetProperties())
+            List<PropertyInfo> props = new List<PropertyInfo>( GetType().GetProperties() );
+
+            // important - properties need to be sorted, b/c GetProperties don't always return properties in the same order
+            props.Sort((x, y) => x.Name.CompareTo(y.Name));
+            
+            foreach (var pi in props)
                 sb.AppendLine(string.Format("{0}: {1}", pi.Name, pi.GetValue(this, null)));
 
             return sb.ToString();

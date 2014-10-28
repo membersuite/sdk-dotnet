@@ -136,5 +136,17 @@ namespace MemberSuite.SDK.Searching.Operations
             var so = new DoesNotEndWithOneOfTheFollowing { FieldName = field, ValuesToOperateOn = new List<object>(listOfValues) };
             return so;
         }
+
+        public static SearchOperation Keyword(string field, string keyword)
+        {
+            var so = new Keyword { FieldName = field, ValuesToOperateOn = new List<object>{keyword} };
+            return so;
+        }
+
+        public static SearchOperation NoKeyword(string field, string keyword)
+        {
+            var so = new NoKeyword { FieldName = field, ValuesToOperateOn = new List<object>{keyword} };
+            return so;
+        }
     }
 }

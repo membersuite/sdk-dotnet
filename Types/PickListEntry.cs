@@ -197,5 +197,17 @@ namespace MemberSuite.SDK.Types
         }
 
             #endregion
+
+        public static List<PickListEntry> FromNameValueStringPairs(List<NameValueStringPair> pairs)
+        {
+            if (pairs == null) throw new ArgumentNullException("pairs");
+            List<PickListEntry> entries = new List<PickListEntry>();
+
+            foreach (var entry in pairs)
+                entries.Add(new PickListEntry(entry.Name, entry.Value));
+
+            return entries;
+
+        }
     }
 }

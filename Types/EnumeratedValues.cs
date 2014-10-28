@@ -7,8 +7,9 @@ namespace MemberSuite.SDK.Types
 {
     public enum AccountingMethod
     {
-        Cash = 0,
-        Accrual = 10
+        
+        Accrual = 10,
+        Cash = 20
     }
 
     public enum AssociationMode
@@ -29,8 +30,18 @@ namespace MemberSuite.SDK.Types
 
         FinalizingMove = 15,
 
-        Disabled = 30
+        Disabled = 30,
+
+        Error = 40
     }
+
+    //public enum IsolationLevel
+    //{
+    //    Serializable = 0,
+    //    ReadCommitted = 5,
+    //    ReadUncommitted = 10,
+    //    RepeatableRead = 15
+    //}
 
     public enum TaxCalculationMode
     {
@@ -46,17 +57,16 @@ namespace MemberSuite.SDK.Types
         Error = 4,
         Login = 5,
         Logout = 6,
-
-        /*Membership*/
-        MembershipCreated=10,
-        MembershipRenewed=11,
-        MembershipDropped=12,
+        ForcedLogout = 7,
+        
+        Renewal=11,
+        Drop=12,
         Information = 14,
         OrderFailure = 16,
         OrderSuccess = 18,
         RegistrationTransfer = 20,
-        RegistrationSubstitution = 30
-        
+        RegistrationSubstitution = 30,
+        PasswordReset = 35
     }
 
     public enum CommitteeMembershipType
@@ -90,8 +100,8 @@ namespace MemberSuite.SDK.Types
     {
         Normal=0,
         Ticketed = 1,
-        Disabled = 2
-        
+        Disabled = 2,
+        Tabled = 10
     }
 
     public enum ExpirationType
@@ -191,16 +201,6 @@ namespace MemberSuite.SDK.Types
         RefundToCard
     }
 
-
-    public enum ShippingCarrier
-    {
-        USPS = 0,
-        FedEx = 5,
-        UPS = 10,
-        DHL = 15,
-        Other = 50
-    }
-
     public enum FinancialSoftwarePackage
     {
         None = 0,
@@ -210,7 +210,9 @@ namespace MemberSuite.SDK.Types
         Adagio = 20,
         QuickBooksOnlineEdition = 12,
         SageBusinessWorks = 25,
+        Mas90 = 30,
         Other = 99,
+
         
     }
 
@@ -557,6 +559,7 @@ namespace MemberSuite.SDK.Types
     {
         Active = 0,
         BillingSuspension = 5,
+        SecurityHold = 10,
         Cancelled = 20
     }
 
@@ -575,4 +578,372 @@ namespace MemberSuite.SDK.Types
         Months = 2,
         Years = 3
     }
+
+    public enum SubscriptionFeeType
+    {
+        InitiateSubscription = 0,
+        RenewSubscription = 5
+    }
+
+     public enum BillingRunMemberStatus
+    {
+        Pending = 0,
+        Completed = 5,
+        Error = 10,
+        Unbilled = 15
+    }
+
+    public enum BillingRunCandidateType
+    {
+        InitialBill = 0,
+        FirstReminder = 1,
+        SecondReminder = 2,
+        ThirdReminder = 3,
+        Drop = 10
+    }
+
+    public enum BillingCycleProductAction
+    {
+        Include = 0,
+        Exclude = 5
+    }
+
+    public enum BillingRunStatus
+    {
+        Pending = 0,
+        CandidateSelection = 10,
+        MemberGeneration = 20,
+        MemberProcessing = 30,
+        PendingActivityReview = 35,
+        QeuedActivityExecution = 40,
+        PendingQueuedActivityReview = 45,
+        SendingEmails = 50,
+        Complete = 60,
+        Error = 70,
+        Cancelled = 80
+        
+    }
+
+    public enum BillingRunMode
+    {
+        Preview = 0,
+
+        GenerateOrders = 5,
+
+        CompleteRun = 10
+    }
+
+
+    public enum SavedPaymentMethodType
+    {
+        // means that the payment method is available for reuse
+        Stored = 0,
+
+        // for payment methods tied to orders
+        Order = 5,
+
+        Gift = 10,
+
+        Membership = 15,
+
+        Subscription = 20,
+
+        Certification = 25
+    }
+
+    public enum BillingRunActivityType
+    {
+        ProcessOrder = 0,
+        SendEmail = 5,
+        DropRecord = 10,
+        ChangeStatus = 15
+    }
+
+    public enum DataExportFormat
+    {
+        Raw = 0,
+        CsvWithHeaders = 5,
+        CsvWithoutHeaders = 10
+        
+    }
+
+    public enum JobPostingStatus
+    {
+        Pending = 0,
+        Approved = 5,
+        OnHold = 10,
+        Rejected = 15,
+
+        
+    }
+
+    public enum RealtorSubscriptionFeeType
+    {
+        MLS = 0,
+        LMS = 5,
+        eKey = 10,
+        aKey = 15,
+        aKeyInsurance = 20
+    }
+
+    public enum eKeyProviderType
+    {
+        Supra = 0
+    }
+
+    public enum ListingSubscriptionProviderType
+    {
+        Matrix = 0
+    }
+
+    public enum RealtorProductCategory
+    {
+        None = 0,
+        NationalDues = 3,
+        ImageAwarenessAssessment = 5,
+        StateDues = 10,
+        LegalFund=15,
+        RPACContribution = 20,
+        LocalDues = 25
+    }
+
+    public enum RealtorRelationshipDesignation
+    {
+        None = 0,
+
+        // represents a relationship between a head broker and an office
+        // Left Side = Indiv, Right Side = Org
+        BrokerOffice = 5,
+
+        // Left Side = Org, Right Side = Org
+        OfficeBranch = 10,
+
+        // Left Side = Indiv, Right Side = Indiv
+        OfficeAgent = 15,
+
+        // Left Side = Indiv, Right Side = Indiv
+        AgentAssistant = 20
+    }
+
+    public enum EngagementCyclePeriodicity
+    {
+        Annual = 0,
+        Quarterly = 5,
+        BiAnnual = 10,
+        Monthly = 15
+    }
+
+    public enum TenantLevel
+    {
+        System,
+        Reseller,
+        Customer,
+        Association
+    }
+
+    public enum SavePaymentMethodSetting
+    {
+        Checked = 0,
+        Unchecked = 1,
+        Disabled =2
+    }
+
+    public enum NRDSAssociationStatus
+    {
+        A,
+        I,
+        D,
+        C,
+    }
+    
+    public enum NRDSAssociationType
+    {
+        L,   // Local
+        S,   // State
+        N,   //
+        A,   //
+        M,   // MLS
+
+        // TODO Why is 'I' allowed in the nrds.dtd but not in Client.jar?
+        ////I,
+    }
+
+    /// <summary>
+    /// Used to describe the nature of a payment or status of a pledge
+    /// </summary>            
+    public enum NRDSDemographicPaymentCodeType
+    {
+        C,   // Commitment made but no payment to date                
+        D,   // Deposit                
+        F,  // Paid in full (as with a sponsorship or pledge)                
+        P,  // Partial Payment
+    }
+
+    /// <summary>
+    /// How the course was delivered
+    /// </summary>
+    public enum NRDSEducationDeliveryMethodType
+    {
+        AUDIO,   // Audio tape
+        CDROM,   // Interactive Computer based
+        CLASS,  // Live classroom
+        ONLINE, // Online course via the Internet
+        VIDCON, // Live Teleconference
+        VIDEO,  // Pre-recorded video tape
+    }
+
+    /// <summary>
+    /// The nature of the payment
+    /// </summary>
+    public enum NRDSEducationPaymentCodeType
+    {
+        B,   // Balance of Payment due
+        D,   // Deposit
+        F,  // Full Fee
+        L,  // Late Fee
+        P,  // Partial Payment
+    }
+
+    /// <summary>
+    /// Where the member prefers test results to be sent
+    /// </summary>
+    public enum NRDSEducationTestMailingAddressType
+    {
+        H,   // Home Address
+        O,   // Office Address
+        M,  // Mailing address
+    }
+
+    public enum NRDSEducationTestStatus
+    {
+        P,  // Pass
+        F,  // Fail
+    }
+
+    /// <summary>
+    /// Used for PAC contributions only
+    /// </summary>
+    public enum NRDSFinancialContributionType
+    {
+        P,  // Personal
+        C,  // Corporate
+    }
+
+    /// <summary>
+    /// The source of this transaction. The code EC is reserved for Financial records that are 
+    /// filled in automatically by the NAR EC Invoicing module. All other records should have 
+    /// XT in this field.
+    /// </summary>
+    public enum NRDSFinancialSource
+    {
+        EC,
+        XT,
+    }
+
+    public enum NRDSMemberGender
+    {
+        F,  // Female
+        M,  // Male
+    }
+
+    /// <summary>
+    /// Where the member prefers to receive faxes
+    /// </summary>
+    public enum NRDSMemberPreferredFax
+    {
+        H,  // Home/personal fax number
+        O,  // Office fax number
+    }
+
+    /// <summary>
+    /// Where the member would prefer to receive mail
+    /// </summary>
+    public enum NRDSMemberAddressType
+    {
+        H,  // Home address
+        O,  // Office address
+        M,  // Mail address
+        F,  // Office address - mailing
+    }
+
+    /// <summary>
+    /// Member’s preferred phone
+    /// </summary>
+    public enum NRDSMemberPreferredPhone
+    {
+        O,  // Office phone number
+        H,  // Home phone number
+        P,  // Pager number
+        C,  // Cell phone number
+    }
+
+    /// <summary>
+    /// Member status
+    /// </summary>
+    public enum NRDSMemberStatus
+    {
+        A,  // Active
+        I,  // Inactive
+        T,  // Terminated
+        P,  // Provisional
+        S,  // Suspend (only available 1/1 - 3/1 every 4 years)
+        X,  // Deceased
+    }
+
+    /// <summary>
+    /// Member status
+    /// </summary>
+    public enum NRDSMemberSupplementalStatus
+    {
+        A,   // Active
+        I,   // Inactive
+        T,  // Terminated
+    }
+
+    /// <summary>
+    /// Type of membership
+    /// </summary>
+    public enum NRDSMemberType
+    {
+        R,      // Realtor
+        RA,     // Realtor-Associate
+        I,      // Institute Affiliate Member
+        AFF,    // Affiliate of association
+        N,      // Non-member salesperson in Realtor Broker's assessment
+        S,      // Association staff person
+    }
+
+    /// <summary>
+    /// Code to indicate the office branch location
+    /// </summary>
+    public enum NRDSOfficeBranchType
+    {
+        M,   // Main office
+        B,   // Branch Office
+        S,   // Single office - no branch locations
+    }
+
+    /// <summary>
+    /// Status of the office record
+    /// </summary>
+    public enum NRDSOfficeStatus
+    {
+        A,   // Active
+        I,   // Inactive
+        T,   // Terminated
+    }
+
+    public enum NRDSPrimaryIndicator
+    {
+        P,  // Primary
+        S   // Secondary
+    }
+
+    public enum RealtorSubscriptionType
+    {
+        Primary = 0,
+        Coop = 5
+    }
 }
+
+      

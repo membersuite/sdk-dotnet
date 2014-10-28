@@ -13,5 +13,6 @@ namespace MemberSuite.SDK.Searching
         public const string Graph = "builtin:graph";
         public const string EmailBlast = "builtin:emarketinglist";
         public const string ZipFile = "builtin:zip";
+        public const string PDF = "builtin:pdf";
     }
 }

@@ -57,7 +57,7 @@ namespace MemberSuite.SDK.Utilities
                         }
                     }
                     while (count > 0);
-                    return Binary.Deserialize( memory.ToArray() );
+                    return Binary.Deserialize<object>( memory.ToArray() );
                 }
             }
 
