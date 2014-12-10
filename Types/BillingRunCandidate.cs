@@ -17,6 +17,10 @@ namespace MemberSuite.SDK.Types
         public string Type { get; set; }
         public string Comment { get; set; }
 
+        public string MemberID { get; set; }
+
+        public string MemberOwnerName { get; set; }
+
         public DateTime Candidate_ExpirationDate { get; set; }
         public string Product_ID { get; set; }
     }

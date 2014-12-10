@@ -15218,210 +15218,296 @@ ClassType = "SessionTrack";
 public msSessionTrack( MemberSuiteObject msObj) : base(msObj) {}
  public static new msSessionTrack FromClassMetadata(ClassMetadata meta){return new msSessionTrack(MemberSuiteObject.FromClassMetadata(meta));}
 }
+
 [Serializable]
-public class msMembership : msCustomizableAssociationDomainObject {
-public new const string CLASS_NAME = "Membership";
-public new  static class FIELDS {
-public const string MembershipOrganization = "MembershipOrganization";
-public const string Order = "Order";
-public const string OrderLineItemID = "OrderLineItemID";
-public const string LastOrder = "LastOrder";
-public const string SavedPaymentMethod = "SavedPaymentMethod";
-public const string LastOrderLineItemID = "LastOrderLineItemID";
-public const string Owner = "Owner";
-public const string Type = "Type";
-public const string Status = "Status";
-public const string Product = "Product";
-public const string JoinDate = "JoinDate";
-public const string ReinstatementDate = "ReinstatementDate";
-public const string RenewalDate = "RenewalDate";
-public const string TerminationDate = "TerminationDate";
-public const string BillTo = "BillTo";
-public const string RevenueRecognitionDate = "RevenueRecognitionDate";
-public const string CurrentDuesAmount = "CurrentDuesAmount";
-public const string TerminationReason = "TerminationReason";
-public const string BilledThru = "BilledThru";
-public const string RemindedThru = "RemindedThru";
-public const string ExpirationDate = "ExpirationDate";
-public const string ReferredBy = "ReferredBy";
-public const string Approved = "Approved";
-public const string DateApproved = "DateApproved";
-public const string Chapters = "Chapters";
-public const string Sections = "Sections";
-public const string AddOns = "AddOns";
-public const string MembershipDirectoryOptOut = "MembershipDirectoryOptOut";
-public const string Notes = "Notes";
-public const string DoNotRenew = "DoNotRenew";
-public const string ReceivesMemberBenefits = "ReceivesMemberBenefits";
-public const string AutomaticallyPayForRenewal = "AutomaticallyPayForRenewal";
-}
-public msMembership() : base() {
-ClassType = "Membership";
-Chapters = new System.Collections.Generic.List<msChapterMembership>();
-Sections = new System.Collections.Generic.List<msSectionMembership>();
-AddOns = new System.Collections.Generic.List<msMembershipAddOn>();
-}
-public msMembership( MemberSuiteObject msObj) : base(msObj) {}
- public static new msMembership FromClassMetadata(ClassMetadata meta){return new msMembership(MemberSuiteObject.FromClassMetadata(meta));}
-public System.String MembershipOrganization {
-get { return SafeGetValue<System.String>("MembershipOrganization");}
-set { this["MembershipOrganization"] = value;}
-}
+public class msMembership : msCustomizableAssociationDomainObject
+{
+    public new const string CLASS_NAME = "Membership";
+    public new static class FIELDS
+    {
+        public const string MembershipOrganization = "MembershipOrganization";
+        public const string Order = "Order";
+        public const string OrderLineItemID = "OrderLineItemID";
+        public const string LastOrder = "LastOrder";
+        public const string SavedPaymentMethod = "SavedPaymentMethod";
+        public const string LastOrderLineItemID = "LastOrderLineItemID";
+        public const string Owner = "Owner";
+        public const string Type = "Type";
+        public const string Status = "Status";
+        public const string Product = "Product";
+        public const string JoinDate = "JoinDate";
+        public const string ReinstatementDate = "ReinstatementDate";
+        public const string RenewalDate = "RenewalDate";
+        public const string TerminationDate = "TerminationDate";
+        public const string BillTo = "BillTo";
+        public const string RevenueRecognitionDate = "RevenueRecognitionDate";
+        public const string CurrentDuesAmount = "CurrentDuesAmount";
+        public const string TerminationReason = "TerminationReason";
+        public const string BilledThru = "BilledThru";
+        public const string RemindedThru = "RemindedThru";
+        public const string ExpirationDate = "ExpirationDate";
+        public const string ReferredBy = "ReferredBy";
+        public const string Approved = "Approved";
+        public const string DateApproved = "DateApproved";
+        public const string Chapters = "Chapters";
+        public const string Sections = "Sections";
+        public const string AddOns = "AddOns";
+        public const string MembershipDirectoryOptOut = "MembershipDirectoryOptOut";
+        public const string Notes = "Notes";
+        public const string DoNotRenew = "DoNotRenew";
+        public const string ReceivesMemberBenefits = "ReceivesMemberBenefits";
+        public const string AutomaticallyPayForRenewal = "AutomaticallyPayForRenewal";
+        public const string IsInherited = "IsInherited";
+        public const string FlowDownRelationship = "FlowDownRelationship";
+        public const string HasFlowDownChildren = "HasFlowDownChildren";
+        public const string FlowDownDepth = "FlowDownDepth";
+        public const string FlownDownEventID = "FlownDownEventID";
+        public const string ParentMembership = "ParentMembership";
+        public const string FlowDownDate = "FlowDownDate";
+    }
+    public msMembership()
+        : base()
+    {
+        ClassType = "Membership";
+        Chapters = new System.Collections.Generic.List<msChapterMembership>();
+        Sections = new System.Collections.Generic.List<msSectionMembership>();
+        AddOns = new System.Collections.Generic.List<msMembershipAddOn>();
+    }
+    public msMembership(MemberSuiteObject msObj) : base(msObj) { }
+    public static new msMembership FromClassMetadata(ClassMetadata meta) { return new msMembership(MemberSuiteObject.FromClassMetadata(meta)); }
+    public System.String MembershipOrganization
+    {
+        get { return SafeGetValue<System.String>("MembershipOrganization"); }
+        set { this["MembershipOrganization"] = value; }
+    }
 
-public System.String Order {
-get { return SafeGetValue<System.String>("Order");}
-set { this["Order"] = value;}
-}
+    public System.String Order
+    {
+        get { return SafeGetValue<System.String>("Order"); }
+        set { this["Order"] = value; }
+    }
 
-public System.String OrderLineItemID {
-get { return SafeGetValue<System.String>("OrderLineItemID");}
-set { this["OrderLineItemID"] = value;}
-}
+    public System.String OrderLineItemID
+    {
+        get { return SafeGetValue<System.String>("OrderLineItemID"); }
+        set { this["OrderLineItemID"] = value; }
+    }
 
-public System.String LastOrder {
-get { return SafeGetValue<System.String>("LastOrder");}
-set { this["LastOrder"] = value;}
-}
+    public System.String LastOrder
+    {
+        get { return SafeGetValue<System.String>("LastOrder"); }
+        set { this["LastOrder"] = value; }
+    }
 
-public System.String SavedPaymentMethod {
-get { return SafeGetValue<System.String>("SavedPaymentMethod");}
-set { this["SavedPaymentMethod"] = value;}
-}
+    public System.String SavedPaymentMethod
+    {
+        get { return SafeGetValue<System.String>("SavedPaymentMethod"); }
+        set { this["SavedPaymentMethod"] = value; }
+    }
 
-public System.String LastOrderLineItemID {
-get { return SafeGetValue<System.String>("LastOrderLineItemID");}
-set { this["LastOrderLineItemID"] = value;}
-}
+    public System.String LastOrderLineItemID
+    {
+        get { return SafeGetValue<System.String>("LastOrderLineItemID"); }
+        set { this["LastOrderLineItemID"] = value; }
+    }
 
-public System.String Owner {
-get { return SafeGetValue<System.String>("Owner");}
-set { this["Owner"] = value;}
-}
+    public System.String Owner
+    {
+        get { return SafeGetValue<System.String>("Owner"); }
+        set { this["Owner"] = value; }
+    }
 
-public System.String Type {
-get { return SafeGetValue<System.String>("Type");}
-set { this["Type"] = value;}
-}
+    public System.String Type
+    {
+        get { return SafeGetValue<System.String>("Type"); }
+        set { this["Type"] = value; }
+    }
 
-public System.String Status {
-get { return SafeGetValue<System.String>("Status");}
-set { this["Status"] = value;}
-}
+    public System.String Status
+    {
+        get { return SafeGetValue<System.String>("Status"); }
+        set { this["Status"] = value; }
+    }
 
-public System.String Product {
-get { return SafeGetValue<System.String>("Product");}
-set { this["Product"] = value;}
-}
+    public System.String Product
+    {
+        get { return SafeGetValue<System.String>("Product"); }
+        set { this["Product"] = value; }
+    }
 
-public System.DateTime? JoinDate {
-get { return SafeGetValue<System.DateTime?>("JoinDate");}
-set { this["JoinDate"] = value;}
-}
+    public System.DateTime? JoinDate
+    {
+        get { return SafeGetValue<System.DateTime?>("JoinDate"); }
+        set { this["JoinDate"] = value; }
+    }
 
-public System.DateTime? ReinstatementDate {
-get { return SafeGetValue<System.DateTime?>("ReinstatementDate");}
-set { this["ReinstatementDate"] = value;}
-}
+    public System.DateTime? ReinstatementDate
+    {
+        get { return SafeGetValue<System.DateTime?>("ReinstatementDate"); }
+        set { this["ReinstatementDate"] = value; }
+    }
 
-public System.DateTime? RenewalDate {
-get { return SafeGetValue<System.DateTime?>("RenewalDate");}
-set { this["RenewalDate"] = value;}
-}
+    public System.DateTime? RenewalDate
+    {
+        get { return SafeGetValue<System.DateTime?>("RenewalDate"); }
+        set { this["RenewalDate"] = value; }
+    }
 
-public System.DateTime? TerminationDate {
-get { return SafeGetValue<System.DateTime?>("TerminationDate");}
-set { this["TerminationDate"] = value;}
-}
+    public System.DateTime? TerminationDate
+    {
+        get { return SafeGetValue<System.DateTime?>("TerminationDate"); }
+        set { this["TerminationDate"] = value; }
+    }
 
-public System.String BillTo {
-get { return SafeGetValue<System.String>("BillTo");}
-set { this["BillTo"] = value;}
-}
+    public System.String BillTo
+    {
+        get { return SafeGetValue<System.String>("BillTo"); }
+        set { this["BillTo"] = value; }
+    }
 
-public System.DateTime? RevenueRecognitionDate {
-get { return SafeGetValue<System.DateTime?>("RevenueRecognitionDate");}
-set { this["RevenueRecognitionDate"] = value;}
-}
+    public System.DateTime? RevenueRecognitionDate
+    {
+        get { return SafeGetValue<System.DateTime?>("RevenueRecognitionDate"); }
+        set { this["RevenueRecognitionDate"] = value; }
+    }
 
-public System.Decimal? CurrentDuesAmount {
-get { return SafeGetValue<System.Decimal?>("CurrentDuesAmount");}
-set { this["CurrentDuesAmount"] = value;}
-}
+    public System.Decimal? CurrentDuesAmount
+    {
+        get { return SafeGetValue<System.Decimal?>("CurrentDuesAmount"); }
+        set { this["CurrentDuesAmount"] = value; }
+    }
 
-public System.String TerminationReason {
-get { return SafeGetValue<System.String>("TerminationReason");}
-set { this["TerminationReason"] = value;}
-}
+    public System.String TerminationReason
+    {
+        get { return SafeGetValue<System.String>("TerminationReason"); }
+        set { this["TerminationReason"] = value; }
+    }
 
-public System.DateTime? BilledThru {
-get { return SafeGetValue<System.DateTime?>("BilledThru");}
-set { this["BilledThru"] = value;}
-}
+    public System.DateTime? BilledThru
+    {
+        get { return SafeGetValue<System.DateTime?>("BilledThru"); }
+        set { this["BilledThru"] = value; }
+    }
 
-public System.DateTime? RemindedThru {
-get { return SafeGetValue<System.DateTime?>("RemindedThru");}
-set { this["RemindedThru"] = value;}
-}
+    public System.DateTime? RemindedThru
+    {
+        get { return SafeGetValue<System.DateTime?>("RemindedThru"); }
+        set { this["RemindedThru"] = value; }
+    }
 
-public System.DateTime? ExpirationDate {
-get { return SafeGetValue<System.DateTime?>("ExpirationDate");}
-set { this["ExpirationDate"] = value;}
-}
+    public System.DateTime? ExpirationDate
+    {
+        get { return SafeGetValue<System.DateTime?>("ExpirationDate"); }
+        set { this["ExpirationDate"] = value; }
+    }
 
-public System.String ReferredBy {
-get { return SafeGetValue<System.String>("ReferredBy");}
-set { this["ReferredBy"] = value;}
-}
+    public System.String ReferredBy
+    {
+        get { return SafeGetValue<System.String>("ReferredBy"); }
+        set { this["ReferredBy"] = value; }
+    }
 
-public System.Boolean Approved {
-get { return SafeGetValue<System.Boolean>("Approved");}
-set { this["Approved"] = value;}
-}
+    public System.Boolean Approved
+    {
+        get { return SafeGetValue<System.Boolean>("Approved"); }
+        set { this["Approved"] = value; }
+    }
 
-public System.DateTime? DateApproved {
-get { return SafeGetValue<System.DateTime?>("DateApproved");}
-set { this["DateApproved"] = value;}
-}
+    public System.DateTime? DateApproved
+    {
+        get { return SafeGetValue<System.DateTime?>("DateApproved"); }
+        set { this["DateApproved"] = value; }
+    }
 
-public System.Collections.Generic.List<msChapterMembership> Chapters {
-get { return SafeGetValue<System.Collections.Generic.List<msChapterMembership>>("Chapters");}
-set { this["Chapters"] = value;}
-}
+    public System.Collections.Generic.List<msChapterMembership> Chapters
+    {
+        get { return SafeGetValue<System.Collections.Generic.List<msChapterMembership>>("Chapters"); }
+        set { this["Chapters"] = value; }
+    }
 
-public System.Collections.Generic.List<msSectionMembership> Sections {
-get { return SafeGetValue<System.Collections.Generic.List<msSectionMembership>>("Sections");}
-set { this["Sections"] = value;}
-}
+    public System.Collections.Generic.List<msSectionMembership> Sections
+    {
+        get { return SafeGetValue<System.Collections.Generic.List<msSectionMembership>>("Sections"); }
+        set { this["Sections"] = value; }
+    }
 
-public System.Collections.Generic.List<msMembershipAddOn> AddOns {
-get { return SafeGetValue<System.Collections.Generic.List<msMembershipAddOn>>("AddOns");}
-set { this["AddOns"] = value;}
-}
+    public System.Collections.Generic.List<msMembershipAddOn> AddOns
+    {
+        get { return SafeGetValue<System.Collections.Generic.List<msMembershipAddOn>>("AddOns"); }
+        set { this["AddOns"] = value; }
+    }
 
-public System.Boolean MembershipDirectoryOptOut {
-get { return SafeGetValue<System.Boolean>("MembershipDirectoryOptOut");}
-set { this["MembershipDirectoryOptOut"] = value;}
-}
+    public System.Boolean MembershipDirectoryOptOut
+    {
+        get { return SafeGetValue<System.Boolean>("MembershipDirectoryOptOut"); }
+        set { this["MembershipDirectoryOptOut"] = value; }
+    }
 
-public System.String Notes {
-get { return SafeGetValue<System.String>("Notes");}
-set { this["Notes"] = value;}
-}
+    public System.String Notes
+    {
+        get { return SafeGetValue<System.String>("Notes"); }
+        set { this["Notes"] = value; }
+    }
 
-public System.Boolean DoNotRenew {
-get { return SafeGetValue<System.Boolean>("DoNotRenew");}
-set { this["DoNotRenew"] = value;}
-}
+    public System.Boolean DoNotRenew
+    {
+        get { return SafeGetValue<System.Boolean>("DoNotRenew"); }
+        set { this["DoNotRenew"] = value; }
+    }
 
-public System.Boolean ReceivesMemberBenefits {
-get { return SafeGetValue<System.Boolean>("ReceivesMemberBenefits");}
-set { this["ReceivesMemberBenefits"] = value;}
-}
+    public System.Boolean ReceivesMemberBenefits
+    {
+        get { return SafeGetValue<System.Boolean>("ReceivesMemberBenefits"); }
+        set { this["ReceivesMemberBenefits"] = value; }
+    }
 
-public System.Boolean AutomaticallyPayForRenewal {
-get { return SafeGetValue<System.Boolean>("AutomaticallyPayForRenewal");}
-set { this["AutomaticallyPayForRenewal"] = value;}
-}
+    public System.Boolean AutomaticallyPayForRenewal
+    {
+        get { return SafeGetValue<System.Boolean>("AutomaticallyPayForRenewal"); }
+        set { this["AutomaticallyPayForRenewal"] = value; }
+    }
+
+    public System.Boolean IsInherited
+    {
+        get { return SafeGetValue<System.Boolean>("IsInherited"); }
+        set { this["IsInherited"] = value; }
+    }
+
+    public System.String FlowDownRelationship
+    {
+        get { return SafeGetValue<System.String>("FlowDownRelationship"); }
+        set { this["FlowDownRelationship"] = value; }
+    }
+
+    public System.Boolean HasFlowDownChildren
+    {
+        get { return SafeGetValue<System.Boolean>("HasFlowDownChildren"); }
+        set { this["HasFlowDownChildren"] = value; }
+    }
+
+    public System.Int32? FlowDownDepth
+    {
+        get { return SafeGetValue<System.Int32?>("FlowDownDepth"); }
+        set { this["FlowDownDepth"] = value; }
+    }
+
+    public System.String FlownDownEventID
+    {
+        get { return SafeGetValue<System.String>("FlownDownEventID"); }
+        set { this["FlownDownEventID"] = value; }
+    }
+
+    public System.String ParentMembership
+    {
+        get { return SafeGetValue<System.String>("ParentMembership"); }
+        set { this["ParentMembership"] = value; }
+    }
+
+    public System.DateTime? FlowDownDate
+    {
+        get { return SafeGetValue<System.DateTime?>("FlowDownDate"); }
+        set { this["FlowDownDate"] = value; }
+    }
 
 }
 [Serializable]

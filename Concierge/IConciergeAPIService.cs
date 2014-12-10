@@ -2047,6 +2047,24 @@ namespace MemberSuite.SDK.Concierge
 
         #region Membership
 
+        /// <summary>
+        /// Recalculates all flow down for an association for a specific type of object
+        /// </summary>
+        /// <param name="typeOfObject">The type of object.</param>
+        /// <returns>ConciergeResult.</returns>
+        [OperationContract]
+        ConciergeResult RecalculateFlowDown(string typeOfObject, string targetObjectID);
+
+        /// <summary>
+        /// Recalculates the primary membership for a given ID
+        /// </summary>
+        /// <param name="targetEntityID">The target entity identifier.</param>
+        /// <returns>ConciergeResult.</returns>
+        [OperationContract]
+        ConciergeResult RecalculatePrimaryMembership(string targetEntityID);
+
+        [OperationContract]
+        ConciergeResult RecalculatePrimaryOrganization(string targetEntityID);
          
 
         /// <summary>

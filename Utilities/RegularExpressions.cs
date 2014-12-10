@@ -105,7 +105,7 @@ namespace MemberSuite.SDK.Utilities
         public static readonly string PathSplitterRegex = @"(.*)\\(.*)";
         public static readonly string OldConnectionStringParserRegex = @"server=(.*?);database=(.*?);(UID=(.*?);Password=(.*))?"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase );
         public static readonly string NewConnectionStringParserRegex = @"Data Source=(.*?);Initial Catalog=(.*?);"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+        public static readonly string RemoveSpecialCharactersRegex = "[^a-zA-Z0-9_.]+"; 
         //uncached, accomodate within the default 15
         public static Func<string, string> GetDefaultPortalUrlRegex = protocol => String.Format(@"{0}://customer(?<PartitionKey>\d+)(?<Last4>[A-Fa-f0-9]{{4,}})", protocol);
         //caller caches appdomain-wide

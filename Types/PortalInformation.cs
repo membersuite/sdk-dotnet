@@ -71,6 +71,9 @@ namespace MemberSuite.SDK.Types
         public bool MembershipDirectoryEnabled { get; set; }
 
         [DataMember]
+        public bool MembershipDirectoryIncludeInheritedMemberships { get; set; }
+
+        [DataMember]
         public bool MembershipDirectoryForMembersOnly { get; set; }
 
         [DataMember]

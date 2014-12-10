@@ -224,6 +224,7 @@
     <Compile Include="Types\PortalPaymentMethods.cs" />
     <Compile Include="Types\RelevantAnnouncement.cs" />
     <Compile Include="Types\SavedPaymentInfo.cs" />
+    <Compile Include="Types\SendGridEventData.cs" />
     <Compile Include="Types\ShippingCarrierServices.cs" />
     <Compile Include="Types\VolunteerMatch.cs" />
     <Compile Include="Utilities\Binary.cs" />

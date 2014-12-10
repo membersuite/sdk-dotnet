@@ -32,7 +32,9 @@ namespace MemberSuite.SDK.Types
 
         Disabled = 30,
 
-        Error = 40
+        Error = 40,
+
+        QueuedForProvisioning = 50
     }
 
     //public enum IsolationLevel
@@ -255,7 +257,8 @@ namespace MemberSuite.SDK.Types
         Draft = 3,
         Processing = 5,
         Error = 10,
-        Complete = 15
+        Complete = 15,
+        Queued = 20
     }
 
     public enum EventLocationRoomCategory
@@ -656,7 +659,8 @@ namespace MemberSuite.SDK.Types
         ProcessOrder = 0,
         SendEmail = 5,
         DropRecord = 10,
-        ChangeStatus = 15
+        ChangeStatus = 15,
+        FailedProcessing = 20
     }
 
     public enum DataExportFormat

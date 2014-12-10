@@ -70,10 +70,17 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="EmailTemplate"/> is disabled.
+        /// Gets or sets a value indicating whether this <see cref="EmailTemplate"/> is disabled for console users.
         /// </summary>
         /// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
         [DataMember]
-        public bool Disabled { get; set; }
+        public bool DisableForConsoleUsers { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="EmailTemplate"/> is disabled for portal users.
+        /// </summary>
+        /// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
+        [DataMember]
+        public bool DisableForPortalUsers { get; set; }
     }
 }

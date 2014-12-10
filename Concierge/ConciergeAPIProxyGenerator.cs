@@ -499,7 +499,11 @@ namespace MemberSuite.SDK.Concierge
             b.MaxReceivedMessageSize = 65536000;
             b.ReaderQuotas.MaxStringContentLength = 88880000;
             b.ReliableSession.InactivityTimeout = TimeSpan.FromHours(1);
+#if DEBUG
+            b.Security.Mode = SecurityMode.None;
+#else
             b.Security.Mode = SecurityMode.Transport;
+#endif
             return b;
 
         }

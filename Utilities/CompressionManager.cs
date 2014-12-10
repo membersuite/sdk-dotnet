@@ -4,50 +4,35 @@ using System.IO.Compression;
 
 namespace MemberSuite.SDK.Utilities
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks></remarks>
     public static class CompressionManager
     {
-        /// <summary>
-        /// Compresses the specified obj to compress.
-        /// </summary>
-        /// <param name="objToCompress">The obj to compress.</param>
-        /// <returns></returns>
-        /// <remarks></remarks>
         public static byte[] Compress(object objToCompress)
         {
-            if (objToCompress == null) throw new ArgumentNullException("objToCompress");
+            if (objToCompress == null)
+                throw new ArgumentNullException("objToCompress");
 
-            var bytes = Binary.Serialize( objToCompress );
-            MemoryStream ms = new MemoryStream();
-            ms.Write( bytes, 0, bytes.Length );
+            var bytes = Binary.Serialize(objToCompress);
 
-            ms.Position = 0;
+            using (var msDestination = new MemoryStream(bytes.Length))
+            {
+                var gz = new GZipStream(msDestination, CompressionMode.Compress);
 
-            MemoryStream msDestination = new MemoryStream();
+                gz.Write(bytes, 0, bytes.Length);
+                gz.Close();
 
-            GZipStream gz = new GZipStream(msDestination, CompressionMode.Compress);
-
-            gz.Write(bytes, 0, bytes.Length);
-            gz.Close();
-
-            return msDestination.ToArray();
+                return msDestination.GetBuffer();
+            }
         }
 
-       
-
-        public static object Decompress( byte[] bytesToDecompress)
+        public static object Decompress(Stream source)
         {
-            if (bytesToDecompress == null) throw new ArgumentNullException("bytesToDecompress");
-            using (GZipStream stream = new GZipStream(new MemoryStream(bytesToDecompress), CompressionMode.Decompress))
+            using (var stream = new GZipStream(source, CompressionMode.Decompress))
             {
                 const int size = 4096;
-                byte[] buffer = new byte[size];
-                using (MemoryStream memory = new MemoryStream())
+                var buffer = new byte[size];
+                using (var memory = new MemoryStream())
                 {
-                    int count = 0;
+                    int count;
                     do
                     {
                         count = stream.Read(buffer, 0, size);
@@ -57,11 +42,17 @@ namespace MemberSuite.SDK.Utilities
                         }
                     }
                     while (count > 0);
-                    return Binary.Deserialize<object>( memory.ToArray() );
+                    return Binary.Deserialize<object>(memory.ToArray());
                 }
             }
+        }
 
-            
+        public static object Decompress(byte[] bytesToDecompress)
+        {
+            if (bytesToDecompress == null)
+                throw new ArgumentNullException("bytesToDecompress");
+
+            return Decompress(new MemoryStream(bytesToDecompress));
         }
     }
 }

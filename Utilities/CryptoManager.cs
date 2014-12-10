@@ -324,14 +324,14 @@ namespace MemberSuite.SDK.Utilities
         public static byte[] EncryptDataWithProcessSymmetric(byte[] bytes)
         {
             //Get the Rijndael symmetric provider configured with the static key/IV pair
-            using (RijndaelManaged symmetricProvider = GetProcessSymetricProvider())
+            using (var symmetricProvider = GetProcessSymetricProvider())
             {
                 //Encrypt
                 using (var encryptor = symmetricProvider.CreateEncryptor())
                 {
-                    using (MemoryStream result = new MemoryStream())
+                    using (var result = new MemoryStream())
                     {
-                        using (CryptoStream cryptoStream = new CryptoStream(result, encryptor, CryptoStreamMode.Write))
+                        using (var cryptoStream = new CryptoStream(result, encryptor, CryptoStreamMode.Write))
                         {
                             cryptoStream.Write(bytes, 0, bytes.Length);
                             cryptoStream.FlushFinalBlock();
