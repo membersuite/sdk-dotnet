@@ -929,6 +929,12 @@ namespace MemberSuite.SDK.Concierge
         [OperationContract]
         ConciergeResult<SearchResult> QuickSearch(string searchType, string searchContext, string queryText, int startRecord, int? maximumNumberOfRecordsToReturn);
 
+        [OperationContract]
+        ConciergeResult RebuildQuickSearchIndex(List<string> quickSearches);
+
+        [OperationContract]
+        ConciergeResult RebuildCatalogQuickSearchIndexes();
+
         /// <summary>
         /// Generates a quick search.
         /// </summary><type>Search</type>
@@ -939,6 +945,12 @@ namespace MemberSuite.SDK.Concierge
         /// <remarks></remarks>
         [OperationContract]
         ConciergeResult<Search> GenerateQuickSearch(string searchText, string searchContext, string queryText);
+
+        [OperationContract]
+        ConciergeResult<List<string>> RetrieveClientSideQuickSearchKeys(List<string> quickSearches);
+
+        [OperationContract]
+        ConciergeResult<List<string>> GetIndexableAssociaionObjects( );
 
         /// <summary>
         /// Finds all searches that can be the target of an email blast
@@ -2673,5 +2685,8 @@ namespace MemberSuite.SDK.Concierge
 
         [OperationContract]
         ConciergeResult RecordForcedLogout(string userID, string description);
+
+        [OperationContract]
+        ConciergeResult<PriorityApiSettings> GetPriorityConfiguration(string entityID);
     }
 }

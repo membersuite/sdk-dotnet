@@ -9,6 +9,11 @@ namespace MemberSuite.SDK.Utilities
 {
     public static class Formats
     {
+        public static string GetSafeFieldName(string format, params object[] parms)
+        {
+            return GetSafeFieldName(string.Format(format, parms));
+        }
+
         public static string GetSafeFieldName(string fieldName)
         {
             return fieldName == null ? null : GetSafeFieldName(fieldName, false).Trim();

@@ -27,5 +27,8 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public bool AllowsSandboxes { get; set; }
+
+        [DataMember]
+        public string ReadOnlyName { get; set; }
     }
 }

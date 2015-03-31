@@ -64,7 +64,7 @@ namespace MemberSuite.SDK.Utilities.TypeResolution
                                                      typeof(T), attr.Type, cache[attr.Type].GetType(), t));
 
                     if (storeSingletons)
-                        cache.Add(attr.Type, (T)Activator.CreateInstance(t)); // create a singleton
+                        cache.Add(attr.Type, (T)MemberSuite.Container.GetOrCreateInstance(t)); // create a singleton
                     else
                         throw new NotSupportedException();
                 }

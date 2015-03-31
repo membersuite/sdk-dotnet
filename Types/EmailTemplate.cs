@@ -27,6 +27,9 @@ namespace MemberSuite.SDK.Types
         public string SearchType { get; set; }
 
         [DataMember]
+        public string BaseObject { get; set; }
+
+        [DataMember]
         public string SearchContext { get; set; }
 
         [DataMember]

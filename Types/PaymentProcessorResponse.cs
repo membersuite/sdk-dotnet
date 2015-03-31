@@ -8,6 +8,9 @@ namespace MemberSuite.SDK.Types
     public class PaymentProcessorResponse
     {
         [DataMember]
+        public bool IsPreferredProvider { get; set; }
+
+        [DataMember]
         public bool Success { get; set; }
 
         [DataMember]

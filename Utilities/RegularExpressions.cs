@@ -15,8 +15,12 @@ namespace MemberSuite.SDK.Utilities
         private const string ORGANIZATIONAL_LAYER_TYPE_HINT = "006B";
         private const string MERCHANDISE_HINT = "0076";
 
-        ///<summary>Regexes for parsing request path.  Uses [A-Fa-f0-9] for GUID characters instead of \w because we want to be very particular with the path and don't want to match _</summary>
+        /// <summary>
+        ///     Regexes for parsing request path.  Uses [A-Fa-f0-9] for GUID characters instead of \w because we want to be
+        ///     very particular with the path and don't want to match _
+        /// </summary>
         public static string DynamicImageDetectorRegex = String.Format(@"/(?<AssociationHint>[A-Fa-f0-9]{{8}})-{0}-(?<AssociationIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}})/(?<PartitionKey>\d+)/\k<AssociationHint>-{1}-(?<FileIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}}$)", ASSOCIATION_TYPE_HINT, FILE_TYPE_HINT);
+
         public static string PathRegex = string.Format(@"^/(?<AssociationHint>[A-Fa-f0-9]{{8}})-{0}-(?<AssociationIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}})/(?<PartitionKey>\d+)/\k<AssociationHint>-{1}-(?<FileIdNoHints>[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{4}}-[A-Fa-f0-9]{{12}}$)", ASSOCIATION_TYPE_HINT, FILE_TYPE_HINT);
         public static readonly string TypeCreatedRegex = @"\w+\.(\w+)\.\w+";
         public static readonly string FrontDoorRegex = @"Console.(\w+).FrontDoor";
@@ -30,6 +34,7 @@ namespace MemberSuite.SDK.Utilities
         public static readonly string DefaultPageDetectorRegex = @"/default";
         public static readonly string TelerikDetector1Regex = @"Telerik.Web.UI";
         public static readonly string TelerikDetector2Regex = @"\.axd";
+        public static readonly string ListSplitterRegex = ";| |,|\r";
         public static readonly string FileNameIdRegex = string.Format(@"_(?<FileId>[A-F0-9]{{8}}-{0}-[A-F0-9]{{4}}-[A-F0-9]{{4}}-[A-F0-9]{{12}}).", FILE_TYPE_HINT);
         public static readonly string MessageOpenDetectorRegex = @"/emarketing/omd.gif";
         public static readonly string MessageOpenDetectorUrlRegex = @"/emod.gif";
@@ -105,7 +110,7 @@ namespace MemberSuite.SDK.Utilities
         public static readonly string PathSplitterRegex = @"(.*)\\(.*)";
         public static readonly string OldConnectionStringParserRegex = @"server=(.*?);database=(.*?);(UID=(.*?);Password=(.*))?"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase );
         public static readonly string NewConnectionStringParserRegex = @"Data Source=(.*?);Initial Catalog=(.*?);"; //, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static readonly string RemoveSpecialCharactersRegex = "[^a-zA-Z0-9_.]+"; 
+        public static readonly string RemoveSpecialCharactersRegex = "[^a-zA-Z0-9_.]+";
         //uncached, accomodate within the default 15
         public static Func<string, string> GetDefaultPortalUrlRegex = protocol => String.Format(@"{0}://customer(?<PartitionKey>\d+)(?<Last4>[A-Fa-f0-9]{{4,}})", protocol);
         //caller caches appdomain-wide

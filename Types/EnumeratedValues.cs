@@ -574,6 +574,15 @@ namespace MemberSuite.SDK.Types
         Both
     }
 
+    public enum IndexedQuickSearchUsage
+    {
+        Never = 0,
+        QuickSearchesOnly = 5
+       // EverywhereInTheConsole = 10
+        //EverywhereInTheConsoleAndPortal = 15
+        
+    }
+
     public enum TermType
     {
         Days = 0,

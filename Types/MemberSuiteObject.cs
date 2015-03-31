@@ -372,6 +372,7 @@ namespace MemberSuite.SDK.Types
             allowableTypes.Add(typeof(Tab));
             allowableTypes.Add(typeof(AssociationMode));
             allowableTypes.Add(typeof(ConsolePortalOptions));
+            allowableTypes.Add(typeof(IndexedQuickSearchUsage));
 
             allowableTypes.Add(typeof(List<MemberSuiteObject>));
             allowableTypes.Add(typeof(FinancialRecurrenceTemplate));
@@ -1046,7 +1047,14 @@ namespace MemberSuite.SDK.Types
                     if (genericArgs.Length > 0 && genericArgs[0].IsSubclassOf(typeof(MemberSuiteObject)))
                     {
                         // let's create a new list
+
+                        //!!! Important! Don't use Container in any shared code. Shared code is used by API and JES as well as Console and Portal.
+                        // Console and Portal are not configured to use Container!
+                        //IList newList = (IList)MemberSuite.Container.GetOrCreateInstance(typeof(List<>).MakeGenericType(genericArgs[0]));
+
                         IList newList = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(genericArgs[0]));
+
+                  
 
                         IEnumerable oldList = newMSO[pi.Name] as IEnumerable;
 

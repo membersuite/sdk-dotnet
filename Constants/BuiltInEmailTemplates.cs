@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MemberSuite.SDK.Constants
+﻿namespace MemberSuite.SDK.Constants
 {
     public static class EmailTemplates
     {
@@ -59,11 +54,11 @@ namespace MemberSuite.SDK.Constants
             public const string SecondReminder = "BuiltIn:SubscriptionSecondReminder";
             public const string ThirdReminder = "BuiltIn:SubscriptionThirdReminder";
             public const string DropNotice = "BuiltIn:SubscriptionDropNotice";
-
         }
 
         public static class Events
         {
+            public const string AbstractSubmission = "BuiltIn:AbstractSubmission";
             public const string Confirmation = "BuiltIn:RegistrationConfirmation";
             public const string WaitList = "BuiltIn:WaitListConfirmation";
         }
@@ -86,28 +81,35 @@ namespace MemberSuite.SDK.Constants
             public const string DonorThankYou = "BuiltIn:DonorThankYou";
             public const string RecurringGiftSuccess = "BuiltIn:RecurringGiftSuccess";
             public const string RecurringGiftFailure = "BuiltIn:RecurringGiftFailure";
-
         }
 
         public static class CareerCenter
         {
             public const string JobPostingResumeSubmission = "BuiltIn:JobPostingResumeSubmission";
             public const string JobPosted = "BuiltIn:JobPosted";
-
         }
 
         public static class Sales
         {
             public const string AccountAssignment = "BuiltIn:AccountAssignment";
             public const string LeadAssignment = "BuiltIn:LeadAssignment";
-
         }
 
         public static class Volunteers
         {
             public const string JobAssignmentNotification = "BuiltIn:JobAssignmentNotification";
+        }
 
+        public static class Certifications
+        {
+            public const string CertificationRecommendation = "BuiltIn:CertificationRecommendation";
+        }
 
+        public static class Discussions
+        {
+            public const string DiscussionPostApproval = "BuiltIn:DiscussionPostApproval";
+            public const string DiscussionPostRejection = "BuiltIn:DiscussionPostRejection";
+            public const string DiscussionTopicSubscription = "BuiltIn:DiscussionTopicSubscription";
         }
     }
 }

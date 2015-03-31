@@ -27,11 +27,14 @@ namespace MemberSuite.SDK.Types
         /// </summary>
         /// <value>The default sort fieds.</value>
         [DataMember]
-        public List<SearchSortColumn> DefaultSortFieds { get; set; }
+        public List<SearchSortColumn> DefaultSortFields { get; set; }
+
 
         /// <summary>
         /// These are the default columns that the quick search will act on
         /// </summary>
+        [XmlArray("DefaultQuickSearchCriteria")]
+        [XmlArrayItem("CriteriaField")]
         [DataMember]
         public List<string> DefaultQuickSearchCriteria { get; set; }
 

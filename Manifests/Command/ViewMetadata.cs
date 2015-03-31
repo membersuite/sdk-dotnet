@@ -483,7 +483,8 @@ namespace MemberSuite.SDK.Manifests.Command
                                              PortalAccessibility =  fieldMetadata.PortalAccessibility,
                                              ReferenceType = fieldMetadata.ReferenceType,
                                              ReferenceContext = fieldMetadata.ReferenceTypeContext,
-                                             DataSourceExpression = Formats.GetSafeFieldName(fieldMetadata.Name)
+                                             DataSourceExpression = Formats.GetSafeFieldName(fieldMetadata.Name),
+                                             LookupTableID = fieldMetadata.LookupTableID    // MS-6019 (Modified 1/9/2015) Need to account for lookup tables
                                          };
             return result;
         }
