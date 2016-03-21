@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
@@ -18,6 +15,5 @@ namespace MemberSuite.SDK.Types
         public string IndividualID { get; set; }
         public string IndividualFirstName { get; set; }
         public string IndividualLastName { get; set; }
-        
     }
 }

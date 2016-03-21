@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -22,8 +23,8 @@ using MemberSuite.SDK.Utilities;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Represents everything about a "field", or in the .NET world, a property, on
-    /// an object
+    ///     Represents everything about a "field", or in the .NET world, a property, on
+    ///     an object
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [Serializable]
@@ -31,7 +32,12 @@ namespace MemberSuite.SDK.Types
     public class FieldMetadata
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldMetadata"/> class.
+        ///     The _declaring type
+        /// </summary>
+        private string _declaringType;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="FieldMetadata" /> class.
         /// </summary>
         public FieldMetadata()
         {
@@ -44,7 +50,7 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
         [XmlAttribute]
@@ -52,7 +58,7 @@ namespace MemberSuite.SDK.Types
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the label.
+        ///     Gets or sets the label.
         /// </summary>
         /// <value>The label.</value>
         [XmlAttribute]
@@ -60,7 +66,7 @@ namespace MemberSuite.SDK.Types
         public string Label { get; set; }
 
         /// <summary>
-        /// Gets or sets the portal prompt.
+        ///     Gets or sets the portal prompt.
         /// </summary>
         /// <value>The portal prompt.</value>
         [XmlAttribute]
@@ -68,7 +74,7 @@ namespace MemberSuite.SDK.Types
         public string PortalPrompt { get; set; }
 
         /// <summary>
-        /// Gets or sets the help text.
+        ///     Gets or sets the help text.
         /// </summary>
         /// <value>The help text.</value>
         [XmlAttribute]
@@ -76,7 +82,7 @@ namespace MemberSuite.SDK.Types
         public string HelpText { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace.
+        ///     Gets or sets the namespace.
         /// </summary>
         /// <value>The namespace.</value>
         [XmlAttribute]
@@ -84,7 +90,7 @@ namespace MemberSuite.SDK.Types
         public string Namespace { get; set; }
 
         /// <summary>
-        /// Gets or sets the portal accessibility.
+        ///     Gets or sets the portal accessibility.
         /// </summary>
         /// <value>The portal accessibility.</value>
         [XmlAttribute]
@@ -92,7 +98,7 @@ namespace MemberSuite.SDK.Types
         public PortalAccessibility PortalAccessibility { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of field
+        ///     Gets or sets the type of field
         /// </summary>
         /// <value>The type.</value>
         [XmlAttribute]
@@ -100,7 +106,7 @@ namespace MemberSuite.SDK.Types
         public FieldType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the data.
+        ///     Gets or sets the type of the data.
         /// </summary>
         /// <value>The type of the data.</value>
         [XmlAttribute]
@@ -108,7 +114,7 @@ namespace MemberSuite.SDK.Types
         public FieldDataType DataType { get; set; }
 
         /// <summary>
-        /// Gets or sets the display type.
+        ///     Gets or sets the display type.
         /// </summary>
         /// <value>The display type.</value>
         [XmlAttribute]
@@ -116,7 +122,7 @@ namespace MemberSuite.SDK.Types
         public FieldDisplayType DisplayType { get; set; }
 
         /// <summary>
-        /// Gets or sets the width of the column.
+        ///     Gets or sets the width of the column.
         /// </summary>
         /// <value>The width of the column.</value>
         [XmlIgnore]
@@ -124,7 +130,7 @@ namespace MemberSuite.SDK.Types
         public int? ColumnWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the null value label.
+        ///     Gets or sets the null value label.
         /// </summary>
         /// <value>The null value label.</value>
         [XmlAttribute]
@@ -132,7 +138,7 @@ namespace MemberSuite.SDK.Types
         public string NullValueLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        ///     Gets or sets the description.
         /// </summary>
         /// <value>The description.</value>
         [XmlAttribute]
@@ -140,12 +146,7 @@ namespace MemberSuite.SDK.Types
         public string Description { get; set; }
 
         /// <summary>
-        /// The _declaring type
-        /// </summary>
-        private string _declaringType;
-
-        /// <summary>
-        /// Gets or sets the type that this field is declared on
+        ///     Gets or sets the type that this field is declared on
         /// </summary>
         /// <value>The type of the declaring.</value>
         [XmlAttribute]
@@ -162,7 +163,7 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// Gets or sets the lookup table ID.
+        ///     Gets or sets the lookup table ID.
         /// </summary>
         /// <value>The lookup table ID.</value>
         [XmlAttribute]
@@ -170,7 +171,7 @@ namespace MemberSuite.SDK.Types
         public string LookupTableID { get; set; }
 
         /// <summary>
-        /// Gets or sets the extension service ID that will populate this record (dropdowns/ajax combobox only)
+        ///     Gets or sets the extension service ID that will populate this record (dropdowns/ajax combobox only)
         /// </summary>
         /// <value>The extension service ID.</value>
         [XmlAttribute]
@@ -178,7 +179,7 @@ namespace MemberSuite.SDK.Types
         public string ExtensionServiceID { get; set; }
 
         /// <summary>
-        /// Gets or sets the relationship type ID.
+        ///     Gets or sets the relationship type ID.
         /// </summary>
         /// <value>The relationship type ID.</value>
         [XmlAttribute]
@@ -186,7 +187,7 @@ namespace MemberSuite.SDK.Types
         public string RelationshipTypeID { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="FieldMetadata" /> is sortable.
+        ///     Gets or sets a value indicating whether this <see cref="FieldMetadata" /> is sortable.
         /// </summary>
         /// <value><c>true</c> if sortable; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -194,7 +195,7 @@ namespace MemberSuite.SDK.Types
         public bool Sortable { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="FieldMetadata" /> is displayable.
+        ///     Gets or sets a value indicating whether this <see cref="FieldMetadata" /> is displayable.
         /// </summary>
         /// <value><c>true</c> if displayable; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -202,7 +203,7 @@ namespace MemberSuite.SDK.Types
         public bool Displayable { get; set; }
 
         /// <summary>
-        /// Gets or sets the default value.
+        ///     Gets or sets the default value.
         /// </summary>
         /// <value>The default value.</value>
         [XmlAttribute]
@@ -210,7 +211,7 @@ namespace MemberSuite.SDK.Types
         public string DefaultValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum value.
+        ///     Gets or sets the minimum value.
         /// </summary>
         /// <value>The minimum value.</value>
         [XmlAttribute]
@@ -218,7 +219,7 @@ namespace MemberSuite.SDK.Types
         public string MinimumValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum value.
+        ///     Gets or sets the maximum value.
         /// </summary>
         /// <value>The maximum value.</value>
         [XmlAttribute]
@@ -226,7 +227,7 @@ namespace MemberSuite.SDK.Types
         public string MaximumValue { get; set; }
 
         /// <summary>
-        /// If this is a pick list object, contains the entries that should be in the picklist
+        ///     If this is a pick list object, contains the entries that should be in the picklist
         /// </summary>
         /// <value>The pick list entries.</value>
         [XmlArray("PickListEntries")]
@@ -235,7 +236,7 @@ namespace MemberSuite.SDK.Types
         public List<PickListEntry> PickListEntries { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the reference, if this is a reference type
+        ///     Gets or sets the type of the reference, if this is a reference type
         /// </summary>
         /// <value>The type of the reference.</value>
         [XmlAttribute]
@@ -243,7 +244,7 @@ namespace MemberSuite.SDK.Types
         public string ReferenceType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is required.
+        ///     Gets or sets a value indicating whether this instance is required.
         /// </summary>
         /// <value><c>true</c> if this instance is required; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -251,7 +252,7 @@ namespace MemberSuite.SDK.Types
         public bool IsRequired { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is required in portal.
+        ///     Gets or sets a value indicating whether this instance is required in portal.
         /// </summary>
         /// <value><c>true</c> if this instance is required in portal; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -259,7 +260,7 @@ namespace MemberSuite.SDK.Types
         public bool IsRequiredInPortal { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is sealed.
+        ///     Gets or sets a value indicating whether this instance is sealed.
         /// </summary>
         /// <value><c>true</c> if this instance is sealed; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -267,7 +268,7 @@ namespace MemberSuite.SDK.Types
         public bool IsSealed { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is read only.
+        ///     Gets or sets a value indicating whether this instance is read only.
         /// </summary>
         /// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -275,7 +276,7 @@ namespace MemberSuite.SDK.Types
         public bool IsReadOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the access level.
+        ///     Gets or sets the access level.
         /// </summary>
         /// <value>The access level.</value>
         [XmlAttribute]
@@ -283,7 +284,7 @@ namespace MemberSuite.SDK.Types
         public SecurityLockAccessLevel AccessLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [do not describe].
+        ///     Gets or sets a value indicating whether [do not describe].
         /// </summary>
         /// <value><c>true</c> if [do not describe]; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -291,7 +292,7 @@ namespace MemberSuite.SDK.Types
         public bool DoNotDescribe { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is overriden.
+        ///     Gets or sets a value indicating whether this instance is overriden.
         /// </summary>
         /// <value><c>true</c> if this instance is overriden; otherwise, <c>false</c>.</value>
         [XmlIgnore]
@@ -299,7 +300,7 @@ namespace MemberSuite.SDK.Types
         public bool IsOverriden { get; set; }
 
         /// <summary>
-        /// Gets or sets the custom field ID.
+        ///     Gets or sets the custom field ID.
         /// </summary>
         /// <value>The custom field ID.</value>
         [XmlAttribute]
@@ -307,7 +308,7 @@ namespace MemberSuite.SDK.Types
         public string CustomFieldID { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference type context.
+        ///     Gets or sets the reference type context.
         /// </summary>
         /// <value>The reference type context.</value>
         [XmlAttribute]
@@ -315,7 +316,7 @@ namespace MemberSuite.SDK.Types
         public string ReferenceTypeContext { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the metadata.
+        ///     Gets or sets the type of the metadata.
         /// </summary>
         /// <value>The type of the metadata.</value>
         [XmlAttribute]
@@ -323,7 +324,7 @@ namespace MemberSuite.SDK.Types
         public string MetadataType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [do not convert time to UTC].
+        ///     Gets or sets a value indicating whether [do not convert time to UTC].
         /// </summary>
         /// <value><c>true</c> if [do not convert time to UTC]; otherwise, <c>false</c>.</value>
         [XmlAttribute]
@@ -331,7 +332,7 @@ namespace MemberSuite.SDK.Types
         public bool DoNotConvertTimeToUTC { get; set; }
 
         /// <summary>
-        /// The number of digits available after the decimal point.  Applies to fields with a FieldDataType of Decimal only.
+        ///     The number of digits available after the decimal point.  Applies to fields with a FieldDataType of Decimal only.
         /// </summary>
         /// <value>The precision.</value>
         [XmlAttribute]
@@ -339,7 +340,7 @@ namespace MemberSuite.SDK.Types
         public int Precision { get; set; }
 
         /// <summary>
-        /// Suppresses default value assignment
+        ///     Suppresses default value assignment
         /// </summary>
         [XmlAttribute]
         [DataMember]
@@ -353,20 +354,22 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public string EndingYear { get; set; }
 
+        [DataMember]
+        public string ApplicableType { get; set; }
 
         #region Methods
 
         /// <summary>
-        /// Makes a copy of this object
+        ///     Makes a copy of this object
         /// </summary>
         /// <returns>FieldMetadata.</returns>
         public FieldMetadata Clone()
         {
-            FieldMetadata meta = (FieldMetadata) MemberwiseClone();
+            var meta = (FieldMetadata) MemberwiseClone();
 
             meta.PickListEntries = new List<PickListEntry>();
             if (PickListEntries != null)
-                foreach (PickListEntry pe in PickListEntries)
+                foreach (var pe in PickListEntries)
                     meta.PickListEntries.Add(pe.Clone());
 
 
@@ -376,7 +379,7 @@ namespace MemberSuite.SDK.Types
         #endregion
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
@@ -384,52 +387,51 @@ namespace MemberSuite.SDK.Types
             return string.Format("{0} <{1}>", Name, DataType);
         }
 
-
         /// <summary>
-        /// Parses the specified list of pick list entries.
+        ///     Parses the specified list of pick list entries.
         /// </summary>
         /// <param name="listOfPickListEntries">The list of pick list entries.</param>
         /// <returns>List{PickListEntry}.</returns>
         public static List<PickListEntry> Parse(string listOfPickListEntries)
         {
-            List<PickListEntry> entries = new List<PickListEntry>();
+            var entries = new List<PickListEntry>();
             if (listOfPickListEntries == null)
                 return entries;
 
-            string[] parts = listOfPickListEntries.Split('\n');
+            var parts = listOfPickListEntries.Split('\n');
 
             // let's iterate through each entry
-            foreach (string pickListEntry in parts)
+            foreach (var pickListEntry in parts)
             {
                 // can we match to the regular expression?
-                Match m = Regex.Match(pickListEntry, RegularExpressions.ParserRegex, RegexOptions.Compiled);
+                var m = Regex.Match(pickListEntry, RegularExpressions.ParserRegex, RegexOptions.Compiled);
 
                 // nope, keep it moving
                 if (!m.Success)
                     continue;
 
                 // yep - let's create a new entry
-                PickListEntry pe = new PickListEntry();
+                var pe = new PickListEntry();
 
                 pe.Text = m.Groups[1].Value;
                 pe.Value = m.Groups[2].Value;
 
-                if (String.IsNullOrEmpty(pe.Value))
+                if (string.IsNullOrEmpty(pe.Value))
                     pe.Value = pe.Text; // if no value specified
 
-                if (String.IsNullOrEmpty(pe.Text.Trim())) // nothing to do
+                if (string.IsNullOrEmpty(pe.Text.Trim())) // nothing to do
                     continue;
                 pe.Text = pe.Text.Trim();
                 pe.Value = pe.Value.Trim();
 
 
-                List<string> dependencyFields = new List<string>();
-                string includedFields = m.Groups[3].Value;
-                if (!String.IsNullOrEmpty(includedFields))
+                var dependencyFields = new List<string>();
+                var includedFields = m.Groups[3].Value;
+                if (!string.IsNullOrEmpty(includedFields))
                     dependencyFields.AddRange(StringUtil.TrimStringArray(includedFields.Split('|')));
 
-                string excludedFields = m.Groups[4].Value;
-                if (!String.IsNullOrEmpty(excludedFields))
+                var excludedFields = m.Groups[4].Value;
+                if (!string.IsNullOrEmpty(excludedFields))
                 {
                     dependencyFields.Clear();
                     pe.InvertCascadingDependency = true;
@@ -439,9 +441,9 @@ namespace MemberSuite.SDK.Types
                 // now - add them
                 if (pe.CascadingDropDownParentValues == null)
                     pe.CascadingDropDownParentValues = new List<string>();
-                foreach (string dField in dependencyFields)
+                foreach (var dField in dependencyFields)
                 {
-                    if (String.IsNullOrEmpty(dField))
+                    if (string.IsNullOrEmpty(dField))
                         continue;
                     pe.CascadingDropDownParentValues.Add(dField);
                 }
@@ -452,9 +454,8 @@ namespace MemberSuite.SDK.Types
             return entries;
         }
 
-
         /// <summary>
-        /// Converts a list of pick list entries to a string
+        ///     Converts a list of pick list entries to a string
         /// </summary>
         /// <returns>System.String.</returns>
         public string ToPickListEntriesString()
@@ -466,7 +467,7 @@ namespace MemberSuite.SDK.Types
 
 
             // fire up the builder!
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // go through each entry, adding a line
             foreach (var entry in entries)
@@ -475,15 +476,15 @@ namespace MemberSuite.SDK.Types
                     continue; // we don't want to show those
 
                 string entryLine;
-                if (entry.Text == entry.Value || String.IsNullOrEmpty(entry.Value))
+                if (entry.Text == entry.Value || string.IsNullOrEmpty(entry.Value))
                     entryLine = entry.Text; // just add the raw text
                 else
                     entryLine = string.Format("{0}|{1}", entry.Text, entry.Value); // separate text|value
 
                 if (entry.CascadingDropDownParentValues != null && entry.CascadingDropDownParentValues.Count > 0)
                 {
-                    StringBuilder sbCacascadingFields = new StringBuilder();
-                    foreach (string cascadingField in entry.CascadingDropDownParentValues)
+                    var sbCacascadingFields = new StringBuilder();
+                    foreach (var cascadingField in entry.CascadingDropDownParentValues)
                         sbCacascadingFields.AppendFormat("{0}|", cascadingField);
 
                     if (!entry.InvertCascadingDependency)
@@ -498,15 +499,13 @@ namespace MemberSuite.SDK.Types
             return sb.ToString();
         }
 
-
         /// <summary>
-        /// Gets the type for.
+        ///     Gets the type for.
         /// </summary>
         /// <param name="dataType">Type of the data.</param>
         /// <returns>Type.</returns>
         public static Type GetTypeFor(FieldDataType dataType)
         {
-
             switch (dataType)
             {
                 case FieldDataType.Text:
@@ -555,7 +554,7 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// Gets an "empty" value for a specific data type
+        ///     Gets an "empty" value for a specific data type
         /// </summary>
         /// <param name="dataType">Type of the data.</param>
         /// <returns>System.Object.</returns>
@@ -602,11 +601,7 @@ namespace MemberSuite.SDK.Types
                 default:
                     return string.Empty;
             }
-
         }
-
-        [DataMember]
-        public string ApplicableType { get; set; }
 
         public static bool IsReferenceable(FieldDataType typeToCheck)
         {
@@ -614,5 +609,4 @@ namespace MemberSuite.SDK.Types
                    typeToCheck == FieldDataType.Image;
         }
     }
-
 }

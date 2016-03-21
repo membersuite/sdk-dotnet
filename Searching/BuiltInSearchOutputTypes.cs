@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MemberSuite.SDK.Searching
+﻿namespace MemberSuite.SDK.Searching
 {
     public static class BuiltInSearchOutputTypes
     {

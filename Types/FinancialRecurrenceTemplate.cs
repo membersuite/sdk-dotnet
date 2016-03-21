@@ -7,7 +7,7 @@ namespace MemberSuite.SDK.Types
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("FinancialRecurrenceTemplate", Namespace = "http://membersuite.com/schemas/",
-      IsNullable = false)]
+        IsNullable = false)]
     [Serializable]
     [DataContract]
     public class FinancialRecurrenceTemplate : IMemberSuiteComponent
@@ -23,8 +23,9 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public DateTime? Date { get; set; }
+
         /// <summary>
-        /// Gets or sets the initial amount (percentage)
+        ///     Gets or sets the initial amount (percentage)
         /// </summary>
         /// <value>The initial amount.</value>
         [DataMember]
@@ -34,14 +35,14 @@ namespace MemberSuite.SDK.Types
         public int? PeriodCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the day of month to recognize revenue
+        ///     Gets or sets the day of month to recognize revenue
         /// </summary>
         /// <value>The day of month.</value>
         [DataMember]
         public int? DayOfMonth { get; set; }
 
         /// <summary>
-        /// Gets or sets the custom entries.
+        ///     Gets or sets the custom entries.
         /// </summary>
         /// <value>The custom entries.</value>
         [DataMember]
@@ -59,19 +60,20 @@ namespace MemberSuite.SDK.Types
     public class RecurrenceEntry
     {
         /// <summary>
-        /// Gets or sets the date.
+        ///     Gets or sets the date.
         /// </summary>
         /// <value>The date.</value>
         [DataMember]
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the percentage.
+        ///     Gets or sets the percentage.
         /// </summary>
         /// <value>The percentage.</value>
         [DataMember]
         public decimal Percentage { get; set; }
     }
+
     public enum RecurrenceType
     {
         MonthlyForFixedNumberOfPeriods = 0,
@@ -83,9 +85,5 @@ namespace MemberSuite.SDK.Types
         MonthlyIndefinitely = 60,
         QuarterlyIndefinitely = 70,
         YearlyIndefinitely = 80
-        
-        
     }
-
-   
 }

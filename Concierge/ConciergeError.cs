@@ -2,9 +2,13 @@
 {
     public struct ConciergeError
     {
-        public ConciergeError(ConciergeErrorCode code, string msg) : this( code, msg, null )
+        private ConciergeErrorCode _code;
+        private string _id;
+        private string _message;
+        private string _offendingField;
+
+        public ConciergeError(ConciergeErrorCode code, string msg) : this(code, msg, null)
         {
-            
         }
 
         public ConciergeError(ConciergeErrorCode code, string msg, string offendingField)
@@ -15,28 +19,24 @@
             _id = null;
         }
 
-        private ConciergeErrorCode _code;
         public ConciergeErrorCode Code
         {
             get { return _code; }
             set { _code = value; }
         }
 
-        private string _message;
         public string Message
         {
             get { return _message; }
             set { _message = value; }
         }
 
-        private string _offendingField;
         public string OffendingField
         {
             get { return _offendingField; }
             set { _offendingField = value; }
         }
 
-        private string _id;
         public string ID
         {
             get { return _id; }

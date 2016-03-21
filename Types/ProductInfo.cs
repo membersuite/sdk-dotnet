@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
@@ -44,7 +41,7 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public bool IsSoldOut { get; set; }
-        
+
         [DataMember]
         public bool SellOnline { get; set; }
 
@@ -56,9 +53,8 @@ namespace MemberSuite.SDK.Types
     [DataContract]
     public class MembershipProductInfo : ProductInfo
     {
-
         /// <summary>
-        /// Gets or sets the type of the membership.
+        ///     Gets or sets the type of the membership.
         /// </summary>
         /// <value>The type of the membership.</value>
         /// <remarks>For membership products only, this is set - otherwise, ignored</remarks>
@@ -77,6 +73,5 @@ namespace MemberSuite.SDK.Types
     [Serializable]
     public class CompetitionEntryFeeProductInfo : ProductInfo
     {
-
     }
 }

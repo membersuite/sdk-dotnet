@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MemberSuite.SDK.Types;
+﻿using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Concierge.Parameters
 {
-    public class CloneExhibitShowRequest : ConciergeRequest 
+    public class CloneExhibitShowRequest : ConciergeRequest
     {
         public string SourceExhibitShowID { get; set; }
-
         public MemberSuiteObject DestinationShow { get; set; }
-
         public CloneExhibitShowOptions Options { get; set; }
     }
 
@@ -27,13 +21,9 @@ namespace MemberSuite.SDK.Concierge.Parameters
         }
 
         public bool CloneBoothsAndFees { get; set; }
-
         public bool CloneMerchandise { get; set; }
-
         public bool CloneContactRestrictions { get; set; }
-
         public bool CloneRegistrationWindows { get; set; }
-
         public bool CloneSponsorshipsAndFees { get; set; }
     }
 }

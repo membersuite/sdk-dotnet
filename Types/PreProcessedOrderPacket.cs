@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
@@ -11,7 +9,7 @@ namespace MemberSuite.SDK.Types
     public class PreProcessedOrderPacket
     {
         /// <summary>
-        /// Gets or sets the finalized order.
+        ///     Gets or sets the finalized order.
         /// </summary>
         /// <value>The finalized order.</value>
         [DataMember]
@@ -42,16 +40,16 @@ namespace MemberSuite.SDK.Types
         public string ShippingCarrierErrorMessage { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [customer can pay later].
+        ///     Gets or sets a value indicating whether [customer can pay later].
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if [customer can pay later]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [customer can pay later]; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
         public bool CustomerCanPayLater { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount due now.
+        ///     Gets or sets the amount due now.
         /// </summary>
         /// <value>The amount due now.</value>
         [DataMember]
@@ -63,16 +61,15 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public List<string> ProductNames { get; set; }
 
-
         /// <summary>
-        /// Gets or sets the product demographics for the products in this order
+        ///     Gets or sets the product demographics for the products in this order
         /// </summary>
         /// <value>The product demographics.</value>
         [DataMember]
         public List<List<FieldMetadata>> ProductDemographics { get; set; }
 
         /// <summary>
-        /// Gets or sets the future billings.
+        ///     Gets or sets the future billings.
         /// </summary>
         /// <value>The future billings.</value>
         [DataMember]
@@ -80,6 +77,11 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public List<ProductInfo> CrossSellCandidates { get; set; }
+
+
+        [DataMember]
+        public string ShippingZone { get; set; }
+       
 
         [DataContract]
         [Serializable]
@@ -92,6 +94,4 @@ namespace MemberSuite.SDK.Types
             public decimal Amount { get; set; }
         }
     }
-
-    
 }

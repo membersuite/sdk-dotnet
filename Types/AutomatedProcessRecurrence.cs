@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -10,6 +8,8 @@ namespace MemberSuite.SDK.Types
     [DataContract]
     public class AutomatedProcessRecurrence : IMemberSuiteComponent
     {
+        [DataMember] public int? NumberOfOccurrences;
+
         [DataMember]
         public AutomatedProcessRecurrenceType Type { get; set; }
 
@@ -49,8 +49,8 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public bool RecalculateOnSave { get; set; }
 
-        [DataMember]
-        public int? NumberOfOccurrences;
+        // need to know the timezone
+        public string TimeZone { get; set; }
 
         public void Clean()
         {
@@ -71,29 +71,34 @@ namespace MemberSuite.SDK.Types
                 EndType = AutomatedProcessRecurrenceEndType.Never;
         }
 
-        public DateTime CalculateNextDate(DateTime refDate)
+        public DateTime? CalculateNextDate(DateTime refDate)
         {
-            return CalculateNextDate(refDate, refDate );
+            return CalculateNextDate(refDate, refDate);
         }
 
-        public DateTime CalculateNextDate(DateTime refDate, DateTime time)
+        public DateTime? CalculateNextDate(DateTime refDate, DateTime time)
         {
             var nextDate = _calculateNextDateHelper(refDate, time);
+
+            if (nextDate == null)
+                return null;
+
             // MS-5041
             // Since we performed all date/time calculations in user specific time zone, we have to convert date/time back to Utc.
             // Using DateTime.ToUniversalTime() would not work here since conversion will asssume curent system's time zone which migh
             // be different from current uers's time zone. That is why we've been experiencing time deviation for other then
             // Eastern Standard Time time zone.
-            nextDate = TimeZoneInfo.ConvertTimeToUtc(nextDate, TimeZoneInfo.FindSystemTimeZoneById(TimeZone));
+            nextDate = TimeZoneInfo.ConvertTimeToUtc(nextDate.Value , TimeZoneInfo.FindSystemTimeZoneById(TimeZone));
 
+            if (EndType == AutomatedProcessRecurrenceEndType.OnASpecificDate && EndDate <= nextDate)
+                return null;    // we're done, this is over
             return nextDate;
         }
 
-        public DateTime _calculateNextDateHelper(DateTime refDate, DateTime time)
+        public DateTime? _calculateNextDateHelper(DateTime refDate, DateTime time)
         {
-
             if (TimeZone == null)
-                TimeZone = System.TimeZoneInfo.Local.Id;
+                TimeZone = TimeZoneInfo.Local.Id;
 
             // ok, note we have to work in local time
             // otherwise we cause bugs like MS-4564
@@ -105,9 +110,12 @@ namespace MemberSuite.SDK.Types
 
             switch (Type)
             {
+                case AutomatedProcessRecurrenceType.OneTime:
+                    return null;
+
                 case AutomatedProcessRecurrenceType.Hourly:
 
-                    if (refDate.Minute >= RecurrenceNumber)  // then it's the NEXT hour
+                    if (refDate.Minute >= RecurrenceNumber) // then it's the NEXT hour
                         refDate = refDate.AddHours(1);
 
                     var minute = RecurrenceNumber;
@@ -115,7 +123,6 @@ namespace MemberSuite.SDK.Types
                         minute = 59;
 
                     return new DateTime(refDate.Year, refDate.Month, refDate.Day, refDate.Hour, minute, refDate.Second);
-
 
 
                 case AutomatedProcessRecurrenceType.Daily:
@@ -126,8 +133,8 @@ namespace MemberSuite.SDK.Types
                         if (newDate.DayOfWeek == DayOfWeek.Sunday) newDate = newDate.AddDays(1);
                     }
 
-                    newDate = new DateTime( newDate.Year, newDate.Month, newDate.Day,
-                        time.Hour, time.Minute, 0 );
+                    newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day,
+                        time.Hour, time.Minute, 0);
                     return newDate;
 
                 case AutomatedProcessRecurrenceType.Weekly:
@@ -148,14 +155,13 @@ namespace MemberSuite.SDK.Types
                         if (refDate.DayOfWeek == DayOfWeek.Friday && Saturday)
                             return refDate.AddDays(1); // then, it's the next day
 
-                        refDate = refDate.AddDays(1);   // now, increase the day
-                    }
-                    while (refDate.DayOfWeek != DayOfWeek.Saturday);
+                        refDate = refDate.AddDays(1); // now, increase the day
+                    } while (refDate.DayOfWeek != DayOfWeek.Saturday);
 
-                    var nextWeeksDate = refDate.AddDays(7 * (RecurrenceNumber - 1));
+                    var nextWeeksDate = refDate.AddDays(7*(RecurrenceNumber - 1));
                     nextWeeksDate = new DateTime(nextWeeksDate.Year, nextWeeksDate.Month, nextWeeksDate.Day,
-                       time.Hour, time.Minute, 0);
-                    for (int i = 0; i < 356; i++)   // put a cap on the recursion
+                        time.Hour, time.Minute, 0);
+                    for (var i = 0; i < 356; i++) // put a cap on the recursion
                     {
                         // let's keep incrementing the date until we find it
                         if (nextWeeksDate.DayOfWeek == DayOfWeek.Sunday && Sunday) return nextWeeksDate;
@@ -172,17 +178,24 @@ namespace MemberSuite.SDK.Types
 
 
                 case AutomatedProcessRecurrenceType.Monthly:
-                    DateTime dtFloating = refDate;
+                    var dtFloating = refDate;
 
                     // let's look at what the date would be of this month's recurrence number
-                    
+
                     // so, if recurrence is every month on the 15th at 8:00pm, if I ask for the next scheduled date on 8/15 8:00pm, I should
                     // get that exact date. But a second later - I should get the following month
-                    DateTime dtCurrentMonthRecurrenceNumber = new DateTime(refDate.Year, refDate.Month, RecurrenceNumber,
-                                                                           time.Hour, time.Minute, time.Second,
-                                                                           time.Millisecond, DateTimeKind.Utc);
+                    //var dtCurrentMonthRecurrenceNumber = new DateTime(refDate.Year, refDate.Month, RecurrenceNumber,
+                    //    time.Hour, time.Minute, time.Second,
+                    //    time.Millisecond, DateTimeKind.Utc);
 
-                    if (refDate > dtCurrentMonthRecurrenceNumber)
+                    // MS-6876 Time portion should not matter here. Above logic can lead to scheduling run several times in a loop.
+                    // The logic is simple:
+                    // If this run accured before recurrence number (day) then specify next run same month at recurence number
+                    // if this run accured at or after recurrence number then move to next month
+                    var dtCurrentMonthRecurrenceNumber = new DateTime(refDate.Year, refDate.Month, RecurrenceNumber,
+                        0, 0, 0, 0, DateTimeKind.Utc);
+
+                    if (refDate >= dtCurrentMonthRecurrenceNumber)
                         dtFloating = dtFloating.AddMonths(1);
 
                     var day = RecurrenceNumber;
@@ -192,15 +205,12 @@ namespace MemberSuite.SDK.Types
                     //    dtFloating = dtFloating.AddMonths(1);   // it's next month
 
                     return new DateTime(dtFloating.Year, dtFloating.Month, day, dtFloating.Hour, dtFloating.Minute,
-                                        dtFloating.Second);
+                        dtFloating.Second);
 
                 default:
                     throw new ApplicationException("Unable to process type " + Type);
             }
         }
-
-        // need to know the timezone
-        public string TimeZone { get; set; }
 
         public override string ToString()
         {
@@ -223,7 +233,7 @@ namespace MemberSuite.SDK.Types
                         RecurrenceNumber);
 
                 case AutomatedProcessRecurrenceType.Weekly:
-                    StringBuilder sb = new StringBuilder(string.Format("Every {0} weeks(s) on: ",
+                    var sb = new StringBuilder(string.Format("Every {0} week(s) on: ",
                         RecurrenceNumber));
                     if (Sunday) sb.Append("Sunday, ");
                     if (Monday) sb.Append("Monday, ");
@@ -258,14 +268,11 @@ namespace MemberSuite.SDK.Types
 
                 case AutomatedProcessRecurrenceEndType.OnASpecificDate:
                     return string.Format("{0} at  {1}", EndDate.Value.ToLongDateString(),
-                         EndDate.Value.ToShortTimeString());
+                        EndDate.Value.ToShortTimeString());
 
                 default:
                     throw new NotSupportedException("unable to process end type " + EndType);
-
             }
-
-
         }
     }
 

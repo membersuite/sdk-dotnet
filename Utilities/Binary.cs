@@ -10,7 +10,7 @@ namespace MemberSuite.SDK.Utilities
             using (var ms = new MemoryStream(serializedObject))
                 return (T) new BinaryFormatter().Deserialize(ms);
         }
-        
+
         public static byte[] Serialize(object obj)
         {
             using (var ms = new MemoryStream())

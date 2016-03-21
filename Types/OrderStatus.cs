@@ -1,6 +1,4 @@
-﻿ 
-
-namespace MemberSuite.SDK.Types
+﻿namespace MemberSuite.SDK.Types
 {
     public enum OrderStatus
     {

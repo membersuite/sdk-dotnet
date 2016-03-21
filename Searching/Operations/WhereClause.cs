@@ -1,15 +1,16 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Searching.Operations
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
-    [System.Serializable]
+    [Serializable]
     [DataContract]
     public class WhereClause : SearchOperation
     {
         /// <summary>
-        /// Gets or sets the clause.
+        ///     Gets or sets the clause.
         /// </summary>
         /// <value>The clause.</value>
         [DataMember]

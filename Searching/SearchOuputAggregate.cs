@@ -1,6 +1,5 @@
 ﻿namespace MemberSuite.SDK.Searching
 {
-    
     public enum SearchOuputAggregate
     {
         None,
@@ -15,6 +14,6 @@
 
         Min,
 
-        Max 
+        Max
     }
 }

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Runtime.Serialization;
 using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Results
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <remarks></remarks>
     [DataContract]
-    public class MSQLResult  
+    public class MSQLResult
     {
         /// <summary>
-        /// Gets or sets the search result.
+        ///     Gets or sets the search result.
         /// </summary>
         /// <value>The search result.</value>
         /// <remarks></remarks>
@@ -23,7 +18,7 @@ namespace MemberSuite.SDK.Results
         public SearchResult SearchResult { get; set; }
 
         /// <summary>
-        /// Gets or sets the single object.
+        ///     Gets or sets the single object.
         /// </summary>
         /// <value>The single object.</value>
         /// <remarks></remarks>
@@ -31,12 +26,11 @@ namespace MemberSuite.SDK.Results
         public MemberSuiteObject SingleObject { get; set; }
 
         /// <summary>
-        /// Gets or sets the object search result.
+        ///     Gets or sets the object search result.
         /// </summary>
         /// <value>The object search result.</value>
         /// <remarks></remarks>
         [DataMember]
         public ObjectSearchResult ObjectSearchResult { get; set; }
-
     }
 }

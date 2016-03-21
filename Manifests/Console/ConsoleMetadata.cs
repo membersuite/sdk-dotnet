@@ -8,18 +8,17 @@ using MemberSuite.SDK.Types;
 namespace MemberSuite.SDK.Manifests.Console
 {
     /// <summary>
-    /// Describes all of the elements of the console
+    ///     Describes all of the elements of the console
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("ConsoleMetadata", Namespace = "http://membersuite.com/schemas/",
         IsNullable = false)]
-    [System.Serializable]
+    [Serializable]
     [DataContract]
-    public class ConsoleMetadata : MetadataBase 
+    public class ConsoleMetadata : MetadataBase
     {
-       
         /// <summary>
-        /// Gets or sets the quick searches.
+        ///     Gets or sets the quick searches.
         /// </summary>
         /// <value>The quick searches.</value>
         [XmlArrayItem("QuickSearch")]
@@ -27,7 +26,7 @@ namespace MemberSuite.SDK.Manifests.Console
         public List<NameValueStringPair> QuickSearches { get; set; }
 
         /// <summary>
-        /// Gets or sets the tabs.
+        ///     Gets or sets the tabs.
         /// </summary>
         /// <value>The tabs.</value>
         [DataMember]
@@ -36,8 +35,5 @@ namespace MemberSuite.SDK.Manifests.Console
         [XmlArrayItem("Resource")]
         [DataMember]
         public List<StringResource> Resources { get; set; }
-
-      
-        
     }
 }

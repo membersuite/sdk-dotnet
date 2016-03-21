@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Manifests.CustomField
 {
     /// <summary>
-    /// Used to create a custom field and simultaneously update 
-    /// page layout containers
+    ///     Used to create a custom field and simultaneously update
+    ///     page layout containers
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     [DataContract]
     public class CustomFieldCreationPacket
     {
@@ -19,9 +20,7 @@ namespace MemberSuite.SDK.Manifests.CustomField
             PortalPageLayouts = new List<NameValuePair>();
         }
 
-        [DataMember]
-        public MemberSuiteObject CustomFieldContainer { get; set; }
-
+        
         [DataMember]
         public List<NameValuePair> DataEntryPageLayouts { get; set; }
 

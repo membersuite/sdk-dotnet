@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -26,7 +25,7 @@ namespace MemberSuite.SDK.Utilities
 
         public static string GetSafeFieldName(string fieldName, bool canBeginWithNumber, bool ignorePeriods)
         {
-            if (String.IsNullOrEmpty(fieldName))
+            if (string.IsNullOrEmpty(fieldName))
                 return fieldName;
 
             if (!canBeginWithNumber)
@@ -61,7 +60,7 @@ namespace MemberSuite.SDK.Utilities
 
         public static string MakePlural(string name)
         {
-            if (name.EndsWith( "ch" ) || name.EndsWith("s"))
+            if (name.EndsWith("ch") || name.EndsWith("s"))
                 name += "es";
             else if (name.EndsWith("y") && !name.EndsWith("ay"))
                 name = name.Substring(0, name.Length - 1) + "ies";
@@ -80,7 +79,8 @@ namespace MemberSuite.SDK.Utilities
             result.Replace('æ', 'a').Replace('Æ', 'A').Replace('œ', 'o').Replace('ø', 'o').Replace('Œ', 'O');
             result.Replace('Ø', 'O').Replace('ð', 'd').Replace('Ð', 'D').Replace('ß', 's');
             result.Replace('ł', 'l').Replace('Ł', 'L').Replace('¿', '?').Replace('¡', '!');
-            result.Replace('\u2018', '\'').Replace('\u2019', '\'').Replace('\u201c', '\"').Replace('\u201d', '\"'); // These characters are the Word style single and double quotes
+            result.Replace('\u2018', '\'').Replace('\u2019', '\'').Replace('\u201c', '\"').Replace('\u201d', '\"');
+                // These characters are the Word style single and double quotes
 
             // This should get the remaining "extended ascii" accented
             return new StringBuilder().Append(result.ToString().Normalize(NormalizationForm.FormKD)
@@ -103,17 +103,19 @@ namespace MemberSuite.SDK.Utilities
                 return null;
 
             return Regex.Replace(variableName, "([A-Z])", " $1").Trim()
-                .Replace( "G L A", "GL A")
+                .Replace("G L A", "GL A")
                 .Replace("A P I", "API")
                 .Replace("C O G S", "COGS")
                 .Replace("C E U", "CEU")
                 .Replace("C R M", "CRM")
                 .Replace("Y T D", "YTD")
                 .Replace("I D", "ID")
+                .Replace("M I P", "MIP")
                 .Replace("N R D S", "NRDS");
         }
 
-        public static string GetQueryString(NameValueCollection queryStringParameters, IEnumerable<string> parametersToRemove)
+        public static string GetQueryString(NameValueCollection queryStringParameters,
+            IEnumerable<string> parametersToRemove)
         {
             const string RESULT = "?";
 
@@ -128,16 +130,19 @@ namespace MemberSuite.SDK.Utilities
             if (queryStringParameters.Count == 0)
                 return RESULT;
 
-            return queryStringParameters.Cast<string>().Aggregate(RESULT, (current, parameter) => String.Format("{0}{1}={2}&", current, parameter, queryStringParameters[parameter]));
+            return queryStringParameters.Cast<string>()
+                .Aggregate(RESULT,
+                    (current, parameter) =>
+                        string.Format("{0}{1}={2}&", current, parameter, queryStringParameters[parameter]));
         }
 
         public static string FormatWebSiteAsUrl(string urlToFormat)
         {
-            if (String.IsNullOrWhiteSpace(urlToFormat)) 
+            if (string.IsNullOrWhiteSpace(urlToFormat))
                 return null;
-           
+
             if (urlToFormat.Contains("://")) //it's already a URI, so leave it
-                return urlToFormat ;
+                return urlToFormat;
 
             return "http://" + urlToFormat;
         }
@@ -149,7 +154,7 @@ namespace MemberSuite.SDK.Utilities
 
             var matches = Regex.Matches(phoneNumber, RegularExpressions.PhoneNumberRegex, RegexOptions.Compiled);
             if (matches.Count != 10)
-                return phoneNumber;  // don't even bother
+                return phoneNumber; // don't even bother
 
             phoneNumber = string.Format("({0}{1}{2}) {3}{4}{5}-{6}{7}{8}{9}",
                 matches[0].Groups[0].Value,

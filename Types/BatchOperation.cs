@@ -7,7 +7,7 @@ namespace MemberSuite.SDK.Types
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [Serializable]
     [DataContract]
-    public class BatchOperation : CommandShortcut 
+    public class BatchOperation : CommandShortcut
     {
         [XmlAttribute]
         [DataMember]

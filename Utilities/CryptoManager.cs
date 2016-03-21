@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,22 +11,6 @@ namespace MemberSuite.SDK.Utilities
 {
     public class CryptoManager
     {
-        #region Private Static Fields
-
-        /// <summary>
-        /// The encrypted Rijndael key to use during the life of the executing process for process scoped encryption.
-        /// This should always be stored in a SecureString or other encrypted type to minimize the time the clear-text key exists in memory.
-        /// </summary>
-        private static SecureString EncryptedProcessSymmetricKey;
-
-        /// <summary>
-        /// The encrypted Rijndael Initialization Vector (IV) to use during the life of the executing process for process scoped encryption.
-        /// This should always be stored in a SecureString or other encrypted type to minimize the time the clear-text IV exists in memory.
-        /// </summary>
-        private static SecureString EncryptedProcessSymmetricIV;
-
-        #endregion
-
         static CryptoManager()
         {
             //Generate the Rijndael key/IV pair to use to encrypt/decrypt data during the life of the executing process
@@ -36,16 +18,17 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Creates a new instance of the RijndaelManaged provider using random key/IV values that exist during the life of the executing process.
+        ///     Creates a new instance of the RijndaelManaged provider using random key/IV values that exist during the life of the
+        ///     executing process.
         /// </summary>
         /// <returns></returns>
         private static RijndaelManaged GetProcessSymetricProvider()
         {
-            RijndaelManaged result = new RijndaelManaged();
+            var result = new RijndaelManaged();
 
             //Create pointers to the encrypted data in the SecureStrings used to store the key and IV values
-            IntPtr keyPointer = Marshal.SecureStringToBSTR(EncryptedProcessSymmetricKey);
-            IntPtr ivPointer = Marshal.SecureStringToBSTR(EncryptedProcessSymmetricIV);
+            var keyPointer = Marshal.SecureStringToBSTR(EncryptedProcessSymmetricKey);
+            var ivPointer = Marshal.SecureStringToBSTR(EncryptedProcessSymmetricIV);
 
             //Always access securedstring in a try/finally to clean up the pointers
             try
@@ -65,8 +48,10 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Retrieves a X509 Certificate from the Local Machine certificate store using the given store and subject. This method attempts to match on the certificate subject
-        /// which is less unique than thumbprint but does not require settings to be reconfigured if the certificate is regenerated. 
+        ///     Retrieves a X509 Certificate from the Local Machine certificate store using the given store and subject. This
+        ///     method attempts to match on the certificate subject
+        ///     which is less unique than thumbprint but does not require settings to be reconfigured if the certificate is
+        ///     regenerated.
         /// </summary>
         /// <param name="subject">The subject of the certificate to retrieve (usually starts with CN=)</param>
         /// <param name="store">Optional store location of certificates</param>
@@ -74,54 +59,66 @@ namespace MemberSuite.SDK.Utilities
         public static X509Certificate2 GetCertificateByStoreAndSubject(string subject, string store)
         {
             //Determine the store to use - always LocalMachine but the store name may be configured
-            X509Store certStore = string.IsNullOrWhiteSpace(store)
-                                      ? new X509Store(StoreLocation.LocalMachine)
-                                      : new X509Store(store, StoreLocation.LocalMachine);
+            var certStore = string.IsNullOrWhiteSpace(store)
+                ? new X509Store(StoreLocation.LocalMachine)
+                : new X509Store(store, StoreLocation.LocalMachine);
             certStore.Open(OpenFlags.ReadOnly);
 
             //Not a keyed collection so query on the subject name using LINQ
-            X509Certificate2 result =
+            var result =
                 certStore.Certificates.Cast<X509Certificate2>().FirstOrDefault(
                     currentCert => currentCert.Subject.Equals(subject));
             if (result == null)
                 throw new ApplicationException(
-                    String.Format("Unable to locate certificate with Container Name '{0}' in Store {1}", subject,
-                                  certStore.Name));
+                    string.Format("Unable to locate certificate with Container Name '{0}' in Store {1}", subject,
+                        certStore.Name));
 
             return result;
         }
 
         /// <summary>
-        /// Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will attempt to use RSA using SHA1 first then will attempt DSA.
+        ///     Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will
+        ///     attempt to use RSA using SHA1 first then will attempt DSA.
         /// </summary>
         /// <param name="data">The data to use to verify the signature</param>
         /// <param name="signature">The signature to verify</param>
         /// <param name="key">The PublicKey to use to verify the data.</param>
-        /// <returns>True if the supplied signature was generated using the private key pair of the supplied public key against the supplied data. Otherwise false.</returns>
+        /// <returns>
+        ///     True if the supplied signature was generated using the private key pair of the supplied public key against the
+        ///     supplied data. Otherwise false.
+        /// </returns>
         public static bool VerifySignature(byte[] data, byte[] signature, PublicKey key)
         {
             return VerifySignature(data, signature, key.Key);
         }
 
         /// <summary>
-        /// Attempts to use the supplied certificate to verify the supplied digital signature against the supplied data.  Will verify with the public key always as it should have been signed with the private key.
+        ///     Attempts to use the supplied certificate to verify the supplied digital signature against the supplied data.  Will
+        ///     verify with the public key always as it should have been signed with the private key.
         /// </summary>
         /// <param name="data">The data to use to verify the signature</param>
         /// <param name="signature">The signature to verify</param>
         /// <param name="certificate">The certificate containing the PublicKey to use to verify the data.</param>
-        /// <returns>True if the supplied signature was generated using the private key pair of the supplied public key against the supplied data. Otherwise false.</returns>
+        /// <returns>
+        ///     True if the supplied signature was generated using the private key pair of the supplied public key against the
+        ///     supplied data. Otherwise false.
+        /// </returns>
         public static bool VerifySignature(byte[] data, byte[] signature, X509Certificate2 certificate)
         {
             return VerifySignature(data, signature, certificate.PublicKey);
         }
 
         /// <summary>
-        /// Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will attempt to use RSA using SHA1 first then will attempt DSA.
+        ///     Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will
+        ///     attempt to use RSA using SHA1 first then will attempt DSA.
         /// </summary>
         /// <param name="data">The data to use to verify the signature</param>
         /// <param name="signature">The signature to verify</param>
         /// <param name="key">The PublicKey to use to verify the data.</param>
-        /// <returns>True if the supplied signature was generated using the private key pair of the supplied public key against the supplied data. Otherwise false.</returns>
+        /// <returns>
+        ///     True if the supplied signature was generated using the private key pair of the supplied public key against the
+        ///     supplied data. Otherwise false.
+        /// </returns>
         public static bool VerifySignature(byte[] data, byte[] signature, AsymmetricAlgorithm key)
         {
             if (data == null || data.Length == 0)
@@ -134,26 +131,31 @@ namespace MemberSuite.SDK.Utilities
                 throw new ArgumentNullException("key", "Signature cannot be verified with a null key");
 
             //Try RSA fist because it's the default when creating a new certificate
-            RSACryptoServiceProvider RSASigner = key as RSACryptoServiceProvider;
+            var RSASigner = key as RSACryptoServiceProvider;
             if (RSASigner != null)
                 //Currently only supports the certifiacte default SHA1 - to change in the future we'll need a variable
                 return RSASigner.VerifyData(data, new SHA1CryptoServiceProvider(), signature);
 
             //The public key is not using RSA - try DSA
-            DSACryptoServiceProvider DSASigner = key as DSACryptoServiceProvider;
+            var DSASigner = key as DSACryptoServiceProvider;
             if (DSASigner != null)
                 return DSASigner.VerifyData(data, signature);
 
-            throw new ApplicationException("Unsupported public key algorithm.  Only RSA (default) and DSA are supported.");
+            throw new ApplicationException(
+                "Unsupported public key algorithm.  Only RSA (default) and DSA are supported.");
         }
 
         /// <summary>
-        /// Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will attempt to use RSA using SHA1 first then will attempt DSA.
+        ///     Attempts to use the supplied public key to verify the supplied digital signature against the supplied data.  Will
+        ///     attempt to use RSA using SHA1 first then will attempt DSA.
         /// </summary>
         /// <param name="data">The data to use to verify the signature</param>
         /// <param name="signature">The signature to verify</param>
         /// <param name="signer">The signer to use to verify the data.</param>
-        /// <returns>True if the supplied signature was generated using the private key pair of the supplied public key against the supplied data. Otherwise false.</returns>
+        /// <returns>
+        ///     True if the supplied signature was generated using the private key pair of the supplied public key against the
+        ///     supplied data. Otherwise false.
+        /// </returns>
         public static bool VerifySignature(byte[] data, byte[] signature, RSACryptoServiceProvider signer)
         {
             if (data == null || data.Length == 0)
@@ -170,20 +172,24 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Retrieves a certificate using the supplied store and subject and creates a unique signature using the data using the certificate private key.
+        ///     Retrieves a certificate using the supplied store and subject and creates a unique signature using the data using
+        ///     the certificate private key.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="certificateSubject">The subject of the certificate containing the private key to use to sign the data</param>
-        /// <param name="certificateStore">Optional store location of the certificate containing the private key to use to sign the data</param>
+        /// <param name="certificateStore">
+        ///     Optional store location of the certificate containing the private key to use to sign the
+        ///     data
+        /// </param>
         /// <returns></returns>
         public static byte[] Sign(byte[] data, string certificateSubject, string certificateStore)
         {
-            X509Certificate2 certificate = GetCertificateByStoreAndSubject(certificateSubject, certificateStore);
+            var certificate = GetCertificateByStoreAndSubject(certificateSubject, certificateStore);
             return Sign(data, certificate.PrivateKey);
         }
 
         /// <summary>
-        /// Creates a unique signature using the supplied data and private key of the supplied certificate.
+        ///     Creates a unique signature using the supplied data and private key of the supplied certificate.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="certificate">The certificate containing the private key to use to sign the data</param>
@@ -193,9 +199,8 @@ namespace MemberSuite.SDK.Utilities
             return Sign(data, certificate.PrivateKey);
         }
 
-
         /// <summary>
-        /// Creates a unique signature using the supplied data and RSA key information in the supplied file path.
+        ///     Creates a unique signature using the supplied data and RSA key information in the supplied file path.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="path">Path to a unicode encoded text file containing the RSA key XML string</param>
@@ -206,7 +211,7 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Creates a unique signature using the supplied data and RSA key information in the supplied stream.
+        ///     Creates a unique signature using the supplied data and RSA key information in the supplied stream.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="xmlKeyStream">A stream containing the RSA key XML string</param>
@@ -221,14 +226,14 @@ namespace MemberSuite.SDK.Utilities
                 throw new ArgumentNullException("xmlKeyStream");
 
             var reader = new StreamReader(xmlKeyStream, encoding);
-            string xmlKeyString = reader.ReadToEnd();
-            RSACryptoServiceProvider signer = new RSACryptoServiceProvider();
+            var xmlKeyString = reader.ReadToEnd();
+            var signer = new RSACryptoServiceProvider();
             signer.FromXmlString(xmlKeyString);
             return signer.SignData(data, new SHA1CryptoServiceProvider());
         }
 
         /// <summary>
-        /// Creates a unique signature using the supplied data and RSA key information in the supplied stream.
+        ///     Creates a unique signature using the supplied data and RSA key information in the supplied stream.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="xmlKeyStream">A stream containing the RSA key XML string</param>
@@ -239,7 +244,7 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Creates a unique signature using the supplied data and RSA key information in the supplied file path.
+        ///     Creates a unique signature using the supplied data and RSA key information in the supplied file path.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="path">Path to a text file containing the RSA key XML string</param>
@@ -253,14 +258,14 @@ namespace MemberSuite.SDK.Utilities
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            string xmlKeyString = File.ReadAllText(path, encoding);
-            RSACryptoServiceProvider signer = new RSACryptoServiceProvider();
+            var xmlKeyString = File.ReadAllText(path, encoding);
+            var signer = new RSACryptoServiceProvider();
             signer.FromXmlString(xmlKeyString);
             return signer.SignData(data, new SHA1CryptoServiceProvider());
         }
 
         /// <summary>
-        /// Creates a unique signature using the supplied data using the provided key.
+        ///     Creates a unique signature using the supplied data using the provided key.
         /// </summary>
         /// <param name="data">The data to sign</param>
         /// <param name="key">The RSACryptoServiceProvider or DSACryptoServiceProvider to use to verify the data.</param>
@@ -274,25 +279,26 @@ namespace MemberSuite.SDK.Utilities
                 throw new ArgumentNullException("data", "The key to use to sign the data is required.");
 
             //Try RSA fist because it's the default when creating a new certificate
-            RSACryptoServiceProvider RSASigner = key as RSACryptoServiceProvider;
+            var RSASigner = key as RSACryptoServiceProvider;
             if (RSASigner != null)
                 //Currently only supports the certifiacte default SHA1 - to change in the future we'll need a variable
                 return RSASigner.SignData(data, new SHA1CryptoServiceProvider());
 
             //The public key is not using RSA - try DSA
-            DSACryptoServiceProvider DSASigner = key as DSACryptoServiceProvider;
+            var DSASigner = key as DSACryptoServiceProvider;
             if (DSASigner != null)
                 return DSASigner.SignData(data);
 
             throw new ApplicationException("Unsupported key algorithm.  Only RSA (default) and DSA are supported.");
         }
 
-
         /// <summary>
-        /// Generates and encrypts a random symmetric key and IV that are valid for the life of the process.  Generally there is no need to call this
-        /// method because values are randomly generated on first use.  However this method can be used to generate a new key and IV pair during the life
-        /// of the process.  
-        /// **WARNING** executing this method will render all data encrypted using the process symmetric key unretrievable.
+        ///     Generates and encrypts a random symmetric key and IV that are valid for the life of the process.  Generally there
+        ///     is no need to call this
+        ///     method because values are randomly generated on first use.  However this method can be used to generate a new key
+        ///     and IV pair during the life
+        ///     of the process.
+        ///     **WARNING** executing this method will render all data encrypted using the process symmetric key unretrievable.
         /// </summary>
         public static void GenerateProcessSymmetric()
         {
@@ -300,7 +306,7 @@ namespace MemberSuite.SDK.Utilities
             EncryptedProcessSymmetricIV = new SecureString();
 
             //Generate random key/IV settings by creating a new RijndaelManaged instance
-            using (RijndaelManaged symmetricServiceProvider = new RijndaelManaged())
+            using (var symmetricServiceProvider = new RijndaelManaged())
             {
                 //Encrypt the random key to a static variable
                 foreach (var c in Convert.ToBase64String(symmetricServiceProvider.Key))
@@ -316,8 +322,10 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Encrypts the supplied data using the Rijndael algorythm and a random key/IV that only exists during the lifespan of the executing process.
-        /// **WARNING** restarting the executing process or calling GenerateProcessSymmetric() will render all data encrypted using the method unretrievable.
+        ///     Encrypts the supplied data using the Rijndael algorythm and a random key/IV that only exists during the lifespan of
+        ///     the executing process.
+        ///     **WARNING** restarting the executing process or calling GenerateProcessSymmetric() will render all data encrypted
+        ///     using the method unretrievable.
         /// </summary>
         /// <param name="bytes">The data to encrypt</param>
         /// <returns>The encrypted data</returns>
@@ -343,8 +351,10 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Decrypts data previous encrypted using the Rijndael algorythm and the random key/IV generated during the lifespan of the executing process using the EncryptDataWithProcessSymmetric method.
-        /// If the executing process has been restarted or GenerateProcessSymmetric() has been called since the data was encrypted this method will fail.
+        ///     Decrypts data previous encrypted using the Rijndael algorythm and the random key/IV generated during the lifespan
+        ///     of the executing process using the EncryptDataWithProcessSymmetric method.
+        ///     If the executing process has been restarted or GenerateProcessSymmetric() has been called since the data was
+        ///     encrypted this method will fail.
         /// </summary>
         /// <param name="bytes">The data previously encrypted using EncryptDataWithProcessSymmetric</param>
         /// <returns>The decrypted data</returns>
@@ -353,17 +363,17 @@ namespace MemberSuite.SDK.Utilities
             //Declare the return array - decrypted byte array length cannot be determined
             //but is always smaller than encrypted equivalent data so use the encrypted 
             //array length to avoid out of bounds.
-            byte[] result = new byte[bytes.Length];
+            var result = new byte[bytes.Length];
 
             //Get the Rijndael symmetric provider configured with the static key/IV pair
-            using (RijndaelManaged symmetricProvider = GetProcessSymetricProvider())
+            using (var symmetricProvider = GetProcessSymetricProvider())
             {
                 //Decrypt
                 using (var decryptor = symmetricProvider.CreateDecryptor())
                 {
-                    using (MemoryStream memoryStream = new MemoryStream(bytes))
+                    using (var memoryStream = new MemoryStream(bytes))
                     {
-                        using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                        using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                         {
                             cryptoStream.Read(result, 0, bytes.Length);
                             return result;
@@ -373,7 +383,8 @@ namespace MemberSuite.SDK.Utilities
             }
         }
 
-        public static string GetMessageSignature(byte[] secretAccessKey, string action, string sessionId, string associationId)
+        public static string GetMessageSignature(byte[] secretAccessKey, string action, string sessionId,
+            string associationId)
         {
             HMACSHA1 signer;
 
@@ -383,7 +394,7 @@ namespace MemberSuite.SDK.Utilities
                 //Decrypt the key and IV and set it on the RijndaelManaged symmetric provider
                 signer = new HMACSHA1(secretAccessKey);
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return null;
             }
@@ -391,7 +402,8 @@ namespace MemberSuite.SDK.Utilities
             return GetMessageSignature(signer, action, sessionId, associationId);
         }
 
-        public static string GetMessageSignature(SecureString secretAccessKey, string action, string sessionId, string associationId)
+        public static string GetMessageSignature(SecureString secretAccessKey, string action, string sessionId,
+            string associationId)
         {
             if (secretAccessKey == null)
                 return null;
@@ -399,7 +411,7 @@ namespace MemberSuite.SDK.Utilities
             HMACSHA1 signer;
 
             //Create pointers to the encrypted data in the SecureString used to store the secret access key
-            IntPtr keyPointer = Marshal.SecureStringToBSTR(secretAccessKey);
+            var keyPointer = Marshal.SecureStringToBSTR(secretAccessKey);
 
             //Always access securedstring in a try/finally to clean up the pointers
             try
@@ -407,7 +419,7 @@ namespace MemberSuite.SDK.Utilities
                 //Decrypt the key and IV and set it on the RijndaelManaged symmetric provider
                 signer = new HMACSHA1(Convert.FromBase64String(Marshal.PtrToStringBSTR(keyPointer)));
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return null;
             }
@@ -420,12 +432,13 @@ namespace MemberSuite.SDK.Utilities
             return GetMessageSignature(signer, action, sessionId, associationId);
         }
 
-        public static string GetMessageSignature(HashAlgorithm signer, string action, string sessionId, string associationId)
+        public static string GetMessageSignature(HashAlgorithm signer, string action, string sessionId,
+            string associationId)
         {
             if (signer == null)
                 return null;
 
-            string dataToSign = action;
+            var dataToSign = action;
 
             if (!string.IsNullOrWhiteSpace(associationId))
                 dataToSign += associationId;
@@ -433,8 +446,8 @@ namespace MemberSuite.SDK.Utilities
             if (!string.IsNullOrWhiteSpace(sessionId))
                 dataToSign += sessionId;
 
-            byte[] signature = signer.ComputeHash(Encoding.ASCII.GetBytes(dataToSign));
-            string result = Convert.ToBase64String(signature);
+            var signature = signer.ComputeHash(Encoding.ASCII.GetBytes(dataToSign));
+            var result = Convert.ToBase64String(signature);
 
             return result;
         }
@@ -444,18 +457,18 @@ namespace MemberSuite.SDK.Utilities
         public static string GetMd5Hash(string input)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.
-            MD5 md5Hasher = MD5.Create();
+            var md5Hasher = MD5.Create();
 
             // Convert the input string to a byte array and compute the hash.
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            var data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
 
             // Create a new Stringbuilder to collect the bytes
             // and create a string.
-            StringBuilder sBuilder = new StringBuilder();
+            var sBuilder = new StringBuilder();
 
             // Loop through each byte of the hashed data 
             // and format each one as a hexadecimal string.
-            for (int i = 0; i < data.Length; i++)
+            for (var i = 0; i < data.Length; i++)
             {
                 sBuilder.Append(data[i].ToString("x2"));
             }
@@ -463,5 +476,24 @@ namespace MemberSuite.SDK.Utilities
             // Return the hexadecimal string.
             return sBuilder.ToString();
         }
+
+        #region Private Static Fields
+
+        /// <summary>
+        ///     The encrypted Rijndael key to use during the life of the executing process for process scoped encryption.
+        ///     This should always be stored in a SecureString or other encrypted type to minimize the time the clear-text key
+        ///     exists in memory.
+        /// </summary>
+        private static SecureString EncryptedProcessSymmetricKey;
+
+        /// <summary>
+        ///     The encrypted Rijndael Initialization Vector (IV) to use during the life of the executing process for process
+        ///     scoped encryption.
+        ///     This should always be stored in a SecureString or other encrypted type to minimize the time the clear-text IV
+        ///     exists in memory.
+        /// </summary>
+        private static SecureString EncryptedProcessSymmetricIV;
+
+        #endregion
     }
 }

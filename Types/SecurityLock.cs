@@ -5,9 +5,8 @@ using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Types
 {
-
     /// <summary>
-    /// Represents a lock on a particular record, indicating which people have access
+    ///     Represents a lock on a particular record, indicating which people have access
     /// </summary>
     [Serializable]
     [XmlType(Namespace = "http://membersuite.com/schemas/")]

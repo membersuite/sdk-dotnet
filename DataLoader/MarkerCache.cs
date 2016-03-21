@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace MemberSuite.DataLoader.Common
+namespace MemberSuite.SDK.DataLoader
 {
     public class MarkerCache
     {
-        public MarkerCache()
-        {
-            Cache = new Dictionary<string, Dictionary<string, string>>();
-             
-        }
-
         /// <summary>
-        /// Gets or sets the id markers.
+        ///     Gets or sets the id markers.
         /// </summary>
         /// <value>The id markers.</value>
         private Dictionary<string, Dictionary<string, string>> _cache;
 
+        public MarkerCache()
+        {
+            Cache = new Dictionary<string, Dictionary<string, string>>();
+        }
+
         /// <summary>
-        /// Gets or sets the id markers.
+        ///     Gets or sets the id markers.
         /// </summary>
         /// <value>The id markers.</value>
         public Dictionary<string, Dictionary<string, string>> Cache
@@ -30,7 +26,6 @@ namespace MemberSuite.DataLoader.Common
             set { _cache = value; }
         }
 
-
         public bool ContainsMarker(string marker)
         {
             if (marker == null) throw new ArgumentNullException("marker");
@@ -38,9 +33,8 @@ namespace MemberSuite.DataLoader.Common
                 if (dic.ContainsKey(marker))
                     return true;
 
-           
-            return false;
 
+            return false;
         }
 
         public void StoreMarker(string objectType, string marker, string markerValue)
@@ -58,7 +52,6 @@ namespace MemberSuite.DataLoader.Common
                 dic[marker] = markerValue;
         }
 
-       
         public string LookupMarker(string objectType, string marker)
         {
             Dictionary<string, string> dic;
@@ -83,7 +76,6 @@ namespace MemberSuite.DataLoader.Common
             return null;
         }
 
-
         public Dictionary<string, Dictionary<string, string>> GetAllMarkers()
         {
             return Cache;
@@ -91,14 +83,14 @@ namespace MemberSuite.DataLoader.Common
 
         public int Count()
         {
-            int count = 0;
+            var count = 0;
             foreach (var entry in Cache)
                 count += entry.Value.Count;
 
             return count;
         }
 
-        public Dictionary<string,string> GetCacheFor(string objectType)
+        public Dictionary<string, string> GetCacheFor(string objectType)
         {
             Dictionary<string, string> dic;
             if (Cache.TryGetValue(objectType, out dic))
@@ -114,7 +106,7 @@ namespace MemberSuite.DataLoader.Common
                 if (dic.ContainsKey(marker))
                     return dic[marker];
 
-            return null ;
+            return null;
         }
     }
 }

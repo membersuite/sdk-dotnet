@@ -5,7 +5,7 @@ namespace MemberSuite.SDK.Types
 {
     [Serializable]
     [DataContract]
-    public class PaymentProcessorResponse
+    public class PaymentProcessorResponse : IMemberSuiteComponent
     {
         [DataMember]
         public bool IsPreferredProvider { get; set; }
@@ -46,12 +46,26 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public string InvoiceID { get; set; }
 
-
         [DataMember]
         public string WorkflowExecutionID { get; set; }
 
-
         [DataMember]
         public string WorkflowRunID { get; set; }
+
+        [DataMember]
+        public string CustomerToken { get; set; }
+
+        /// <summary>
+        /// Needed for priority payment when captuing payment... 
+        /// We'll need to include this ID when capturing payments..without this, the customer name don't appear in mxMerchant dashboard for transaction type of Sale
+        /// </summary>
+        [DataMember]
+        public string CustomerID { get; set; }
+
+        /// <summary>
+        /// Required for priority paymenst capture  call
+        /// </summary>
+        [DataMember]
+        public string TransactionReferenceNumber { get; set; }
     }
 }

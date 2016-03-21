@@ -8,7 +8,7 @@ namespace MemberSuite.SDK.Manifests.Command.Views
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("TabularDataViewMetadata", Namespace = "http://membersuite.com/schemas/",
-       IsNullable = false)]
+        IsNullable = false)]
     [Serializable]
     [DataContract]
     public class TabularDataViewMetadata
@@ -19,12 +19,11 @@ namespace MemberSuite.SDK.Manifests.Command.Views
             Fields = new List<FieldMetadata>();
         }
 
-
         [DataMember]
         public bool RenderInEditMode { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [show checkboxes].
+        ///     Gets or sets a value indicating whether [show checkboxes].
         /// </summary>
         /// <value><c>true</c> if [show checkboxes]; otherwise, <c>false</c>.</value>
         [DataMember]
@@ -51,7 +50,7 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         public List<FieldMetadata> Fields { get; set; }
 
         /// <summary>
-        /// Gets or sets the text.
+        ///     Gets or sets the text.
         /// </summary>
         /// <value>The text.</value>
         [XmlElement]
@@ -61,7 +60,5 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [XmlArrayItem("Section")]
         [DataMember]
         public List<ViewMetadata.ControlSection> CommandSections { get; set; }
-
-       
     }
 }

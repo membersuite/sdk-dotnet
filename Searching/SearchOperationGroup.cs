@@ -6,7 +6,6 @@ using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Searching
 {
-
     [KnownType(typeof (List<SearchOperation>))]
     [Serializable]
     [DataContract]
@@ -18,7 +17,7 @@ namespace MemberSuite.SDK.Searching
         }
 
         /// <summary>
-        /// Gets or sets the operations.
+        ///     Gets or sets the operations.
         /// </summary>
         /// <value>The operations.</value>
         [DataMember]
@@ -26,33 +25,34 @@ namespace MemberSuite.SDK.Searching
         public List<SearchOperation> Criteria { get; set; }
 
         /// <summary>
-        /// Gets or sets the type.
+        ///     Gets or sets the type.
         /// </summary>
         /// <value>The type.</value>
         [DataMember]
         public SearchOperationGroupType GroupType { get; set; }
 
-
         /// <summary>
-        /// Accepts the specified visitor.
+        ///     Accepts the specified visitor.
         /// </summary>
         /// <param name="visitor">The visitor.</param>
-        /// <remarks>We usse this for operations that require navigation the search operation tree, but which
-        /// are too sensitive to be exposed to the User Interface layer - most notably generation of SQL.</remarks>
+        /// <remarks>
+        ///     We usse this for operations that require navigation the search operation tree, but which
+        ///     are too sensitive to be exposed to the User Interface layer - most notably generation of SQL.
+        /// </remarks>
         public override void Accept(ISearchObjectVisitor visitor)
         {
             visitor.Visit(this);
         }
 
         /// <summary>
-        /// Removes the operation.
+        ///     Removes the operation.
         /// </summary>
         /// <param name="operationID">The operation ID.</param>
         public void RemoveOperation(string operationID)
         {
             if (operationID == null) throw new ArgumentNullException("operationID");
 
-            for (int i = Criteria.Count - 1; i >= 0; i--)
+            for (var i = Criteria.Count - 1; i >= 0; i--)
             {
                 var op = Criteria[i];
                 var opGroup = op as SearchOperationGroup;
@@ -65,18 +65,15 @@ namespace MemberSuite.SDK.Searching
 
                 if (op.ID == operationID)
                     Criteria.RemoveAt(i);
-
             }
-
-
         }
 
         public override int CalculateSearchHashCode()
         {
             Clean();
-            int hashCode = GroupType.GetHashCode();
-            if (this.Criteria != null)
-                foreach (var c in this.Criteria)
+            var hashCode = GroupType.GetHashCode();
+            if (Criteria != null)
+                foreach (var c in Criteria)
                     hashCode += c.CalculateSearchHashCode();
 
             return hashCode;
@@ -87,10 +84,10 @@ namespace MemberSuite.SDK.Searching
             if (Criteria == null)
                 return;
 
-            for (int i = Criteria.Count - 1; i >= 0; i--)
+            for (var i = Criteria.Count - 1; i >= 0; i--)
             {
                 var op = Criteria[i];
-                SearchOperationGroup sog = op as SearchOperationGroup;
+                var sog = op as SearchOperationGroup;
 
                 if (sog != null && (sog.Criteria == null || sog.Criteria.Count == 0)) // its useless
                 {
@@ -103,7 +100,7 @@ namespace MemberSuite.SDK.Searching
 
             if (Criteria.Count == 1 && Criteria[0] is SearchOperationGroup) // just collapse the group
             {
-                SearchOperationGroup sog = (SearchOperationGroup) Criteria[0];
+                var sog = (SearchOperationGroup) Criteria[0];
                 GroupType = sog.GroupType;
                 Criteria.Remove(sog);
                 Criteria.AddRange(sog.Criteria); // add the criteria to this group
@@ -111,7 +108,7 @@ namespace MemberSuite.SDK.Searching
         }
 
         /// <summary>
-        /// Recursively finds the operation.
+        ///     Recursively finds the operation.
         /// </summary>
         /// <param name="so">The so.</param>
         /// <returns></returns>
@@ -134,7 +131,7 @@ namespace MemberSuite.SDK.Searching
 
         public override List<string> GetMergeCriteriaFields()
         {
-            List<string> result = base.GetMergeCriteriaFields();
+            var result = base.GetMergeCriteriaFields();
 
             foreach (
                 var mergeCriteriaField in
@@ -161,7 +158,7 @@ namespace MemberSuite.SDK.Searching
         }
 
         /// <summary>
-        /// Recursively finds the operation.
+        ///     Recursively finds the operation.
         /// </summary>
         /// <param name="so">The so.</param>
         /// <returns></returns>
@@ -174,7 +171,7 @@ namespace MemberSuite.SDK.Searching
                 if (c.ID == operationID)
                     return c;
 
-                SearchOperationGroup sog = c as SearchOperationGroup;
+                var sog = c as SearchOperationGroup;
 
                 if (sog != null)
                 {
@@ -182,19 +179,18 @@ namespace MemberSuite.SDK.Searching
                     if (r != null)
                         return r;
                 }
-
             }
 
             return r;
         }
 
         /// <summary>
-        /// Recursively gets the parameterized operations.
+        ///     Recursively gets the parameterized operations.
         /// </summary>
         /// <returns></returns>
         public List<SearchOperation> GetParameterizedOperations()
         {
-            List<SearchOperation> ops = new List<SearchOperation>();
+            var ops = new List<SearchOperation>();
             _getParameterizedOperatoinHelper(ops, this);
 
             return ops;
@@ -203,10 +199,10 @@ namespace MemberSuite.SDK.Searching
         private void _getParameterizedOperatoinHelper(List<SearchOperation> ops,
             SearchOperationGroup searchOperationGroup)
         {
-            foreach (SearchOperation so in searchOperationGroup.Criteria)
+            foreach (var so in searchOperationGroup.Criteria)
             {
                 // we'll do our recursion up front
-                SearchOperationGroup sog = so as SearchOperationGroup;
+                var sog = so as SearchOperationGroup;
                 if (sog != null)
                     _getParameterizedOperatoinHelper(ops, sog);
 
@@ -224,35 +220,34 @@ namespace MemberSuite.SDK.Searching
                     c.PostSerializationCleanse();
         }
 
-
         /// <summary>
-        /// Adds the specified operation to this group. If the group's type (and/or) is different than the groupType
-        /// parameter, a new group is spawned and added to this one,
+        ///     Adds the specified operation to this group. If the group's type (and/or) is different than the groupType
+        ///     parameter, a new group is spawned and added to this one,
         /// </summary>
         /// <param name="groupType"></param>
         /// <param name="operationToAdd"></param>
         public void InjectCriteriaAndReformatGroupIfNecessary(SearchOperationGroupType groupType,
             SearchOperation operationToAdd)
         {
-            if (this.GroupType == groupType)
+            if (GroupType == groupType)
             {
-                this.Criteria.Add(operationToAdd); // easy
+                Criteria.Add(operationToAdd); // easy
                 return;
             }
 
             // ok, so the group type is different
             // we create a new group
-            SearchOperationGroup sog = new SearchOperationGroup();
-            sog.GroupType = this.GroupType;
+            var sog = new SearchOperationGroup();
+            sog.GroupType = GroupType;
 
             // copy over the current criteria
-            sog.Criteria.AddRange(this.Criteria);
+            sog.Criteria.AddRange(Criteria);
 
             // clear the criteria from this group
-            this.Criteria.Clear();
+            Criteria.Clear();
 
             // set the new type
-            this.GroupType = GroupType;
+            GroupType = GroupType;
 
             // add the old criteria, grouped
             Criteria.Add(sog);

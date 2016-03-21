@@ -14,7 +14,7 @@ namespace MemberSuite.SDK.Types
         public string ShippingCarrierAccount { get; set; }
 
         [DataMember]
-        public List<ShippingCarrierService> Services { get; set; } 
+        public List<ShippingCarrierService> Services { get; set; }
     }
 
     [XmlType(Namespace = "http://membersuite.com/schemas/")]

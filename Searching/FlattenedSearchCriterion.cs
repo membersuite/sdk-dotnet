@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MemberSuite.SDK.Searching
+﻿namespace MemberSuite.SDK.Searching
 {
     /// <summary>
-    /// Used EXCLUSIVELY to render a complex search operation tree
+    ///     Used EXCLUSIVELY to render a complex search operation tree
     /// </summary>
     public class FlattenedSearchCriterion
     {

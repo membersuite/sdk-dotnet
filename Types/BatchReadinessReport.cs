@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
@@ -21,7 +19,7 @@ namespace MemberSuite.SDK.Types
         public bool CanBePosted { get; set; }
 
         /// <summary>
-        /// Gets or sets the missing revenue L Accouns
+        ///     Gets or sets the missing revenue L Accouns
         /// </summary>
         /// <value>The missing revenue G ls.</value>
         /// <remarks>These are a list of product IDs with missing</remarks>
@@ -29,27 +27,25 @@ namespace MemberSuite.SDK.Types
         public List<BatchReadinessReportIncompleteProduct> IncompleteProducts { get; set; }
 
         /// <summary>
-        /// Gets or sets the missing due to due from entries.
+        ///     Gets or sets the missing due to due from entries.
         /// </summary>
         /// <value>The missing due to due from entries.</value>
         [DataMember]
         public List<BatchReadinessReportMissingDueToDueFrom> MissingDueToDueFromEntries { get; set; }
 
         /// <summary>
-        /// Gets or sets the incomplete business units.
+        ///     Gets or sets the incomplete business units.
         /// </summary>
         /// <value>The incomplete business units.</value>
         [DataMember]
         public List<BatchReadinessReportIncompleteBusinessUnit> IncompleteBusinessUnits { get; set; }
 
         /// <summary>
-        /// Gets or sets the pro forma invoice count.
+        ///     Gets or sets the pro forma invoice count.
         /// </summary>
         /// <value>The pro forma invoice count.</value>
         [DataMember]
         public long ProFormaInvoiceCount { get; set; }
-
-
     }
 
     public class BatchReadinessReportIncompleteProduct
@@ -57,7 +53,6 @@ namespace MemberSuite.SDK.Types
         public string ProductID { get; set; }
         public string ProductFullName { get; set; }
         public string MissingAccountType { get; set; }
-       
     }
 
     public class BatchReadinessReportMisplacedInvoice
@@ -69,29 +64,30 @@ namespace MemberSuite.SDK.Types
     }
 
     /// <summary>
-    /// Represents missing (but necessary) due to/due from entries
+    ///     Represents missing (but necessary) due to/due from entries
     /// </summary>
     public class BatchReadinessReportMissingDueToDueFrom
     {
         /// <summary>
-        /// Gets or sets from business unit.
+        ///     Gets or sets from business unit.
         /// </summary>
         /// <value>From business unit.</value>
         public string FromBusinessUnitID { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of from business unit.
+        ///     Gets or sets the name of from business unit.
         /// </summary>
         /// <value>The name of from business unit.</value>
         public string FromBusinessUnitName { get; set; }
 
         /// <summary>
-        /// Gets or sets to business unit.
+        ///     Gets or sets to business unit.
         /// </summary>
         /// <value>To business unit.</value>
         public string ToBusinessUnit { get; set; }
+
         /// <summary>
-        /// Gets or sets the name of to business unit.
+        ///     Gets or sets the name of to business unit.
         /// </summary>
         /// <value>The name of to business unit.</value>
         public string ToBusinessUnitName { get; set; }
@@ -100,13 +96,13 @@ namespace MemberSuite.SDK.Types
     public class BatchReadinessReportIncompleteBusinessUnit
     {
         /// <summary>
-        /// Gets or sets the business unit ID.
+        ///     Gets or sets the business unit ID.
         /// </summary>
         /// <value>The business unit ID.</value>
         public string BusinessUnitID { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the business unit.
+        ///     Gets or sets the name of the business unit.
         /// </summary>
         /// <value>The name of the business unit.</value>
         public string BusinessUnitName { get; set; }

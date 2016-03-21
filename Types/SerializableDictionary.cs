@@ -9,8 +9,8 @@ namespace MemberSuite.SDK.Types
 {
     /// PHASE THIS OUT!!!  A custom serializable dictionary IS NOT a standard implementations therefore a SOAP client has NO IDEA how to deserialize the XML into any object
     /// <summary>
-    /// Serializable Dictionay class written by Paul Welter, copied from
-    /// http://weblogs.asp.net/pwelter34/archive/2006/05/03/444961.aspx
+    ///     Serializable Dictionay class written by Paul Welter, copied from
+    ///     http://weblogs.asp.net/pwelter34/archive/2006/05/03/444961.aspx
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
@@ -24,7 +24,9 @@ namespace MemberSuite.SDK.Types
         {
         }
 
-        protected SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
 
         #region IXmlSerializable Members
 
@@ -41,7 +43,7 @@ namespace MemberSuite.SDK.Types
             var valueSerializer = new XmlSerializer(typeof (TValue));
 
 
-            bool wasEmpty = reader.IsEmptyElement;
+            var wasEmpty = reader.IsEmptyElement;
 
             reader.Read();
 
@@ -89,7 +91,7 @@ namespace MemberSuite.SDK.Types
             var valueSerializer = new XmlSerializer(typeof (TValue));
 
 
-            foreach (TKey key in Keys)
+            foreach (var key in Keys)
             {
                 writer.WriteStartElement("item");
 
@@ -103,10 +105,10 @@ namespace MemberSuite.SDK.Types
 
                 writer.WriteStartElement("value");
 
-                TValue value = this[key];
+                var value = this[key];
 
                 if (value is byte[])
-                    value = (TValue) (object) Convert.ToBase64String( (byte[]) (object) value);
+                    value = (TValue) (object) Convert.ToBase64String((byte[]) (object) value);
 
                 valueSerializer.Serialize(writer, value);
 

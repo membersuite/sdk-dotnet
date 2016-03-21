@@ -13,11 +13,8 @@ namespace MemberSuite.SDK.Manifests.Command.Views
     [DataContract]
     public class Data360ViewMetadata : ISectionLayoutMetadata
     {
-        [DataMember]
-        public string Name { get; set; }
-
         /// <summary>
-        /// Gets or sets the additional fields that should always be loaded
+        ///     Gets or sets the additional fields that should always be loaded
         /// </summary>
         /// <value>The additional fields.</value>
         [XmlArrayItem("Field")]
@@ -27,12 +24,8 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [DataMember]
         public string DefaultOneClick { get; set; }
 
-        [XmlArrayItem("Section")]
-        [DataMember]
-        public List<ViewMetadata.ControlSection> Sections { get; set; }
-
         /// <summary>
-        /// Gets or sets the searches for this 360 layout
+        ///     Gets or sets the searches for this 360 layout
         /// </summary>
         /// <value>The searches.</value>
         [XmlArrayItem("Search")]
@@ -45,6 +38,35 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [DataMember]
         public string SelectedSection { get; set; }
 
+        [DataMember]
+        public string Name { get; set; }
+
+        [XmlArrayItem("Section")]
+        [DataMember]
+        public List<ViewMetadata.ControlSection> Sections { get; set; }
+
+        public void Clean()
+        {
+            if (Sections != null)
+            {
+                // first, let's assign numbers if they are not there
+                for (var i = 0; i < Sections.Count; i++)
+                    if (Sections[i].DisplayOrder == default(int))
+                        Sections[i].DisplayOrder = (i + 1)*10;
+
+                // now sort
+                Sections.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
+
+                // now, set them to what they should be
+                for (var i = 0; i < Sections.Count; i++)
+                    Sections[i].DisplayOrder = (i + 1)*10;
+            }
+
+            if (Searches != null)
+                foreach (var s in Searches)
+                    if (string.IsNullOrWhiteSpace(s.ID))
+                        s.ID = Guid.NewGuid().ToString();
+        }
 
         public bool ContainsField(string fieldName)
         {
@@ -58,39 +80,14 @@ namespace MemberSuite.SDK.Manifests.Command.Views
             return false;
         }
 
-        public void Clean()
-        {
-            if (Sections != null)
-            {
-                // first, let's assign numbers if they are not there
-                for (int i = 0; i < Sections.Count; i++)
-                    if (Sections[i].DisplayOrder == default(int))
-                        Sections[i].DisplayOrder = (i + 1)*10;
-
-                // now sort
-                Sections.Sort((x, y) => x.DisplayOrder.CompareTo(y.DisplayOrder));
-
-                // now, set them to what they should be
-                for (int i = 0; i < Sections.Count; i++)
-                    Sections[i].DisplayOrder = (i + 1)*10;
-
-            }
-
-            if (Searches != null)
-                foreach (var s in Searches)
-                    if (string.IsNullOrWhiteSpace(s.ID))
-                        s.ID = Guid.NewGuid().ToString();
-        }
-
         public string DetermineDefaultOneClick()
         {
-
             var defaultOneClick = DefaultOneClick;
 
             if (!string.IsNullOrWhiteSpace(defaultOneClick) && !
-                                                               Searches.Exists(
-                                                                   s =>
-                                                                   s.ID == defaultOneClick || s.Type == defaultOneClick))
+                Searches.Exists(
+                    s =>
+                        s.ID == defaultOneClick || s.Type == defaultOneClick))
                 defaultOneClick = null; // it's not there, so it's null
 
             if (defaultOneClick == null) // assign it
@@ -101,8 +98,6 @@ namespace MemberSuite.SDK.Manifests.Command.Views
                     defaultOneClick = Searches[1].ID;
 
                 return defaultOneClick;
-
-
             }
 
             return defaultOneClick;

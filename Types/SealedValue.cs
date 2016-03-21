@@ -3,7 +3,7 @@
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Represents a value of a record that is locked
+    ///     Represents a value of a record that is locked
     /// </summary>
     [Serializable]
     public struct SealedValue

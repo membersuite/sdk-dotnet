@@ -4,11 +4,15 @@ using System.Collections.Generic;
 namespace MemberSuite.SDK.Searching
 {
     /// <summary>
-    /// Used to construct a search object
+    ///     Used to construct a search object
     /// </summary>
     [Serializable]
     public class SearchBuilder
     {
+        protected SearchOperationGroup _currentSearchOperationGroup;
+        protected Stack<SearchOperationGroup> _parenthesesStack;
+        protected Search _search;
+
         public SearchBuilder(Search s)
         {
             _search = s;
@@ -18,35 +22,38 @@ namespace MemberSuite.SDK.Searching
             _parenthesesStack = new Stack<SearchOperationGroup>();
         }
 
-        public SearchBuilder() : this ( new Search() )
+        public SearchBuilder() : this(new Search())
         {
-           
-
         }
 
-        protected Search _search;
-        protected SearchOperationGroup _currentSearchOperationGroup;
-        protected Stack<SearchOperationGroup> _parenthesesStack;
+        public SearchOperationGroup CurrentSearchOperationGroup
+        {
+            get { return _currentSearchOperationGroup; }
+        }
 
-        public SearchOperationGroup CurrentSearchOperationGroup { get { return _currentSearchOperationGroup; } }
-
-            /// <summary>
-        /// Gets a value indicating whether this instance can close parenthesis.
+        /// <summary>
+        ///     Gets a value indicating whether this instance can close parenthesis.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance can close parenthesis; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance can close parenthesis; otherwise, <c>false</c>.
         /// </value>
-        public bool CanCloseParenthesis { get { return _parenthesesStack.Count > 0; } }
+        public bool CanCloseParenthesis
+        {
+            get { return _parenthesesStack.Count > 0; }
+        }
 
-            /// <summary>
-        /// Gets the search.
+        /// <summary>
+        ///     Gets the search.
         /// </summary>
         /// <value>The search.</value>
-        public Search Search { get {  return _search; } }
+        public Search Search
+        {
+            get { return _search; }
+        }
 
         public void OpenParenthesis()
         {
-            SearchOperationGroup sog = new SearchOperationGroup();
+            var sog = new SearchOperationGroup();
             sog.Parent = _currentSearchOperationGroup;
             _currentSearchOperationGroup.Criteria.Add(sog);
 
@@ -60,22 +67,20 @@ namespace MemberSuite.SDK.Searching
         {
             // pop the group off of the stack
             _currentSearchOperationGroup = _parenthesesStack.Pop();
-
-            
         }
 
         public void AddOperation(SearchOperation so, SearchOperationGroupType groupType)
         {
             if (so == null) throw new ArgumentNullException("so");
 
-            if (_currentSearchOperationGroup.GroupType == groupType)  // no problem
+            if (_currentSearchOperationGroup.GroupType == groupType) // no problem
             {
                 _currentSearchOperationGroup.Criteria.Add(so);
                 return;
             }
 
             // ok - it's different, so...
-            if (_currentSearchOperationGroup.Criteria.Count <= 1)  // just change the type!
+            if (_currentSearchOperationGroup.Criteria.Count <= 1) // just change the type!
             {
                 _currentSearchOperationGroup.GroupType = groupType;
                 _currentSearchOperationGroup.Criteria.Add(so);
@@ -83,23 +88,22 @@ namespace MemberSuite.SDK.Searching
             }
 
             // we must split off another group
-            SearchOperationGroup sog = new SearchOperationGroup();
+            var sog = new SearchOperationGroup();
             sog.GroupType = groupType;
 
-            if (_currentSearchOperationGroup.Parent != null)  // we have to replace the parent
+            if (_currentSearchOperationGroup.Parent != null) // we have to replace the parent
             {
-                int index = _currentSearchOperationGroup.Parent.Criteria.IndexOf(_currentSearchOperationGroup);
+                var index = _currentSearchOperationGroup.Parent.Criteria.IndexOf(_currentSearchOperationGroup);
                 _currentSearchOperationGroup.Parent.Criteria.RemoveAt(index);
                 _currentSearchOperationGroup.Parent.Criteria.Insert(index, sog);
                 sog.Criteria.Add(_currentSearchOperationGroup);
                 sog.Criteria.Add(so);
                 _currentSearchOperationGroup = sog; // reset the current group
-
             }
             else
             {
                 // we're at the top
-                SearchOperationGroup soBase = new SearchOperationGroup();
+                var soBase = new SearchOperationGroup();
                 soBase.GroupType = _currentSearchOperationGroup.GroupType;
                 soBase.Criteria.AddRange(_currentSearchOperationGroup.Criteria);
                 _currentSearchOperationGroup.Criteria.Clear();
@@ -107,9 +111,6 @@ namespace MemberSuite.SDK.Searching
                 _currentSearchOperationGroup.GroupType = groupType;
                 _currentSearchOperationGroup.Criteria.Add(so);
             }
-
-         
-           
         }
 
         public void RemoveOperation(string operationID)
@@ -129,7 +130,7 @@ namespace MemberSuite.SDK.Searching
             if (g == null)
                 return;
 
-            if ( _search.FindOperation(g) == null ) // problem
+            if (_search.FindOperation(g) == null) // problem
                 _parenthesesStack.Pop();
 
             // now be recursive wit it

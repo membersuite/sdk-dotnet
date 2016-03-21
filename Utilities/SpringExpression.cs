@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Spring.Core.TypeResolution;
 using Spring.Expressions;
@@ -10,25 +9,25 @@ namespace MemberSuite.SDK.Utilities
 {
     public static class SpringExpression
     {
+        private static readonly ConcurrentDictionary<string, IExpression> _expressionCache;
+
         static SpringExpression()
         {
             // make sure you can use regex in expressions
-            TypeRegistry.RegisterType("Regex",typeof (Regex));
+            TypeRegistry.RegisterType("Regex", typeof (Regex));
             _expressionCache = new ConcurrentDictionary<string, IExpression>();
         }
 
-        private static ConcurrentDictionary<string, IExpression> _expressionCache;
-
-        public static object GetValue( object context, string formulaToEvaluate )
+        public static object GetValue(object context, string formulaToEvaluate)
         {
-            return GetValue(context, formulaToEvaluate, null  );
+            return GetValue(context, formulaToEvaluate, null);
         }
 
-        public static object GetValue( object context, string formulaToEvaluate, IDictionary variables )
+        public static object GetValue(object context, string formulaToEvaluate, IDictionary variables)
         {
             if (formulaToEvaluate == null) throw new ArgumentNullException("formulaToEvaluate");
 
-            IExpression expr = GetExpressionFor(formulaToEvaluate);
+            var expr = GetExpressionFor(formulaToEvaluate);
 
             if (variables != null) return expr.GetValue(context, variables);
 

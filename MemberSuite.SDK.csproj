@@ -41,65 +41,37 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>bdefbbb7</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\lib\shared\</OutputPath>
+    <OutputPath>..\..\assemblies</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>..\..\assemblies\MemberSuite.SDK.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\lib\shared\</OutputPath>
+    <OutputPath>..\..\assemblies</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBuild|AnyCPU'">
-    <OutputPath>..\..\lib\shared\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\MemberSuite.SDK.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="antlr.runtime">
-      <HintPath>..\..\lib\Spring.Net\antlr.runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging">
-      <HintPath>..\..\lib\Spring.Net\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="antlr.runtime, Version=2.7.6.2, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>\packages\antlr.runtime.2.7.6.2\lib\net20\antlr.runtime.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core">
-      <HintPath>..\..\lib\Spring.Net\Spring.Core.dll</HintPath>
+      <HintPath>\packages\Spring.Core.1.2.0.20001\lib\net20\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -112,17 +84,14 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Args\CloneEventArgs.cs" />
     <Compile Include="Concierge\ConciergeAPIProxyGenerator.cs" />
     <Compile Include="Concierge\ConciergeClaimTypes.cs" />
     <Compile Include="Concierge\ConciergeClaimValues.cs" />
@@ -165,7 +134,6 @@
     <Compile Include="Manifests\Command\PartialReportDefinition.cs" />
     <Compile Include="Manifests\Command\ViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\SearchViewMetadata.cs" />
-    <Compile Include="Manifests\Command\Views\DashboardMetadata.cs" />
     <Compile Include="Manifests\Command\Views\Data360ViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\DataEntryViewMetadata.cs" />
     <Compile Include="Manifests\Command\Views\PageLayoutEditorMetadata.cs" />
@@ -179,27 +147,32 @@
     <Compile Include="Manifests\CustomField\CustomFieldCreationPacket.cs" />
     <Compile Include="Manifests\MetadataBase.cs" />
     <Compile Include="Manifests\OrderPayload.cs" />
-    <Compile Include="Manifests\Reporting\ChartDefinition.cs" />
-    <Compile Include="Manifests\Reporting\ChartManifest.cs" />
-    <Compile Include="Manifests\Reporting\KPIDefinition.cs" />
     <Compile Include="Manifests\Reporting\ReportManifest.cs" />
-    <Compile Include="Manifests\Reporting\WidgetDefinition.cs" />
     <Compile Include="Manifests\Resource\StringResource.cs" />
     <Compile Include="Manifests\Searching\SearchManifest.cs" />
     <Compile Include="Manifests\Searching\ShortenedSearchManifest.cs" />
     <Compile Include="MemberSuiteObjects.cs" />
+    <Compile Include="MultiCurrency\CurrencyManager.cs" />
+    <Compile Include="MultiCurrency\InvalidCurrencyCodeException.cs" />
+    <Compile Include="MultiCurrency\IncompatibleCurrencyComparisonException.cs" />
+    <Compile Include="MultiCurrency\SumExtensionsForCurrency.cs" />
     <Compile Include="Results\AddressValidationResult.cs" />
     <Compile Include="Results\AutoNumberSeedInfo.cs" />
     <Compile Include="Results\BulkAddressValidationReport.cs" />
     <Compile Include="Results\ColumnMetadataDictionary.cs" />
     <Compile Include="Results\ConciergeResult.cs" />
     <Compile Include="Results\ConciergeResultTyped.cs" />
+    <Compile Include="Results\SearchWithFileOutputResult.cs" />
     <Compile Include="Searching\FlattenedSearchCriterion.cs" />
     <Compile Include="Types\AutomatedProcessRecurrence.cs" />
+    <Compile Include="MultiCurrency\Currency.cs" />
+    <Compile Include="Types\CancellationFeeList.cs" />
     <Compile Include="Types\ElectronicCheck.cs" />
     <Compile Include="Types\ElectronicPaymentManifest.cs" />
+    <Compile Include="Types\LinkedCancellationBehavior.cs" />
+    <Compile Include="Types\LogiServerInformation.cs" />
+    <Compile Include="Types\MembershipCancellationOptions.cs" />
     <Compile Include="Types\MemberSuiteConstants.cs" />
-    <Compile Include="Types\BillingRunCandidate.cs" />
     <Compile Include="Types\MemberSuiteObject2.cs" />
     <Compile Include="Types\MemberSuiteVersion.cs" />
     <Compile Include="Results\MSQLResult.cs" />
@@ -225,17 +198,22 @@
     <Compile Include="Types\FileInfo.cs" />
     <Compile Include="Types\FolderInfo.cs" />
     <Compile Include="Types\NonElectronicPayment.cs" />
+    <Compile Include="Types\NoSqlAttributeType.cs" />
+    <Compile Include="Types\NoSqlTableDefinition.cs" />
+    <Compile Include="Types\NoSqlTableLifespan.cs" />
     <Compile Include="Types\PortalFormsManifest.cs" />
     <Compile Include="Types\PortalPaymentMethods.cs" />
     <Compile Include="Types\PriorityToken.cs" />
+    <Compile Include="Types\RegistrationCancellationOptions.cs" />
     <Compile Include="Types\RelevantAnnouncement.cs" />
     <Compile Include="Types\SavedPaymentInfo.cs" />
     <Compile Include="Types\SendGridEventData.cs" />
     <Compile Include="Types\ShippingCarrierServices.cs" />
+    <Compile Include="Types\UmbrellaProductDemographicAssignment.cs" />
     <Compile Include="Types\VolunteerMatch.cs" />
+    <Compile Include="Types\LongRunningTaskInfo.cs" />
     <Compile Include="Utilities\Binary.cs" />
     <Compile Include="Utilities\ClientSideSearch.cs" />
-    <Compile Include="Utilities\CompressionManager.cs" />
     <Compile Include="Utilities\CreditCardUtils.cs" />
     <Compile Include="Utilities\EmbeddedResource.cs" />
     <Compile Include="Utilities\EventUtilities.cs" />
@@ -248,7 +226,6 @@
     <Compile Include="Utilities\SearchUtilities.cs" />
     <Compile Include="Utilities\SpringExpression.cs" />
     <Compile Include="Types\ZipCodeRadius.cs" />
-    <Compile Include="Searching\BuiltInSearch.cs" />
     <Compile Include="Searching\BuiltInSearchOutputTypes.cs" />
     <Compile Include="Searching\ISeachOperationVisitor.cs" />
     <Compile Include="Searching\Operations\Contains.cs" />
@@ -308,9 +285,6 @@
     <Compile Include="Types\PreProcessedOrderPacket.cs" />
     <Compile Include="Types\IMemberSuiteComponent.cs" />
     <Compile Include="Types\KeyChain.cs" />
-    <Compile Include="Types\KPIs\KPI.cs" />
-    <Compile Include="Types\KPIs\KPIPeriod.cs" />
-    <Compile Include="Types\KPIs\KPIType.cs" />
     <Compile Include="Types\Language.cs" />
     <Compile Include="Types\MailMergeOutputFormat.cs" />
     <Compile Include="Types\MemberSuiteFile.cs" />
@@ -349,14 +323,7 @@
     <Compile Include="Utilities\RunOnce.cs" />
     <Compile Include="Utilities\StringUtil.cs" />
     <Compile Include="Utilities\TimeZoneUtils.cs" />
-    <Compile Include="Utilities\TypeResolution\Resolver.cs" />
-    <Compile Include="Utilities\TypeResolution\ResolverAttribute.cs" />
-    <Compile Include="Utilities\TypeResolution\ResolverException.cs" />
-    <Compile Include="Utilities\TypeResolution\ResolverFactory.cs" />
     <Compile Include="Utilities\Xml.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Utilities\TypeResolution\Resolvers.unity.xml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -366,6 +333,7 @@
     <None Include="app.config.transform">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MemberSuite.SDK.nuspec" />
     <None Include="packages.config" />
     <None Include="Searching\Search Objects.cd" />
     <None Include="Searching\Searching.cd" />
@@ -391,12 +359,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MemberSuite.Container\MemberSuite.Container.csproj">
-      <Project>{40ec92d1-80e3-4e99-9855-d1cb178adf7b}</Project>
-      <Name>MemberSuite.Container</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="MultiCurrency\WorldCurrencies.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets" Condition="Exists('..\..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -404,17 +376,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

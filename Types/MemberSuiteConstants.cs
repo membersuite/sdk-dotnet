@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MemberSuite.SDK.Types
+﻿namespace MemberSuite.SDK.Types
 {
     public static class MemberSuiteConstants
     {
@@ -11,7 +6,5 @@ namespace MemberSuite.SDK.Types
         {
             public const string NAME_ON_REGISTRATION_FIELD = "NameOnRegistration__qg";
         }
-
-        
     }
 }

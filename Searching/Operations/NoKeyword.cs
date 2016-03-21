@@ -1,17 +1,15 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Searching.Operations
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
-    [System.Serializable]
+    [Serializable]
     public class NoKeyword : Keyword
     {
         public override bool IsNegative
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public override void Accept(ISearchObjectVisitor visitor)

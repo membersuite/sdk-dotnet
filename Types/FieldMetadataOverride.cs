@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Class designed to override field metadata
+    ///     Class designed to override field metadata
     /// </summary>
     [Serializable]
     [DataContract]
@@ -15,11 +15,10 @@ namespace MemberSuite.SDK.Types
         public FieldMetadataOverride()
         {
             PickListEntries = null;
-            
         }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
         [XmlAttribute]
@@ -27,15 +26,15 @@ namespace MemberSuite.SDK.Types
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the label.
+        ///     Gets or sets the label.
         /// </summary>
         /// <value>The label.</value>
         [XmlAttribute]
         [DataMember]
         public string Label { get; set; }
 
-          /// <summary>
-        /// Gets or sets the type of the data.
+        /// <summary>
+        ///     Gets or sets the type of the data.
         /// </summary>
         /// <value>The type of the data.</value>
         [XmlIgnore]
@@ -55,7 +54,7 @@ namespace MemberSuite.SDK.Types
         public string HelpText { get; set; }
 
         /// <summary>
-        /// Gets or sets the display type.
+        ///     Gets or sets the display type.
         /// </summary>
         /// <value>The display type.</value>
         [XmlIgnore]
@@ -63,9 +62,9 @@ namespace MemberSuite.SDK.Types
         public FieldDisplayType? DisplayType { get; set; }
 
         /// <summary>
-        /// If this is a pick list object, contains the entries that should be in the picklist
+        ///     If this is a pick list object, contains the entries that should be in the picklist
         /// </summary>
-        [XmlArray("PickListEntries", IsNullable=true )]
+        [XmlArray("PickListEntries", IsNullable = true)]
         [XmlArrayItem("PickListEntry")]
         [DataMember]
         public List<PickListEntry> PickListEntries { get; set; }
@@ -75,7 +74,7 @@ namespace MemberSuite.SDK.Types
         public string NullValueLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets the lookup table ID to pull acceptable values from.
+        ///     Gets or sets the lookup table ID to pull acceptable values from.
         /// </summary>
         /// <value>The lookup table ID.</value>
         [XmlAttribute]
@@ -83,7 +82,7 @@ namespace MemberSuite.SDK.Types
         public string LookupTableID { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the reference, if this is a reference type
+        ///     Gets or sets the type of the reference, if this is a reference type
         /// </summary>
         /// <value>The type of the reference.</value>
         [XmlAttribute]
@@ -130,12 +129,79 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public SecurityLock SecurityLock { get; set; }
-    
+
+        /// <summary>
+        ///     Overrides the specified original field.
+        /// </summary>
+        /// <param name="originalField">The original field.</param>
+        public void Override(FieldMetadata originalField)
+        {
+            if (DataType != null)
+                originalField.DataType = DataType.Value;
+
+            if (DisplayType != null)
+                originalField.DisplayType = DisplayType.Value;
+
+            if (Label != null)
+                originalField.Label = Label;
+
+            if (ReferenceType != null)
+                originalField.ReferenceType = ReferenceType;
+
+            if (IsRequired != null)
+                originalField.IsRequired = IsRequired.Value;
+
+            if (IsRequiredInPortal != null)
+                originalField.IsRequiredInPortal = IsRequiredInPortal.Value;
+
+            if (DefaultValue != null)
+                originalField.DefaultValue = DefaultValue;
+
+            if (IsSealed != null)
+                originalField.IsSealed = IsSealed.Value;
+
+            if (IsReadOnly != null)
+                originalField.IsReadOnly = IsReadOnly.Value;
+
+            if (DoNotDescribe != null)
+                originalField.DoNotDescribe = DoNotDescribe.Value;
+
+            if (PortalPrompt != null)
+                originalField.PortalPrompt = PortalPrompt;
+
+            if (PortalAccessibility != null)
+                originalField.PortalAccessibility = PortalAccessibility.Value;
+
+            if (HelpText != null)
+                originalField.HelpText = HelpText;
+
+            if (PickListEntries != null && PickListEntries.Count > 0)
+            {
+                if (originalField.PickListEntries == null)
+                    originalField.PickListEntries = new List<PickListEntry>();
+                originalField.PickListEntries.AddRange(PickListEntries);
+            }
+
+            if (LookupTableID != null)
+                originalField.LookupTableID = LookupTableID;
+
+            if (NullValueLabel != null)
+                originalField.NullValueLabel = NullValueLabel;
+
+            if (Namespace != null)
+                originalField.Namespace = Namespace;
+
+            if (SuppressDefaultValue != null)
+                originalField.SuppressDefaultValue = SuppressDefaultValue.Value;
+
+            originalField.IsOverriden = true;
+        }
+
         #region Serializatioon Workarounds
 
         // In .NET you can't serialize a Nullable to an attribute
 
-        [XmlAttribute( "DataType" )]
+        [XmlAttribute("DataType")]
         public string FieldDataTypeString
         {
             get { return DataType != null ? DataType.ToString() : null; }
@@ -168,6 +234,7 @@ namespace MemberSuite.SDK.Types
                 }
             }
         }
+
         [XmlAttribute("DisplayType")]
         public string FieldDisplayTypeString
         {
@@ -233,7 +300,9 @@ namespace MemberSuite.SDK.Types
             set
             {
                 PortalAccessibility portalAccessibility;
-                PortalAccessibility = Enum.TryParse(value, out portalAccessibility) ? portalAccessibility : default(PortalAccessibility?);
+                PortalAccessibility = Enum.TryParse(value, out portalAccessibility)
+                    ? portalAccessibility
+                    : default(PortalAccessibility?);
             }
         }
 
@@ -294,75 +363,6 @@ namespace MemberSuite.SDK.Types
             return SecurityLock != null && SecurityLock.Participants != null && SecurityLock.Participants.Count > 0;
         }
 
-
         #endregion
-
-        /// <summary>
-        /// Overrides the specified original field.
-        /// </summary>
-        /// <param name="originalField">The original field.</param>
-        public void Override(FieldMetadata originalField)
-        {
-            if (DataType != null)
-                originalField.DataType = DataType.Value;
-
-            if (DisplayType != null)
-                originalField.DisplayType = DisplayType.Value;
-
-            if (Label != null)
-                originalField.Label = Label;
-
-            if (ReferenceType != null)
-                originalField.ReferenceType = ReferenceType;
-
-            if (IsRequired != null)
-                originalField.IsRequired = IsRequired.Value;
-
-            if (IsRequiredInPortal != null)
-                originalField.IsRequiredInPortal = IsRequiredInPortal.Value;
-
-            if (DefaultValue != null)
-                originalField.DefaultValue = DefaultValue;
-
-            if (IsSealed != null)
-                originalField.IsSealed = IsSealed.Value;
-
-            if (IsReadOnly != null)
-                originalField.IsReadOnly = IsReadOnly.Value;
-
-            if (DoNotDescribe != null)
-                originalField.DoNotDescribe = DoNotDescribe.Value;
-
-            if (PortalPrompt != null)
-                originalField.PortalPrompt = PortalPrompt;
-
-            if(PortalAccessibility != null)
-                originalField.PortalAccessibility = PortalAccessibility.Value;
-
-            if (HelpText != null)
-                originalField.HelpText = HelpText;
-
-            if (PickListEntries != null && PickListEntries.Count > 0)
-            {
-                if (originalField.PickListEntries == null)
-                    originalField.PickListEntries = new List<PickListEntry>();
-                originalField.PickListEntries.AddRange(PickListEntries);
-            }
-
-            if (LookupTableID != null)
-                originalField.LookupTableID = LookupTableID;
-
-            if (NullValueLabel != null)
-                originalField.NullValueLabel = NullValueLabel;
-
-            if (Namespace != null)
-                originalField.Namespace = Namespace;
-
-            if (SuppressDefaultValue != null)
-                originalField.SuppressDefaultValue = SuppressDefaultValue.Value;
-
-            originalField.IsOverriden = true;
-        }
     }
-
 }

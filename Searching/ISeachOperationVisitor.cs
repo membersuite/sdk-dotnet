@@ -16,7 +16,6 @@ namespace MemberSuite.SDK.Searching
         void Visit(IsGreaterThanOrEqualTo isGreaterThanOrEqual);
         void Visit(IsBetween isBetween);
         void Visit(IsOneOfTheFollowing isOneOfTheFollowing);
-
         void Visit(ContainsOneOfTheFollowing containsOneOfTheFollowing);
         void Visit(StartsWithOneOfTheFollowing startsWithOneOfTheFollowing);
         void Visit(EndsWithOneOfTheFollowing endsWithOneOfTheFollowing);

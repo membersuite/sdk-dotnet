@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
-    public enum AccountingMethod
-    {
-        
-        Accrual = 10,
-        Cash = 20
-    }
+    
 
-    public enum AssociationMode
+    public enum AssociationType
     {
         Normal = 0,
 
-        Sandbox = 5 
-         
+        Sandbox = 5,
+
+        Internal = 10,
+
+        Trial = 15,
+
+        Demo = 20
     }
 
     public enum AssociationStatus
     {
-        Active = 0, 
+        Active = 0,
 
         Provisioning = 5,
 
@@ -50,6 +47,7 @@ namespace MemberSuite.SDK.Types
         ByShippingAddress = 0,
         ByEventAddress = 5
     }
+
     public enum AuditLogType
     {
         RecordCreated = 0,
@@ -60,9 +58,9 @@ namespace MemberSuite.SDK.Types
         Login = 5,
         Logout = 6,
         ForcedLogout = 7,
-        
-        Renewal=11,
-        Drop=12,
+
+        Renewal = 11,
+        Drop = 12,
         Information = 14,
         OrderFailure = 16,
         OrderSuccess = 18,
@@ -84,11 +82,9 @@ namespace MemberSuite.SDK.Types
         SpecificProductsOnly = 10
     }
 
-  
 
     public enum DisplayTarget
     {
-
         SameWindow = 0,
 
 
@@ -100,7 +96,7 @@ namespace MemberSuite.SDK.Types
 
     public enum EventRegistrationMode
     {
-        Normal=0,
+        Normal = 0,
         Ticketed = 1,
         Disabled = 2,
         Tabled = 10
@@ -109,17 +105,14 @@ namespace MemberSuite.SDK.Types
     public enum ExpirationType
     {
         Calendar,
-        Anniversary//,
-       // Custom // Cron Expression
+        Anniversary //,
+        // Custom // Cron Expression
     }
- 
+
 
     public enum ExtensionServiceTransport
     {
         Soap = 0
-
-
-
     }
 
     public enum FieldType
@@ -143,23 +136,23 @@ namespace MemberSuite.SDK.Types
     public enum ProductLinkageType
     {
         //Upsell = 0,
-         
+
         //Replacement = 10,
         Complementary = 15,
         Bundled = 20,
-        CrossSell = 30
+        CrossSell = 30,
+        Optional = 35,
+        Umbrella = 40
     }
 
     public enum IntegrationLinkTargetType
     {
-
         Home = 0,
 
 
         Data360View = 10,
 
         Tab = 20
-
     }
 
     [Flags]
@@ -180,7 +173,6 @@ namespace MemberSuite.SDK.Types
 
     public enum PackagedProductPricingMethod
     {
-
         Fixed = 0,
         Percentage = 5
     }
@@ -197,7 +189,6 @@ namespace MemberSuite.SDK.Types
 
     public enum InvoiceAdjustmentPaymentAction
     {
-        
         Void,
         IssueCredit,
         RefundToCard
@@ -210,18 +201,24 @@ namespace MemberSuite.SDK.Types
         QuickBooks = 10,
         Peachtree = 15,
         Adagio = 20,
-        QuickBooksOnlineEdition = 12,
+        QuickBooksOnline = 12,
         SageBusinessWorks = 25,
         Mas90 = 30,
-        Other = 99,
-
-        
+        MIPFundAccounting = 35,
+        Other = 99
     }
 
     public enum BatchDownloadMethod
     {
-        Summary = 0,
-        Detail = 5
+        BatchLevelSummary = 0,
+        Detail = 5,
+        Summary =10
+    }
+
+    public enum PaymentCaptureTimingBehavior
+    {
+        CapturePaymentImmediately = 0,
+        CapturePaymentUponShipping = 5
     }
 
     public enum CustomerType
@@ -236,6 +233,7 @@ namespace MemberSuite.SDK.Types
         InvoicePaidInFull = 0,
         Immediately = 5,
         PercentPaid = 10,
+        Never = 15
     }
 
     public enum ChapterMode
@@ -273,7 +271,6 @@ namespace MemberSuite.SDK.Types
         EventRegistration = 5,
         Competition = 10,
         Product = 15
-        
     }
 
     public enum GiftType
@@ -282,12 +279,12 @@ namespace MemberSuite.SDK.Types
         Cash = 3,
         MatchingCash = 4,
         Pledge = 6,
-        MatchingPledge =  7,
-        StockProperty=9,
-        InKind=12,
-        Other=15,
-        Recurring=18,
-        Planned=21,
+        MatchingPledge = 7,
+        StockProperty = 9,
+        InKind = 12,
+        Other = 15,
+        Recurring = 18,
+        Planned = 21,
         PledgePayment = 24,
         RecurringGiftPayment = 26,
         SoftGift = 29,
@@ -303,20 +300,19 @@ namespace MemberSuite.SDK.Types
     }
 
     /// <summary>
-    /// Determines whether a field can be edited or seen in the portal
+    ///     Determines whether a field can be edited or seen in the portal
     /// </summary>
     public enum PortalAccessibility
     {
         /// <summary>
-        /// 
         /// </summary>
         Full = 0,
+
         /// <summary>
-        /// 
         /// </summary>
         ReadOnly = 1,
+
         /// <summary>
-        /// 
         /// </summary>
         None = 2
     }
@@ -332,7 +328,6 @@ namespace MemberSuite.SDK.Types
 
     public enum HistoricalTransactionType
     {
-
         Invoice = 0,
         Payment = 2,
         Order = 4,
@@ -354,7 +349,7 @@ namespace MemberSuite.SDK.Types
     {
         MembersOnly = 0,
         AnyRegisteredUser = 5,
-        PublicAccess = 10,
+        PublicAccess = 10
     }
 
 
@@ -386,6 +381,7 @@ namespace MemberSuite.SDK.Types
         NewMembers = 5,
         RenewingMembers = 10
     }
+
     public enum DuesBillingType
     {
         Membership = 0
@@ -405,7 +401,7 @@ namespace MemberSuite.SDK.Types
         Direct = 5
     }
 
-    public enum SubLedgerEntryItemType
+    public enum SubledgerEntryItemType
     {
         Unknown = 0,
         AccountsReceivable = 1,
@@ -420,9 +416,22 @@ namespace MemberSuite.SDK.Types
         CreditLiability = 10,
         WriteOffExpense = 11,
         GiftDebit = 12,
-        GiftCredit = 13,
+        GiftRevenue = 13,
         COGSExpense = 14,
-        Inventory = 15
+        Inventory = 15,
+        CurrencyTrading = 16,
+        DepositsInTransit = 17,
+        ReconciliationDiscrepencyAdjustment = 18,
+        CurrencyFluctuation = 19,
+        MerchantServicesFees = 20,
+        JournalEntry = 21
+    }
+
+    public enum BankReconciliationStatus
+    {
+        Open = 0,
+
+        Posted = 10
     }
 
     public enum OpportunityStageType
@@ -431,14 +440,13 @@ namespace MemberSuite.SDK.Types
         ClosedWon = 5,
         ClosedLost = 10,
         ClosedNoDecision = 15
-
     }
 
     public enum GiftReceiptStatus
     {
         NotReceipted = 0,
         Receipted = 5,
-        DoNotReceipt=10
+        DoNotReceipt = 10
     }
 
     public enum GiftAcknowledgmentStatus
@@ -455,12 +463,12 @@ namespace MemberSuite.SDK.Types
         IndicateBoothPreferencesOnly = 10
     }
 
-    public enum COGSPolicy
+    public enum InventoryCostingMethod
     {
         DoNotCalculateCOGS = 0,
         FirstInFirstOut = 5,
-        LastInFirstOut = 10,
-        WeightedAverage = 15
+        LastInFirstOut = 10
+        
     }
 
     public enum ChapterPostalCodeMappingMode
@@ -481,7 +489,7 @@ namespace MemberSuite.SDK.Types
     public enum GenericJobType
     {
         SubscriptionFulfillment = 0,
-        SubscriptionRenewal = 1,
+        SubscriptionRenewal = 1
         //AssignEntitlements = 2
     }
 
@@ -546,7 +554,7 @@ namespace MemberSuite.SDK.Types
     {
         Disabled = 0,
         AllowUnverified = 5,
-        AllowVerified = 10   // Meaning when they submit, it's verified
+        AllowVerified = 10 // Meaning when they submit, it's verified
     }
 
 
@@ -571,22 +579,21 @@ namespace MemberSuite.SDK.Types
         Never = 0,
         Console = 1,
         Portal = 2,
-        Both
+        Both = 3
     }
 
     public enum IndexedQuickSearchUsage
     {
         Never = 0,
         QuickSearchesOnly = 5
-       // EverywhereInTheConsole = 10
+        // EverywhereInTheConsole = 10
         //EverywhereInTheConsoleAndPortal = 15
-        
     }
 
     public enum TermType
     {
         Days = 0,
-        
+
         Months = 2,
         Years = 3
     }
@@ -597,7 +604,7 @@ namespace MemberSuite.SDK.Types
         RenewSubscription = 5
     }
 
-     public enum BillingRunMemberStatus
+    public enum BillingRunMemberStatus
     {
         Pending = 0,
         Completed = 5,
@@ -605,14 +612,28 @@ namespace MemberSuite.SDK.Types
         Unbilled = 15
     }
 
-    public enum BillingRunCandidateType
+    public enum BillingAction
     {
         InitialBill = 0,
         FirstReminder = 1,
         SecondReminder = 2,
         ThirdReminder = 3,
-        Drop = 10
+
+        Drop = 10,
+        LateFees= 15
     }
+
+    //public enum BillingCycleTarget
+    //{
+    //    Memberships = 0,
+    //    Subscriptions = 5,
+    //    Certifications = 10,
+    //    Installments = 15,
+    //    ExpiredPaymentMethods = 20,
+    //    Pledges = 25,
+    //    RecurringGifts = 25,
+    //    InsertionOrders = 30
+    //}
 
     public enum BillingCycleProductAction
     {
@@ -623,9 +644,9 @@ namespace MemberSuite.SDK.Types
     public enum BillingRunStatus
     {
         Pending = 0,
-        CandidateSelection = 10,
-        MemberGeneration = 20,
-        MemberProcessing = 30,
+        TargetRecordSelection = 10,
+        //MemberGeneration = 20,
+        //MemberProcessing = 30,
         PendingActivityReview = 35,
         QeuedActivityExecution = 40,
         PendingQueuedActivityReview = 45,
@@ -633,7 +654,6 @@ namespace MemberSuite.SDK.Types
         Complete = 60,
         Error = 70,
         Cancelled = 80
-        
     }
 
     public enum BillingRunMode
@@ -669,7 +689,8 @@ namespace MemberSuite.SDK.Types
         SendEmail = 5,
         DropRecord = 10,
         ChangeStatus = 15,
-        FailedProcessing = 20
+        FailedProcessing = 20,
+        ApplyLateFee = 25
     }
 
     public enum DataExportFormat
@@ -677,7 +698,6 @@ namespace MemberSuite.SDK.Types
         Raw = 0,
         CsvWithHeaders = 5,
         CsvWithoutHeaders = 10
-        
     }
 
     public enum JobPostingStatus
@@ -685,58 +705,10 @@ namespace MemberSuite.SDK.Types
         Pending = 0,
         Approved = 5,
         OnHold = 10,
-        Rejected = 15,
-
-        
+        Rejected = 15
     }
 
-    public enum RealtorSubscriptionFeeType
-    {
-        MLS = 0,
-        LMS = 5,
-        eKey = 10,
-        aKey = 15,
-        aKeyInsurance = 20
-    }
-
-    public enum eKeyProviderType
-    {
-        Supra = 0
-    }
-
-    public enum ListingSubscriptionProviderType
-    {
-        Matrix = 0
-    }
-
-    public enum RealtorProductCategory
-    {
-        None = 0,
-        NationalDues = 3,
-        ImageAwarenessAssessment = 5,
-        StateDues = 10,
-        LegalFund=15,
-        RPACContribution = 20,
-        LocalDues = 25
-    }
-
-    public enum RealtorRelationshipDesignation
-    {
-        None = 0,
-
-        // represents a relationship between a head broker and an office
-        // Left Side = Indiv, Right Side = Org
-        BrokerOffice = 5,
-
-        // Left Side = Org, Right Side = Org
-        OfficeBranch = 10,
-
-        // Left Side = Indiv, Right Side = Indiv
-        OfficeAgent = 15,
-
-        // Left Side = Indiv, Right Side = Indiv
-        AgentAssistant = 20
-    }
+    
 
     public enum EngagementCyclePeriodicity
     {
@@ -758,7 +730,7 @@ namespace MemberSuite.SDK.Types
     {
         Checked = 0,
         Unchecked = 1,
-        Disabled =2
+        Disabled = 2
     }
 
     public enum NRDSAssociationStatus
@@ -766,190 +738,190 @@ namespace MemberSuite.SDK.Types
         A,
         I,
         D,
-        C,
+        C
     }
-    
+
     public enum NRDSAssociationType
     {
-        L,   // Local
-        S,   // State
-        N,   //
-        A,   //
-        M,   // MLS
+        L, // Local
+        S, // State
+        N, //
+        A, //
+        M // MLS
 
         // TODO Why is 'I' allowed in the nrds.dtd but not in Client.jar?
         ////I,
     }
 
     /// <summary>
-    /// Used to describe the nature of a payment or status of a pledge
-    /// </summary>            
+    ///     Used to describe the nature of a payment or status of a pledge
+    /// </summary>
     public enum NRDSDemographicPaymentCodeType
     {
-        C,   // Commitment made but no payment to date                
-        D,   // Deposit                
-        F,  // Paid in full (as with a sponsorship or pledge)                
-        P,  // Partial Payment
+        C, // Commitment made but no payment to date                
+        D, // Deposit                
+        F, // Paid in full (as with a sponsorship or pledge)                
+        P // Partial Payment
     }
 
     /// <summary>
-    /// How the course was delivered
+    ///     How the course was delivered
     /// </summary>
     public enum NRDSEducationDeliveryMethodType
     {
-        AUDIO,   // Audio tape
-        CDROM,   // Interactive Computer based
-        CLASS,  // Live classroom
+        AUDIO, // Audio tape
+        CDROM, // Interactive Computer based
+        CLASS, // Live classroom
         ONLINE, // Online course via the Internet
         VIDCON, // Live Teleconference
-        VIDEO,  // Pre-recorded video tape
+        VIDEO // Pre-recorded video tape
     }
 
     /// <summary>
-    /// The nature of the payment
+    ///     The nature of the payment
     /// </summary>
     public enum NRDSEducationPaymentCodeType
     {
-        B,   // Balance of Payment due
-        D,   // Deposit
-        F,  // Full Fee
-        L,  // Late Fee
-        P,  // Partial Payment
+        B, // Balance of Payment due
+        D, // Deposit
+        F, // Full Fee
+        L, // Late Fee
+        P // Partial Payment
     }
 
     /// <summary>
-    /// Where the member prefers test results to be sent
+    ///     Where the member prefers test results to be sent
     /// </summary>
     public enum NRDSEducationTestMailingAddressType
     {
-        H,   // Home Address
-        O,   // Office Address
-        M,  // Mailing address
+        H, // Home Address
+        O, // Office Address
+        M // Mailing address
     }
 
     public enum NRDSEducationTestStatus
     {
-        P,  // Pass
-        F,  // Fail
+        P, // Pass
+        F // Fail
     }
 
     /// <summary>
-    /// Used for PAC contributions only
+    ///     Used for PAC contributions only
     /// </summary>
     public enum NRDSFinancialContributionType
     {
-        P,  // Personal
-        C,  // Corporate
+        P, // Personal
+        C // Corporate
     }
 
     /// <summary>
-    /// The source of this transaction. The code EC is reserved for Financial records that are 
-    /// filled in automatically by the NAR EC Invoicing module. All other records should have 
-    /// XT in this field.
+    ///     The source of this transaction. The code EC is reserved for Financial records that are
+    ///     filled in automatically by the NAR EC Invoicing module. All other records should have
+    ///     XT in this field.
     /// </summary>
     public enum NRDSFinancialSource
     {
         EC,
-        XT,
+        XT
     }
 
     public enum NRDSMemberGender
     {
-        F,  // Female
-        M,  // Male
+        F, // Female
+        M // Male
     }
 
     /// <summary>
-    /// Where the member prefers to receive faxes
+    ///     Where the member prefers to receive faxes
     /// </summary>
     public enum NRDSMemberPreferredFax
     {
-        H,  // Home/personal fax number
-        O,  // Office fax number
+        H, // Home/personal fax number
+        O // Office fax number
     }
 
     /// <summary>
-    /// Where the member would prefer to receive mail
+    ///     Where the member would prefer to receive mail
     /// </summary>
     public enum NRDSMemberAddressType
     {
-        H,  // Home address
-        O,  // Office address
-        M,  // Mail address
-        F,  // Office address - mailing
+        H, // Home address
+        O, // Office address
+        M, // Mail address
+        F // Office address - mailing
     }
 
     /// <summary>
-    /// Member’s preferred phone
+    ///     Member’s preferred phone
     /// </summary>
     public enum NRDSMemberPreferredPhone
     {
-        O,  // Office phone number
-        H,  // Home phone number
-        P,  // Pager number
-        C,  // Cell phone number
+        O, // Office phone number
+        H, // Home phone number
+        P, // Pager number
+        C // Cell phone number
     }
 
     /// <summary>
-    /// Member status
+    ///     Member status
     /// </summary>
     public enum NRDSMemberStatus
     {
-        A,  // Active
-        I,  // Inactive
-        T,  // Terminated
-        P,  // Provisional
-        S,  // Suspend (only available 1/1 - 3/1 every 4 years)
-        X,  // Deceased
+        A, // Active
+        I, // Inactive
+        T, // Terminated
+        P, // Provisional
+        S, // Suspend (only available 1/1 - 3/1 every 4 years)
+        X // Deceased
     }
 
     /// <summary>
-    /// Member status
+    ///     Member status
     /// </summary>
     public enum NRDSMemberSupplementalStatus
     {
-        A,   // Active
-        I,   // Inactive
-        T,  // Terminated
+        A, // Active
+        I, // Inactive
+        T // Terminated
     }
 
     /// <summary>
-    /// Type of membership
+    ///     Type of membership
     /// </summary>
     public enum NRDSMemberType
     {
-        R,      // Realtor
-        RA,     // Realtor-Associate
-        I,      // Institute Affiliate Member
-        AFF,    // Affiliate of association
-        N,      // Non-member salesperson in Realtor Broker's assessment
-        S,      // Association staff person
+        R, // Realtor
+        RA, // Realtor-Associate
+        I, // Institute Affiliate Member
+        AFF, // Affiliate of association
+        N, // Non-member salesperson in Realtor Broker's assessment
+        S // Association staff person
     }
 
     /// <summary>
-    /// Code to indicate the office branch location
+    ///     Code to indicate the office branch location
     /// </summary>
     public enum NRDSOfficeBranchType
     {
-        M,   // Main office
-        B,   // Branch Office
-        S,   // Single office - no branch locations
+        M, // Main office
+        B, // Branch Office
+        S // Single office - no branch locations
     }
 
     /// <summary>
-    /// Status of the office record
+    ///     Status of the office record
     /// </summary>
     public enum NRDSOfficeStatus
     {
-        A,   // Active
-        I,   // Inactive
-        T,   // Terminated
+        A, // Active
+        I, // Inactive
+        T // Terminated
     }
 
     public enum NRDSPrimaryIndicator
     {
-        P,  // Primary
-        S   // Secondary
+        P, // Primary
+        S // Secondary
     }
 
     public enum RealtorSubscriptionType
@@ -957,6 +929,84 @@ namespace MemberSuite.SDK.Types
         Primary = 0,
         Coop = 5
     }
-}
 
-      
+    /// <summary>
+    /// Determines what happens if a credit memo is apply to 
+    /// an invoice and there's extra payments/money left over
+    /// </summary>
+    public enum CreditMemoPaymentOverageBehavior
+    {
+        GenerateRefund = 0,
+        GenerateCredit = 5
+    }
+
+    public enum RefundType
+    {
+        Payment = 0,
+        Credit = 5
+    }
+
+    public enum RefundInvoiceInstructions
+    {
+        LeaveBalanceOnInvoice = 0,
+        ReduceInvoiceByAmountOfRefund = 5
+    }
+    public enum CreditType
+    {
+        /// <summary>
+        /// The credit is acting on a payment
+        /// </summary>
+        Payment = 0,
+
+        /// <summary>
+        /// The credit was generated as a result of an overpayment
+        /// </summary>
+        Overpayment= 5
+    }
+
+    public enum DefaultBatchAssignmentRuleTarget
+    {
+        RecurringBatch = 0,
+        SpecificBatch = 5
+    }
+
+    public enum ReturnRequestStatus
+    {
+        Pending = 0,
+        Rejected = 5,
+        Approved = 10,
+        ReturnPartiallyReceived = 15,
+        ReturnCompleted = 20,
+        Cancelled = 25
+    }
+
+    public enum COGSEntryType
+    {
+        Fulfillment = 0,
+        Return = 10,
+        Receipt = 15,
+        Adjustment = 20
+    }
+
+    public enum OrderCancellationRefundInstructions
+    {
+        IssueRefund = 0,
+        IssueCredit = 5
+    }
+
+    public enum RevenueRecognitionScheduleType
+    {
+        Invoice = 0,
+        ChangeMemo = 5,
+        WriteOff = 10
+
+    }
+
+    public enum AdressTypeGeographicalRegionSetting
+    {
+        Disable = 0,
+
+        Enable = 5
+    }
+
+}

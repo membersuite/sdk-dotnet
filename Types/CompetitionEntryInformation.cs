@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Packet of information returned to the client about an Entities options for entering a competition
+    ///     Packet of information returned to the client about an Entities options for entering a competition
     /// </summary>
     [Serializable]
     [DataContract]
@@ -29,10 +27,7 @@ namespace MemberSuite.SDK.Types
         public string SubmittedStatusId { get; set; }
 
         [DataMember]
-        public string PendingPaymentStatusId
-        {
-            get; set;
-        }
+        public string PendingPaymentStatusId { get; set; }
 
         [DataMember]
         public string DraftStatusId { get; set; }

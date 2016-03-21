@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
+using MemberSuite.SDK.Utilities;
 
 namespace MemberSuite.SDK.Types
 {
@@ -27,6 +26,20 @@ namespace MemberSuite.SDK.Types
     [DataContract]
     public class BatchPostingError
     {
+        public BatchPostingError()
+        {
+        }
+
+        public BatchPostingError(string recordID, object record, string msg, params object[] args)
+        {
+            RecordID = recordID;
+            string fMsg = StringUtil.SafeFormat(msg, args);
+
+            RecordType = record.GetType().Name;
+            ErrorMessage = fMsg;
+
+        }
+
         [DataMember]
         public string RecordType { get; set; }
 
@@ -35,5 +48,10 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public string ErrorMessage { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1} (record identifier: {2})", RecordType, ErrorMessage, RecordID);
+        }
     }
 }

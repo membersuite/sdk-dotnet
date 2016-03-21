@@ -2,8 +2,9 @@
 {
     public enum DuplicateDetectionMatchMode
     {
-        ExactMatch= 0,
+        ExactMatch = 0,
         Fuzzy = 1,
-        CommonFirstNames = 2
+        CommonFirstNames = 2,
+        PostalCode = 3
     }
 }

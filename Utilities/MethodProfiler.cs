@@ -14,7 +14,7 @@
 
 //        private Stopwatch _timer;
 //        private StreamWriter _streamWriter;
-       
+
 //        public MethodProfiler(string fileName, string details)
 //        {
 //            _fileName = fileName;
@@ -25,7 +25,7 @@
 //            _streamWriter = File.AppendText(fileName);
 
 //            _streamWriter.WriteLine(details);
-            
+
 //        }
 
 //        public void Dispose()
@@ -63,3 +63,4 @@
 //        }
 //    }
 //}
+

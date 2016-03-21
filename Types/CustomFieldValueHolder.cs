@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Types
@@ -30,7 +28,7 @@ namespace MemberSuite.SDK.Types
         public decimal? DecimalValue { get; set; }
 
         [DataMember]
-        public string ReferenceValue {get;set;}
+        public string ReferenceValue { get; set; }
 
         [DataMember]
         public string StringValue { get; set; }
@@ -52,10 +50,9 @@ namespace MemberSuite.SDK.Types
             if (StringValue != null) return StringValue;
             if (DateTimeValue != null) return DateTimeValue;
             if (BooleanValue != null) return BooleanValue;
-            if (ListValue != null && ListValue.Count >0) return ListValue;
+            if (ListValue != null && ListValue.Count > 0) return ListValue;
 
             return null;
         }
-
     }
 }

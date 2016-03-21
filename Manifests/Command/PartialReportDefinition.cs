@@ -29,7 +29,7 @@ namespace MemberSuite.SDK.Manifests.Command
     {
         [DataMember]
         public bool IsRaw { get; set; }
-        
+
         [DataMember]
         public string ReportDefinitionXml { get; set; }
     }

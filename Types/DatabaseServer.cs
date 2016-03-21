@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Xml.Serialization;
 using MemberSuite.SDK.Manifests;
 
@@ -30,5 +26,8 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public string ReadOnlyName { get; set; }
+
+        [DataMember]
+        public string ServerName { get; set; }
     }
 }

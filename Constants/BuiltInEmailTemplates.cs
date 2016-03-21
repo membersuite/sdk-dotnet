@@ -12,6 +12,8 @@
         {
             public const string Welcome = "BuiltIn:Welcome";
             public const string UserInformationUpdate = "BuiltIn:UserInformationUpdate";
+            public const string MergeConfirmation = "BuiltIn:MergeConfirmation";
+            public const string MergeFailed = "BuiltIn:MergeFailure";
         }
 
         public static class Financial
@@ -19,10 +21,11 @@
             public const string Invoice = "BuiltIn:Invoice";
             public const string Payment = "BuiltIn:Payment";
             public const string RefundRequest = "BuiltIn:RefundRequest";
-
             public const string BillingScheduleInvoiceOnly = "BuiltIn:BillingSchedule_InvoiceOnly";
             public const string BillingScheduleInvoiceAndPayment = "BuiltIn:BillingSchedule_InvoiceAndPayment";
-            public const string BillingScheduleInvoiceAndFailedPayment = "BuiltIn:BillingSchedule_InvoiceAndFailedPayment";
+
+            public const string BillingScheduleInvoiceAndFailedPayment =
+                "BuiltIn:BillingSchedule_InvoiceAndFailedPayment";
         }
 
         public static class Committees
@@ -34,11 +37,8 @@
         {
             public const string NewMember = "BuiltIn:NewMember";
             public const string RenewingMember = "BuiltIn:RenewingMember";
-            
             public const string MembershipRenewalComplete = "BuiltIn:MembershipRenewalComplete";
-
             public const string RenewalInvoice = "BuiltIn:RenewalInvoice";
-
             public const string InitialBilling = "BuiltIn:MembershipInitialBillingNotice";
             public const string FirstReminder = "BuiltIn:MembershipFirstReminder";
             public const string SecondReminder = "BuiltIn:MembershipSecondReminder";
@@ -75,7 +75,6 @@
             public const string WelcomePortalUser = "BuiltIn:WelcomePortalUser";
         }
 
-
         public static class Fundraising
         {
             public const string DonorThankYou = "BuiltIn:DonorThankYou";
@@ -103,6 +102,13 @@
         public static class Certifications
         {
             public const string CertificationRecommendation = "BuiltIn:CertificationRecommendation";
+
+            public const string InitialBilling = "BuiltIn:CertificationInitialBillingNotice";
+            public const string RenewalInvoice = "BuiltIn:CertificationRenewalInvoice";
+            public const string FirstReminder = "BuiltIn:CertificationFirstReminder";
+            public const string SecondReminder = "BuiltIn:CertificationSecondReminder";
+            public const string ThirdReminder = "BuiltIn:CertificationThirdReminder";
+            public const string DropNotice = "BuiltIn:CertificationDropNotice";
         }
 
         public static class Discussions

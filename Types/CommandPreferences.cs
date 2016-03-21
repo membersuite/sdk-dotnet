@@ -6,34 +6,35 @@ using MemberSuite.SDK.Utilities;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Represents command "state" that can be persisted and saved
+    ///     Represents command "state" that can be persisted and saved
     /// </summary>
-    /// <remarks>Note that the value is always a string - not everything can
-    /// be serialized via a WCF service, and making it typeof(object) increases
-    /// the chance a developer somehwere will accidentally dup something in the preferences
-    /// that can't be serialized and spend 2 hours hunting down a bug.</remarks>
+    /// <remarks>
+    ///     Note that the value is always a string - not everything can
+    ///     be serialized via a WCF service, and making it typeof(object) increases
+    ///     the chance a developer somehwere will accidentally dup something in the preferences
+    ///     that can't be serialized and spend 2 hours hunting down a bug.
+    /// </remarks>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [Serializable]
     public class CommandPreferences : MetadataBase
     {
+        private SerializableDictionary<string, string> _preferences;
+
         public CommandPreferences()
         {
+            IsDirty = false;
             _preferences = new SerializableDictionary<string, string>();
         }
 
-        private SerializableDictionary<string, string> _preferences;
-
-       // [Obsolete("Do NOT directly call the preferences dictionary! This is for serialization only.")]
+        // [Obsolete("Do NOT directly call the preferences dictionary! This is for serialization only.")]
         public SerializableDictionary<string, string> Preferences
         {
             get { return _preferences; }
             set { _preferences = value; }
         }
 
-        private bool _isDirty= false;
-
         [XmlIgnore]
-        public bool IsDirty {get { return _isDirty; }}
+        public bool IsDirty { get; private set; }
 
         public void SetPreference(string key, string val)
         {
@@ -43,16 +44,16 @@ namespace MemberSuite.SDK.Types
                     return; // nothing to do
 
             _preferences[key] = val;
-            _isDirty = true;
+            IsDirty = true;
         }
 
         public void ClearReference(string key)
         {
             if (!_preferences.ContainsKey(key))
                 return; // nothing to do
-            
+
             _preferences.Remove(key);
-            _isDirty = true;
+            IsDirty = true;
         }
 
         public string GetPreference(string key)
@@ -66,11 +67,11 @@ namespace MemberSuite.SDK.Types
         }
 
         /// <summary>
-        /// Marks this instance as being clean, meaning that the preferences have been persisted
+        ///     Marks this instance as being clean, meaning that the preferences have been persisted
         /// </summary>
         public void Clean()
         {
-            _isDirty = false;
+            IsDirty = false;
         }
 
         public bool TryGetPreference<T>(string key, out T variable)
@@ -84,7 +85,7 @@ namespace MemberSuite.SDK.Types
 
             variable = Xml.Deserialize<T>(value);
 
-            return true ;
+            return true;
         }
     }
 }

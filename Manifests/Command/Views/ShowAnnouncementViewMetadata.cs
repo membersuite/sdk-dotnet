@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Manifests.Command.Views
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("SearchViewMetadata", Namespace = "http://membersuite.com/schemas/",
-       IsNullable = false)]
+        IsNullable = false)]
     [Serializable]
     [DataContract]
     public class ShowAnnouncementViewMetadata
@@ -17,7 +14,7 @@ namespace MemberSuite.SDK.Manifests.Command.Views
         [DataMember]
         public string Announcement { get; set; }
 
-         [DataMember]
-        public string AnnouncementID     { get; set; }
+        [DataMember]
+        public string AnnouncementID { get; set; }
     }
 }

@@ -7,13 +7,20 @@ using MemberSuite.SDK.Types;
 namespace MemberSuite.SDK.Manifests.Searching
 {
     /// <summary>
-    /// Describes everything about running a particular search - for consumption by the UI.
-    /// Takes a search specification and makes it apply to the current user/association.
+    ///     Describes everything about running a particular search - for consumption by the UI.
+    ///     Takes a search specification and makes it apply to the current user/association.
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     [DataContract]
     public class SearchManifest
     {
+        /// <summary>
+        ///     Points to the search spec
+        /// </summary>
+        [DataMember] public string SearchType;
+
+        [DataMember] public string ViewCommand;
+
         public SearchManifest()
         {
             Fields = new List<FieldMetadata>();
@@ -24,43 +31,35 @@ namespace MemberSuite.SDK.Manifests.Searching
         public string BaseObject { get; set; }
 
         /// <summary>
-        /// Points to the search spec
-        /// </summary>
-        [DataMember]
-        public string SearchType;
-
-        /// <summary>
-        /// Gets or sets the search context.
+        ///     Gets or sets the search context.
         /// </summary>
         /// <value>The search context.</value>
         [DataMember]
         public string SearchContext { get; set; }
 
-        [DataMember]
-        public string ViewCommand;
         /// <summary>
-        /// Gets or sets the display name.
+        ///     Gets or sets the display name.
         /// </summary>
         /// <value>The display name.</value>
         [DataMember]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the fields.
+        ///     Gets or sets the fields.
         /// </summary>
         /// <value>The fields.</value>
         [DataMember]
         public List<FieldMetadata> Fields { get; set; }
 
         /// <summary>
-        /// Gets or sets the default selected fields.
+        ///     Gets or sets the default selected fields.
         /// </summary>
         /// <value>The default selected fields.</value>
         [DataMember]
         public List<SearchOutputColumn> DefaultSelectedFields { get; set; }
 
         /// <summary>
-        /// Gets or sets the default sort fieds.
+        ///     Gets or sets the default sort fieds.
         /// </summary>
         /// <value>The default sort fieds.</value>
         [DataMember]
@@ -74,16 +73,16 @@ namespace MemberSuite.SDK.Manifests.Searching
 
         [DataMember]
         public List<SearchOutputColumn> DefaultFindColumns { get; set; }
-        
+
         /// <summary>
-        /// Gets or sets the module that this search belongs to
+        ///     Gets or sets the module that this search belongs to
         /// </summary>
         /// <value>The module.</value>
         [DataMember]
         public string Module { get; set; }
 
         /// <summary>
-        /// Gets or sets the output formats that are valid for this search
+        ///     Gets or sets the output formats that are valid for this search
         /// </summary>
         /// <value>The output formats.</value>
         [DataMember]
@@ -93,7 +92,7 @@ namespace MemberSuite.SDK.Manifests.Searching
         public List<BatchOperation> BatchOperations { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this search to be used for an email blast.
+        ///     Gets or sets a value indicating whether this search to be used for an email blast.
         /// </summary>
         /// <value><c>true</c> if [email blast eligible]; otherwise, <c>false</c>.</value>
         [DataMember]

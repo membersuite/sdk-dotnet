@@ -6,8 +6,8 @@ using System.Xml.Serialization;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Defines all of the elements of the system that a particular
-    /// user or security role can access.
+    ///     Defines all of the elements of the system that a particular
+    ///     user or security role can access.
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [Serializable]
@@ -27,7 +27,7 @@ namespace MemberSuite.SDK.Types
         public List<string> SecurityRoles { get; set; }
 
         /// <summary>
-        /// Gets or sets the commands.
+        ///     Gets or sets the commands.
         /// </summary>
         /// <value>The commands.</value>
         [DataMember]
@@ -37,7 +37,7 @@ namespace MemberSuite.SDK.Types
         public bool CanAccessAllCommands { get; set; }
 
         /// <summary>
-        /// Gets or sets the reports.
+        ///     Gets or sets the reports.
         /// </summary>
         /// <value>The reports.</value>
         [DataMember]
@@ -47,7 +47,7 @@ namespace MemberSuite.SDK.Types
         public bool CanAccessAllReports { get; set; }
 
         /// <summary>
-        /// Gets or sets the tabs that people in this role can see
+        ///     Gets or sets the tabs that people in this role can see
         /// </summary>
         /// <value>The tabs.</value>
         [DataMember]
@@ -57,8 +57,8 @@ namespace MemberSuite.SDK.Types
         public bool CanAccessAllTabs { get; set; }
 
         /// <summary>
-        /// Gets or sets the record types that 
-        /// can be accessed
+        ///     Gets or sets the record types that
+        ///     can be accessed
         /// </summary>
         /// <value>The record types.</value>
         [DataMember]
@@ -68,7 +68,7 @@ namespace MemberSuite.SDK.Types
         public bool HasFullAccessToAllRecordTypes { get; set; }
 
         /// <summary>
-        /// Absorbs the permissions from another keychain.
+        ///     Absorbs the permissions from another keychain.
         /// </summary>
         /// <param name="keyChain">The key chain.</param>
         public void AbsorbPermissionsFrom(KeyChain keyChain)
@@ -81,7 +81,6 @@ namespace MemberSuite.SDK.Types
 
         private void absorbRecordTypePermissionsFrom(KeyChain chain)
         {
-
             if (chain.HasFullAccessToAllRecordTypes)
                 HasFullAccessToAllRecordTypes = true;
 
@@ -92,23 +91,19 @@ namespace MemberSuite.SDK.Types
             {
                 SecurityLockAccessLevel currentCommandLevel;
 
-                if ( !RecordTypes.TryGetValue( foreginRecordLevel.Key, out currentCommandLevel ) )
+                if (!RecordTypes.TryGetValue(foreginRecordLevel.Key, out currentCommandLevel))
                 {
-                    RecordTypes.Add(foreginRecordLevel.Key, foreginRecordLevel.Value );
+                    RecordTypes.Add(foreginRecordLevel.Key, foreginRecordLevel.Value);
                     continue; // add it - it's not already there
                 }
 
-                if (foreginRecordLevel.Value > currentCommandLevel)  // then this is a higher permission
+                if (foreginRecordLevel.Value > currentCommandLevel) // then this is a higher permission
                     RecordTypes[foreginRecordLevel.Key] = foreginRecordLevel.Value; // use that permission
-
             }
-
         }
 
         private void absorbTabPermissionsFrom(KeyChain chain)
         {
-            
-
             if (chain.CanAccessAllTabs)
                 CanAccessAllTabs = true;
 
@@ -118,13 +113,10 @@ namespace MemberSuite.SDK.Types
             foreach (var cmd in chain.Tabs)
                 if (!Tabs.Contains(cmd))
                     Tabs.Add(cmd);
-           
         }
 
         private void absorbReportPermissionsFrom(KeyChain chain)
         {
-           
-
             if (chain.CanAccessAllReports)
                 CanAccessAllReports = true;
 
@@ -134,24 +126,20 @@ namespace MemberSuite.SDK.Types
             foreach (var cmd in chain.Reports)
                 if (!Reports.Contains(cmd))
                     Reports.Add(cmd);
-           
         }
 
         private void absorbCommandPermissionsFrom(KeyChain chain)
         {
-           
             if (chain.CanAccessAllCommands)
                 CanAccessAllCommands = true;
 
-            if ( chain.Commands == null )
+            if (chain.Commands == null)
                 return;
 
-            
 
             foreach (var cmd in chain.Commands)
                 if (!Commands.Contains(cmd))
                     Commands.Add(cmd);
-            
         }
     }
 }

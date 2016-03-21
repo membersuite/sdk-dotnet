@@ -1,4 +1,4 @@
-﻿    namespace MemberSuite.SDK.Concierge
+﻿namespace MemberSuite.SDK.Concierge
 {
     public enum ConciergeErrorCode
     {
@@ -36,6 +36,9 @@
         DiscountCodeUsageLimitExceeded,
         MSQLSyntaxError,
         SimulatedException,
-        PaymentDeclined
+        PaymentDeclined,
+
+        IncompatibleCurrency,
+        ExchangeRateInappropriatelySpecified
     }
 }

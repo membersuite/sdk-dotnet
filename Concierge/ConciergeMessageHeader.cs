@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.ServiceModel.Channels;
-using System.Xml;
 
 namespace MemberSuite.SDK.Concierge
 {
@@ -12,7 +11,7 @@ namespace MemberSuite.SDK.Concierge
 
         [DataMember]
         public string BrowserId { get; set; }
-     
+
         [DataMember]
         public string SessionId { get; set; }
 
@@ -24,7 +23,7 @@ namespace MemberSuite.SDK.Concierge
             try
             {
                 result = request.Headers.GetHeader<T>(headerName,
-                                                      HeaderNamespace);
+                    HeaderNamespace);
             }
             catch
             {
@@ -34,5 +33,4 @@ namespace MemberSuite.SDK.Concierge
             return result;
         }
     }
-
 }

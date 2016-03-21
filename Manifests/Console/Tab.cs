@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Manifests.Console
 {
-    [System.Serializable]
+    [Serializable]
     [DataContract]
     public class Tab : CommandShortcut
     {
-
         public Tab()
         {
             Commands = new List<CommandShortcut>();

@@ -1,36 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 
 namespace MemberSuite.SDK.Utilities
 {
     public class PriceComparer : IComparer<string>
     {
-        #region Fields
-
-        private NumberFormatInfo _formatInfo;
-
-        #endregion
-
         #region Properties
 
-        public NumberFormatInfo FormatInfo
-        {
-            get { return _formatInfo; }
-        }
-
-        #endregion
-
-        #region Constructors
-
-        public PriceComparer() : this(NumberFormatInfo.CurrentInfo)
-        {
-        }
-
-        public PriceComparer(NumberFormatInfo formatInfo)
-        {
-            _formatInfo = formatInfo;
-        }
+        public NumberFormatInfo FormatInfo { get; private set; }
 
         #endregion
 
@@ -49,18 +26,37 @@ namespace MemberSuite.SDK.Utilities
                 return 1;
 
             //Put all strings that don't start with a price at the beginning of the list
-            bool sp1 = StartsWithPrice(x, FormatInfo);
-            bool sp2 = StartsWithPrice(y, FormatInfo);
+            var sp1 = StartsWithPrice(x, FormatInfo);
+            var sp2 = StartsWithPrice(y, FormatInfo);
 
             if (sp1 && !sp2) return 1;
             if (!sp1 && sp2) return -1;
-            if (!sp1) return 0; //If sp1 is false then sp2 has to be false also because we would already have returned if it wasn't
+            if (!sp1)
+                return 0;
+                    //If sp1 is false then sp2 has to be false also because we would already have returned if it wasn't
 
             //They both start with a digit or the currency symbol
-            decimal d1 = getPrice(x, FormatInfo);
-            decimal d2 = getPrice(y, FormatInfo);
+            var d1 = getPrice(x, FormatInfo);
+            var d2 = getPrice(y, FormatInfo);
 
             return d1.CompareTo(d2);
+        }
+
+        #endregion
+
+        #region Fields
+
+        #endregion
+
+        #region Constructors
+
+        public PriceComparer() : this(NumberFormatInfo.CurrentInfo)
+        {
+        }
+
+        public PriceComparer(NumberFormatInfo formatInfo)
+        {
+            FormatInfo = formatInfo;
         }
 
         #endregion
@@ -80,17 +76,17 @@ namespace MemberSuite.SDK.Utilities
             if (s.StartsWith(nfo.CurrencySymbol))
                 return true;
 
-            return Char.IsDigit(s, 0);
+            return char.IsDigit(s, 0);
         }
 
         private static decimal getPrice(string s, NumberFormatInfo nfo)
         {
-            int lastIndexOfPrice = getLastIndexOfPrice(s, nfo);
+            var lastIndexOfPrice = getLastIndexOfPrice(s, nfo);
 
             if (lastIndexOfPrice < 0)
                 return default(decimal);
 
-            string priceString = s.Substring(0, lastIndexOfPrice + 1);
+            var priceString = s.Substring(0, lastIndexOfPrice + 1);
             decimal result;
 
 
@@ -102,7 +98,7 @@ namespace MemberSuite.SDK.Utilities
 
         private static int getLastIndexOfPrice(string s, NumberFormatInfo nfo)
         {
-            for (int i = 0; i < s.Length; i++)
+            for (var i = 0; i < s.Length; i++)
             {
                 if (subStringEquals(s, i, nfo.CurrencySymbol))
                 {
@@ -122,7 +118,7 @@ namespace MemberSuite.SDK.Utilities
                     continue;
                 }
 
-                if (!Char.IsDigit(s[i]))
+                if (!char.IsDigit(s[i]))
                     return i - 1;
             }
 

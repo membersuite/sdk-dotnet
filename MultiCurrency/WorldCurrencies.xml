@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  ## SOURCE: xe.com
+-->
+<currencies>
+  <currency code="ALL" unicode-decimal="76, 101, 107" unicode-hex="4c, 65, 6b">Albania Lek</currency>
+  <currency code="AFN" unicode-decimal="1547" unicode-hex="60b">Afghanistan Afghani</currency>
+  <currency code="ARS" unicode-decimal="36" unicode-hex="24">Argentina Peso</currency>
+  <currency code="AWG" unicode-decimal="402" unicode-hex="192">Aruba Guilder</currency>
+  <currency code="AUD" unicode-decimal="36" unicode-hex="24">Australia Dollar</currency>
+  <currency code="AZN" unicode-decimal="1084, 1072, 1085" unicode-hex="43c, 430, 43d">Azerbaijan New Manat</currency>
+  <currency code="BSD" unicode-decimal="36" unicode-hex="24">Bahamas Dollar</currency>
+  <currency code="BBD" unicode-decimal="36" unicode-hex="24">Barbados Dollar</currency>
+  <currency code="BYR" unicode-decimal="112, 46" unicode-hex="70, 2e">Belarus Ruble</currency>
+  <currency code="BZD" unicode-decimal="66, 90, 36" unicode-hex="42, 5a, 24">Belize Dollar</currency>
+  <currency code="BMD" unicode-decimal="36" unicode-hex="24">Bermuda Dollar</currency>
+  <currency code="BOB" unicode-decimal="36, 98" unicode-hex="24, 62">Bolivia Boliviano</currency>
+  <currency code="BAM" unicode-decimal="75, 77" unicode-hex="4b, 4d">Bosnia and Herzegovina Convertible Marka</currency>
+  <currency code="BWP" unicode-decimal="80" unicode-hex="50">Botswana Pula</currency>
+  <currency code="BGN" unicode-decimal="1083, 1074" unicode-hex="43b, 432">Bulgaria Lev</currency>
+  <currency code="BRL" unicode-decimal="82, 36" unicode-hex="52, 24">Brazil Real</currency>
+  <currency code="BND" unicode-decimal="36" unicode-hex="24">Brunei Darussalam Dollar</currency>
+  <currency code="KHR" unicode-decimal="6107" unicode-hex="17db">Cambodia Riel</currency>
+  <currency code="CAD" unicode-decimal="36" unicode-hex="24">Canada Dollar</currency>
+  <currency code="KYD" unicode-decimal="36" unicode-hex="24">Cayman Islands Dollar</currency>
+  <currency code="CLP" unicode-decimal="36" unicode-hex="24">Chile Peso</currency>
+  <currency code="CNY" unicode-decimal="165" unicode-hex="a5">China Yuan Renminbi</currency>
+  <currency code="COP" unicode-decimal="36" unicode-hex="24">Colombia Peso</currency>
+  <currency code="CRC" unicode-decimal="8353" unicode-hex="20a1">Costa Rica Colon</currency>
+  <currency code="HRK" unicode-decimal="107, 110" unicode-hex="6b, 6e">Croatia Kuna</currency>
+  <currency code="CUP" unicode-decimal="8369" unicode-hex="20b1">Cuba Peso</currency>
+  <currency code="CZK" unicode-decimal="75, 269" unicode-hex="4b, 10d">Czech Republic Koruna</currency>
+  <currency code="DKK" unicode-decimal="107, 114" unicode-hex="6b, 72">Denmark Krone</currency>
+  <currency code="DOP" unicode-decimal="82, 68, 36" unicode-hex="52, 44, 24">Dominican Republic Peso</currency>
+  <currency code="XCD" unicode-decimal="36" unicode-hex="24">East Caribbean Dollar</currency>
+  <currency code="EGP" unicode-decimal="163" unicode-hex="a3">Egypt Pound</currency>
+  <currency code="SVC" unicode-decimal="36" unicode-hex="24">El Salvador Colon</currency>
+  <currency code="EEK" unicode-decimal="107, 114" unicode-hex="6b, 72">Estonia Kroon</currency>
+  <currency code="EUR" unicode-decimal="8364" unicode-hex="20ac">Euro Member Countries</currency>
+  <currency code="FKP" unicode-decimal="163" unicode-hex="a3">Falkland Islands (Malvinas) Pound</currency>
+  <currency code="FJD" unicode-decimal="36" unicode-hex="24">Fiji Dollar</currency>
+  <currency code="GHC" unicode-decimal="162" unicode-hex="a2">Ghana Cedis</currency>
+  <currency code="GIP" unicode-decimal="163" unicode-hex="a3">Gibraltar Pound</currency>
+  <currency code="GTQ" unicode-decimal="81" unicode-hex="51">Guatemala Quetzal</currency>
+  <currency code="GGP" unicode-decimal="163" unicode-hex="a3">Guernsey Pound</currency>
+  <currency code="GYD" unicode-decimal="36" unicode-hex="24">Guyana Dollar</currency>
+  <currency code="HNL" unicode-decimal="76" unicode-hex="4c">Honduras Lempira</currency>
+  <currency code="HKD" unicode-decimal="36" unicode-hex="24">Hong Kong Dollar</currency>
+  <currency code="HUF" unicode-decimal="70, 116" unicode-hex="46, 74">Hungary Forint</currency>
+  <currency code="ISK" unicode-decimal="107, 114" unicode-hex="6b, 72">Iceland Krona</currency>
+  <currency code="INR" unicode-decimal="" unicode-hex="">India Rupee</currency>
+  <currency code="IDR" unicode-decimal="82, 112" unicode-hex="52, 70">Indonesia Rupiah</currency>
+  <currency code="IRR" unicode-decimal="65020" unicode-hex="fdfc">Iran Rial</currency>
+  <currency code="IMP" unicode-decimal="163" unicode-hex="a3">Isle of Man Pound</currency>
+  <currency code="ILS" unicode-decimal="8362" unicode-hex="20aa">Israel Shekel</currency>
+  <currency code="JMD" unicode-decimal="74, 36" unicode-hex="4a, 24">Jamaica Dollar</currency>
+  <currency code="JPY" unicode-decimal="165" unicode-hex="a5">Japan Yen</currency>
+  <currency code="JEP" unicode-decimal="163" unicode-hex="a3">Jersey Pound</currency>
+  <currency code="KZT" unicode-decimal="1083, 1074" unicode-hex="43b, 432">Kazakhstan Tenge</currency>
+  <currency code="KPW" unicode-decimal="8361" unicode-hex="20a9">Korea (North) Won</currency>
+  <currency code="KRW" unicode-decimal="8361" unicode-hex="20a9">Korea (South) Won</currency>
+  <currency code="KGS" unicode-decimal="1083, 1074" unicode-hex="43b, 432">Kyrgyzstan Som</currency>
+  <currency code="LAK" unicode-decimal="8365" unicode-hex="20ad">Laos Kip</currency>
+  <currency code="LVL" unicode-decimal="76, 115" unicode-hex="4c, 73">Latvia Lat</currency>
+  <currency code="LBP" unicode-decimal="163" unicode-hex="a3">Lebanon Pound</currency>
+  <currency code="LRD" unicode-decimal="36" unicode-hex="24">Liberia Dollar</currency>
+  <currency code="LTL" unicode-decimal="76, 116" unicode-hex="4c, 74">Lithuania Litas</currency>
+  <currency code="MKD" unicode-decimal="1076, 1077, 1085" unicode-hex="434, 435, 43d">Macedonia Denar</currency>
+  <currency code="MYR" unicode-decimal="82, 77" unicode-hex="52, 4d">Malaysia Ringgit</currency>
+  <currency code="MUR" unicode-decimal="8360" unicode-hex="20a8">Mauritius Rupee</currency>
+  <currency code="MXN" unicode-decimal="36" unicode-hex="24">Mexico Peso</currency>
+  <currency code="MNT" unicode-decimal="8366" unicode-hex="20ae">Mongolia Tughrik</currency>
+  <currency code="MZN" unicode-decimal="77, 84" unicode-hex="4d, 54">Mozambique Metical</currency>
+  <currency code="NAD" unicode-decimal="36" unicode-hex="24">Namibia Dollar</currency>
+  <currency code="NPR" unicode-decimal="8360" unicode-hex="20a8">Nepal Rupee</currency>
+  <currency code="ANG" unicode-decimal="402" unicode-hex="192">Netherlands Antilles Guilder</currency>
+  <currency code="NZD" unicode-decimal="36" unicode-hex="24">New Zealand Dollar</currency>
+  <currency code="NIO" unicode-decimal="67, 36" unicode-hex="43, 24">Nicaragua Cordoba</currency>
+  <currency code="NGN" unicode-decimal="8358" unicode-hex="20a6">Nigeria Naira</currency>
+  <currency code="NOK" unicode-decimal="107, 114" unicode-hex="6b, 72">Norway Krone</currency>
+  <currency code="OMR" unicode-decimal="65020" unicode-hex="fdfc">Oman Rial</currency>
+  <currency code="PKR" unicode-decimal="8360" unicode-hex="20a8">Pakistan Rupee</currency>
+  <currency code="PAB" unicode-decimal="66, 47, 46" unicode-hex="42, 2f, 2e">Panama Balboa</currency>
+  <currency code="PYG" unicode-decimal="71, 115" unicode-hex="47, 73">Paraguay Guarani</currency>
+  <currency code="PEN" unicode-decimal="83, 47, 46" unicode-hex="53, 2f, 2e">Peru Nuevo Sol</currency>
+  <currency code="PHP" unicode-decimal="8369" unicode-hex="20b1">Philippines Peso</currency>
+  <currency code="PLN" unicode-decimal="122, 322" unicode-hex="7a, 142">Poland Zloty</currency>
+  <currency code="QAR" unicode-decimal="65020" unicode-hex="fdfc">Qatar Riyal</currency>
+  <currency code="RON" unicode-decimal="108, 101, 105" unicode-hex="6c, 65, 69">Romania New Leu</currency>
+  <currency code="RUB" unicode-decimal="1088, 1091, 1073" unicode-hex="440, 443, 431">Russia Ruble</currency>
+  <currency code="SHP" unicode-decimal="163" unicode-hex="a3">Saint Helena Pound</currency>
+  <currency code="SAR" unicode-decimal="65020" unicode-hex="fdfc">Saudi Arabia Riyal</currency>
+  <currency code="RSD" unicode-decimal="1044, 1080, 1085, 46" unicode-hex="414, 438, 43d, 2e">Serbia Dinar</currency>
+  <currency code="SCR" unicode-decimal="8360" unicode-hex="20a8">Seychelles Rupee</currency>
+  <currency code="SGD" unicode-decimal="36" unicode-hex="24">Singapore Dollar</currency>
+  <currency code="SBD" unicode-decimal="36" unicode-hex="24">Solomon Islands Dollar</currency>
+  <currency code="SOS" unicode-decimal="83" unicode-hex="53">Somalia Shilling</currency>
+  <currency code="ZAR" unicode-decimal="82" unicode-hex="52">South Africa Rand</currency>
+  <currency code="LKR" unicode-decimal="8360" unicode-hex="20a8">Sri Lanka Rupee</currency>
+  <currency code="SEK" unicode-decimal="107, 114" unicode-hex="6b, 72">Sweden Krona</currency>
+  <currency code="CHF" unicode-decimal="67, 72, 70" unicode-hex="43, 48, 46">Switzerland Franc</currency>
+  <currency code="SRD" unicode-decimal="36" unicode-hex="24">Suriname Dollar</currency>
+  <currency code="SYP" unicode-decimal="163" unicode-hex="a3">Syria Pound</currency>
+  <currency code="TWD" unicode-decimal="78, 84, 36" unicode-hex="4e, 54, 24">Taiwan New Dollar</currency>
+  <currency code="THB" unicode-decimal="3647" unicode-hex="e3f">Thailand Baht</currency>
+  <currency code="TTD" unicode-decimal="84, 84, 36" unicode-hex="54, 54, 24">Trinidad and Tobago Dollar</currency>
+  <currency code="TRY" unicode-decimal="" unicode-hex="">Turkey Lira</currency>
+  <currency code="TRL" unicode-decimal="8356" unicode-hex="20a4">Turkey Lira</currency>
+  <currency code="TVD" unicode-decimal="36" unicode-hex="24">Tuvalu Dollar</currency>
+  <currency code="UAH" unicode-decimal="8372" unicode-hex="20b4">Ukraine Hryvna</currency>
+  <currency code="GBP" unicode-decimal="163" unicode-hex="a3">United Kingdom Pound</currency>
+  <currency code="USD" unicode-decimal="36" unicode-hex="24">U.S. Dollar</currency>
+  <currency code="UYU" unicode-decimal="36, 85" unicode-hex="24, 55">Uruguay Peso</currency>
+  <currency code="UZS" unicode-decimal="1083, 1074" unicode-hex="43b, 432">Uzbekistan Som</currency>
+  <currency code="VEF" unicode-decimal="66, 115" unicode-hex="42, 73">Venezuela Bolivar</currency>
+  <currency code="VND" unicode-decimal="8363" unicode-hex="20ab">Viet Nam Dong</currency>
+  <currency code="YER" unicode-decimal="65020" unicode-hex="fdfc">Yemen Rial</currency>
+  <currency code="ZWD" unicode-decimal="90, 36" unicode-hex="5a, 24">Zimbabwe Dollar</currency>
+</currencies>

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Runtime.Serialization;
 using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Results
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <remarks></remarks>
     [Serializable]
@@ -15,7 +13,7 @@ namespace MemberSuite.SDK.Results
     public class Data360Packet
     {
         /// <summary>
-        /// Gets or sets a value indicating whether this instance has mail merge.
+        ///     Gets or sets a value indicating whether this instance has mail merge.
         /// </summary>
         /// <value><c>true</c> if this instance has mail merge; otherwise, <c>false</c>.</value>
         /// <remarks></remarks>
@@ -23,7 +21,7 @@ namespace MemberSuite.SDK.Results
         public bool HasMailMerge { get; set; }
 
         /// <summary>
-        /// Gets or sets the applicable relationship types.
+        ///     Gets or sets the applicable relationship types.
         /// </summary>
         /// <value>The applicable relationship types.</value>
         /// <remarks></remarks>
@@ -31,15 +29,15 @@ namespace MemberSuite.SDK.Results
         public List<MemberSuiteObject> ApplicableRelationshipTypes { get; set; }
 
         /// <summary>
-        /// Gets or sets the applicable custom objects.
+        ///     Gets or sets the applicable custom objects.
         /// </summary>
         /// <value>The applicable custom objects.</value>
         /// <remarks></remarks>
         [DataMember]
-        public List<MemberSuiteObject> ApplicableCustomObjects  { get; set; }
+        public List<MemberSuiteObject> ApplicableCustomObjects { get; set; }
 
         /// <summary>
-        /// Gets or sets the integration links.
+        ///     Gets or sets the integration links.
         /// </summary>
         /// <value>The integration links.</value>
         /// <remarks></remarks>
@@ -47,7 +45,7 @@ namespace MemberSuite.SDK.Results
         public List<MemberSuiteObject> IntegrationLinks { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance can email.
+        ///     Gets or sets a value indicating whether this instance can email.
         /// </summary>
         /// <value><c>true</c> if this instance can email; otherwise, <c>false</c>.</value>
         /// <remarks></remarks>

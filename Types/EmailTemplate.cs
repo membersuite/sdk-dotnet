@@ -8,7 +8,7 @@ using MemberSuite.SDK.Searching;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Represents a template for an email that can be sent
+    ///     Represents a template for an email that can be sent
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("EmailTemplate", Namespace = "http://membersuite.com/schemas/",
@@ -64,6 +64,13 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public List<Search> SubSearches { get; set; }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="EmailTemplate" /> is disabled.
+        /// </summary>
+        /// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
+        [DataMember]
+        public bool Disabled { get; set; }
+
         public static bool IsEmpty(EmailTemplate template)
         {
             if (template == null) return true;
@@ -71,12 +78,5 @@ namespace MemberSuite.SDK.Types
             if (template.HtmlBody.Trim() == string.Empty) return true;
             return false;
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="EmailTemplate"/> is disabled.
-        /// </summary>
-        /// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
-        [DataMember]
-        public bool Disabled { get; set; }
     }
 }

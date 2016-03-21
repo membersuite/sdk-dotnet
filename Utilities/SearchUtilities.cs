@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using MemberSuite.SDK.Concierge;
 using MemberSuite.SDK.Results;
 using MemberSuite.SDK.Searching;
@@ -12,14 +9,16 @@ namespace MemberSuite.SDK.Utilities
     public static class SearchUtilities
     {
         /// <summary>
-        /// Makes the necessary calls to the API to get all search results,
-        /// since the API restricts the number of results that can come back in a search
+        ///     Makes the necessary calls to the API to get all search results,
+        ///     since the API restricts the number of results that can come back in a search
         /// </summary>
         /// <param name="api">The API.</param>
         /// <param name="searchToRun">The search to run.</param>
         /// <returns></returns>
-        /// <remarks>Use this wisely, as the resulting data table will be in memory and could grow large 
-        /// depending on the search</remarks>
+        /// <remarks>
+        ///     Use this wisely, as the resulting data table will be in memory and could grow large
+        ///     depending on the search
+        /// </remarks>
         public static SearchResult SearchAll(IConciergeAPIService api, Search searchToRun)
         {
             if (api == null) throw new ArgumentNullException("api");
@@ -31,7 +30,7 @@ namespace MemberSuite.SDK.Utilities
             if (!conciergeResult.Success)
                 throw new ApplicationException(conciergeResult.FirstErrorMessage);
 
-            SearchResult sr = conciergeResult.ResultValue;
+            var sr = conciergeResult.ResultValue;
 
             while (sr.Table.Rows.Count < sr.TotalRowCount)
             {
@@ -51,6 +50,5 @@ namespace MemberSuite.SDK.Utilities
 
             return sr;
         }
-
     }
 }

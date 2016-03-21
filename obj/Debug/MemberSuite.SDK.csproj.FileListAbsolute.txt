@@ -1,0 +1,11 @@
+C:\Perforce\mss_main\lib\shared\app.config.transform
+C:\Perforce\mss_main\lib\shared\MemberSuite.SDK.dll.config
+C:\Perforce\mss_main\lib\shared\MemberSuite.SDK.dll
+C:\Perforce\mss_main\lib\shared\MemberSuite.SDK.pdb
+C:\Perforce\mss_main\assemblies\app.config.transform
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.dll.config
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.dll
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.pdb
+C:\Perforce\mss_main\shared\MemberSuite.SDK\obj\Debug\MemberSuite.SDK.dll
+C:\Perforce\mss_main\shared\MemberSuite.SDK\obj\Debug\MemberSuite.SDK.pdb
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.XML

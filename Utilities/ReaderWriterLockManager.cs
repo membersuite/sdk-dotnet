@@ -4,21 +4,20 @@ using System.Threading;
 namespace MemberSuite.SDK.Utilities
 {
     /// <summary>
-    /// Wrapper class for syncronized access
+    ///     Wrapper class for syncronized access
     /// </summary>
     /// <remarks>Copied from http://thevalerios.net/matt/2008/09/using-readerwriterlockslim/</remarks>
     public class ReaderWriterLockManager : IDisposable
     {
-        private readonly ReaderWriterLockSlim _readerWriterLock = null;
-        private bool _isDisposed = false;
-
+        private readonly ReaderWriterLockSlim _readerWriterLock;
+        private bool _isDisposed;
 
         public ReaderWriterLockManager()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReaderWriterLockManager"/> class.
+        ///     Initializes a new instance of the <see cref="ReaderWriterLockManager" /> class.
         /// </summary>
         /// <param name="ReaderWriterLock">The reader writer lock.</param>
         public ReaderWriterLockManager(ReaderWriterLockSlim ReaderWriterLock)
@@ -26,7 +25,6 @@ namespace MemberSuite.SDK.Utilities
             if (ReaderWriterLock == null) throw new ArgumentNullException("ReaderWriterLock");
             _readerWriterLock = ReaderWriterLock;
         }
-
 
         public void Dispose()
         {
@@ -48,8 +46,6 @@ namespace MemberSuite.SDK.Utilities
 
                     if (_readerWriterLock.IsWriteLockHeld)
                         _readerWriterLock.ExitWriteLock();
-
-                   
                 }
             }
 

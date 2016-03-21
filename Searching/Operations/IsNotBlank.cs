@@ -1,9 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Searching.Operations
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
-    [System.Serializable]
+    [Serializable]
     public class IsNotBlank : IsBlank
     {
         public override bool IsNegative

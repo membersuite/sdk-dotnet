@@ -1,18 +1,20 @@
-﻿namespace MemberSuite.SDK.Manifests.Searching
+﻿using System;
+
+namespace MemberSuite.SDK.Manifests.Searching
 {
-    [System.Serializable]
+    [Serializable]
     public struct ShortenedSearchManifest
     {
+        private string _displayName;
+        private string _module;
+        private string _name;
+
         public ShortenedSearchManifest(string displayName, string name, string module)
         {
             _displayName = displayName;
             _module = module;
             _name = name;
         }
-
-        private string _displayName;
-        private string _name;
-        private string _module;
 
         public string DisplayName
         {

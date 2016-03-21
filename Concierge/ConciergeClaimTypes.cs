@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MemberSuite.SDK.Concierge
+﻿namespace MemberSuite.SDK.Concierge
 {
     public struct ConciergeClaimTypes
     {
@@ -19,10 +14,7 @@ namespace MemberSuite.SDK.Concierge
         public const string PortalEntityClaimType = "http://api.membersuite.com/security/claims/portalentity";
         public const string RoleClaimType = "http://api.membersuite.com/security/claims/role";
         public const string BrowserClaimType = "http://api.membersuite.com/security/claims/browser";
-        
         //Rights
         public const string ApiUserRight = "http://api.membersuite.com/security/rights/apiuser";
-
-        //Properties
     }
 }

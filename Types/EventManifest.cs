@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// A manifest of everything needed to generate a registration form for an event
+    ///     A manifest of everything needed to generate a registration form for an event
     /// </summary>
     [Serializable]
     [DataContract]
@@ -21,7 +19,6 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public List<ProductInfo> Merchandise { get; set; }
-        
     }
 
     [Serializable]
@@ -45,14 +42,16 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public bool IsSoldOut { get; set; }
-        
+
         /// <summary>
-        /// Gets or sets the fee to use for registration.
+        ///     Gets or sets the fee to use for registration.
         /// </summary>
         /// <value>The fee to use for registration.</value>
-        /// <remarks>If this is set, then you should use THIS fee when a person registered. If there
-        /// are multiple available fees, then this value will be null and you should allow the user to
-        /// select.</remarks>
+        /// <remarks>
+        ///     If this is set, then you should use THIS fee when a person registered. If there
+        ///     are multiple available fees, then this value will be null and you should allow the user to
+        ///     select.
+        /// </remarks>
         [DataMember]
         public string DefaultFee { get; set; }
 
@@ -60,7 +59,7 @@ namespace MemberSuite.SDK.Types
         public EventRegistrationMode RegistrationMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the fees.
+        ///     Gets or sets the fees.
         /// </summary>
         /// <value>The fees.</value>
         /// This is a list of all fees available for this session

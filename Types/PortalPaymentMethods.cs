@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
@@ -12,7 +10,7 @@ namespace MemberSuite.SDK.Types
     {
         [DataMember]
         public bool AllowEChecks { get; set; }
-        
+
         [DataMember]
         public bool AllowAmericanExpress { get; set; }
 
@@ -75,11 +73,10 @@ namespace MemberSuite.SDK.Types
 
                 default:
                     return AllowOtherCards;
-
             }
         }
 
-        public void AddSavedPaymentMethod(string methodName, string methodID )
+        public void AddSavedPaymentMethod(string methodName, string methodID)
         {
             if (SavedPaymentMethods == null)
                 SavedPaymentMethods = new List<NameValueStringPair>();

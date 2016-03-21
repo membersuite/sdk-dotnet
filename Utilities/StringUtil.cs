@@ -3,7 +3,6 @@ using System;
 namespace MemberSuite.SDK.Utilities
 {
     /// <summary>
-    /// 
     /// </summary>
     public static class StringUtil
     {
@@ -12,7 +11,7 @@ namespace MemberSuite.SDK.Utilities
             if (string.IsNullOrWhiteSpace(value))
                 return value;
 
-            int len = value.Length % 4;
+            var len = value.Length%4;
             if (len > 0)
                 return value.PadRight(value.Length + (4 - len), '=');
 
@@ -20,11 +19,11 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Determines whether the specified s is numeric.
+        ///     Determines whether the specified s is numeric.
         /// </summary>
         /// <param name="s">The s.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified s is numeric; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified s is numeric; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsNumeric(this string s)
         {
@@ -33,15 +32,14 @@ namespace MemberSuite.SDK.Utilities
         }
 
         /// <summary>
-        /// Formats the string, guaranteeing that no exception occurs
+        ///     Formats the string, guaranteeing that no exception occurs
         /// </summary>
         /// <param name="msg">The MSG.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
         public static string SafeFormat(string msg, params object[] args)
         {
-            
-            string formattedMsg ;
+            string formattedMsg;
 
             try
             {
@@ -51,31 +49,28 @@ namespace MemberSuite.SDK.Utilities
             {
                 formattedMsg = msg + "(with format exception)";
             }
-            
-            return formattedMsg;
-            
 
+            return formattedMsg;
         }
 
         public static T ToEnum<T>(this string stringToParse)
         {
-            if (String.IsNullOrEmpty(stringToParse))
+            if (string.IsNullOrEmpty(stringToParse))
                 return default(T);
 
-            return (T)Enum.Parse(typeof(T), stringToParse);
+            return (T) Enum.Parse(typeof (T), stringToParse);
         }
 
-
         /// <summary>
-        /// Trims the string array.
+        ///     Trims the string array.
         /// </summary>
         /// <param name="arrayToTrim">The array to trim.</param>
         /// <returns></returns>
         public static string[] TrimStringArray(string[] arrayToTrim)
         {
-            for (int i = 0; i < arrayToTrim.Length; i++)
+            for (var i = 0; i < arrayToTrim.Length; i++)
                 arrayToTrim[i] = arrayToTrim[i].Trim();
-             
+
             return arrayToTrim;
         }
 
@@ -96,6 +91,5 @@ namespace MemberSuite.SDK.Utilities
                 return false;
             }
         }
-
     }
 }

@@ -11,11 +11,17 @@ namespace MemberSuite.SDK.Manifests.Command
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("ViewMetadata", Namespace = "http://membersuite.com/schemas/",
-       IsNullable = false)]
+        IsNullable = false)]
     [Serializable]
     [DataContract]
     public class ViewMetadata
     {
+        public enum ReportLinkType
+        {
+            Report,
+            BuiltInSearch
+        }
+
         [XmlAttribute]
         [DataMember]
         public string Type { get; set; }
@@ -46,7 +52,7 @@ namespace MemberSuite.SDK.Manifests.Command
         public List<ViewTransition> Transitions { get; set; }
 
         /// <summary>
-        /// If this is set, the transition is "long running" and an ajax message will appear
+        ///     If this is set, the transition is "long running" and an ajax message will appear
         /// </summary>
         /// <value>The ajax message.</value>
         [DataMember]
@@ -55,6 +61,12 @@ namespace MemberSuite.SDK.Manifests.Command
         [XmlArrayItem("Resource")]
         [DataMember]
         public List<StringResource> Resources { get; set; }
+
+        public Data360ViewMetadata Get360Metadata()
+        {
+            if (SpecificViewMetadata == null) return null;
+            return SpecificViewMetadata.Data360ViewMetadata;
+        }
 
         [XmlType(Namespace = "http://membersuite.com/schemas/")]
         [DataContract]
@@ -103,8 +115,7 @@ namespace MemberSuite.SDK.Manifests.Command
             [DataMember]
             public PageLayoutEditorMetadata PageLayoutEditorMetadata { get; set; }
 
-            [DataMember]
-            public DashboardMetadata DashboardMetadata { get; set; }
+          
 
             [DataMember]
             public SearchViewMetadata SearchViewMetadata { get; set; }
@@ -146,21 +157,19 @@ namespace MemberSuite.SDK.Manifests.Command
 
             [XmlAttribute]
             [DataMember]
-            public string Icon{ get; set; }
+            public string Icon { get; set; }
 
             [XmlAttribute]
             [DataMember]
             public int DisplayOrder { get; set; }
 
             /// <summary>
-            /// Gets or sets the text.
+            ///     Gets or sets the text.
             /// </summary>
             /// <value>The text.</value>
             [XmlElement]
             [DataMember]
             public string Text { get; set; }
-
-
 
             [XmlArrayItem("Control")]
             [DataMember]
@@ -176,18 +185,14 @@ namespace MemberSuite.SDK.Manifests.Command
 
             [XmlArrayItem("Report")]
             [DataMember]
-            public List<ReportLink> Reports
-            {
-                get;
-                set;
-            }
+            public List<ReportLink> Reports { get; set; }
 
             [XmlArrayItem("SubSection")]
             [DataMember]
             public List<ControlSection> SubSections { get; set; }
 
             /// <summary>
-            /// Gets or sets the searches to display.
+            ///     Gets or sets the searches to display.
             /// </summary>
             /// <value>The searches to display.</value>
             /// <remarks>This is particularly relevant for the Data 360 layout</remarks>
@@ -195,12 +200,9 @@ namespace MemberSuite.SDK.Manifests.Command
             [DataMember]
             public List<string> SearchesToDisplay { get; set; }
 
-            
-
-
             public bool IsEmpty()
             {
-                if (!String.IsNullOrEmpty(Text))
+                if (!string.IsNullOrEmpty(Text))
                     return false;
 
                 if (Commands != null && Commands.Count > 0)
@@ -223,15 +225,21 @@ namespace MemberSuite.SDK.Manifests.Command
 
             public bool ContainsField(string fieldName)
             {
-                if ( LeftControls != null && LeftControls.Exists( f1=>String.Equals( f1.DataSourceExpression, fieldName, StringComparison.CurrentCultureIgnoreCase ) ) )
+                if (LeftControls != null &&
+                    LeftControls.Exists(
+                        f1 =>
+                            string.Equals(f1.DataSourceExpression, fieldName, StringComparison.CurrentCultureIgnoreCase)))
                     return true;
 
-                 if ( RightControls != null && RightControls.Exists( f1=>String.Equals( f1.DataSourceExpression, fieldName, StringComparison.CurrentCultureIgnoreCase ) ) )
+                if (RightControls != null &&
+                    RightControls.Exists(
+                        f1 =>
+                            string.Equals(f1.DataSourceExpression, fieldName, StringComparison.CurrentCultureIgnoreCase)))
                     return true;
 
                 return false;
             }
- 
+
             public ControlMetadata FindFieldWithPrefix(string prefixToLookFor)
             {
                 ControlMetadata cm = null;
@@ -260,10 +268,8 @@ namespace MemberSuite.SDK.Manifests.Command
         [XmlType(Namespace = "http://membersuite.com/schemas/")]
         [Serializable]
         [DataContract]
-        public class ViewTransition : CommandShortcut 
+        public class ViewTransition : CommandShortcut
         {
-
-
             [XmlAttribute]
             [DataMember]
             public string ShowIf { get; set; }
@@ -275,8 +281,6 @@ namespace MemberSuite.SDK.Manifests.Command
             [XmlAttribute]
             [DataMember]
             public bool SuppressValidation { get; set; }
-
-          
         }
 
         [Serializable]
@@ -302,29 +306,15 @@ namespace MemberSuite.SDK.Manifests.Command
             [XmlAttribute]
             [DataMember]
             public bool Customizable { get; set; }
-            
+
             [XmlAttribute]
             [DataMember]
             public bool ExcelAvailable { get; set; }
-            
+
             [XmlAttribute]
             [DataMember]
             public bool PDFAvailable { get; set; }
         }
-
-        public enum ReportLinkType
-        {
-            Report,
-            BuiltInSearch
-        }
-
-        public Data360ViewMetadata Get360Metadata()
-        {
-            if (this.SpecificViewMetadata == null) return null;
-            return SpecificViewMetadata.Data360ViewMetadata;
-        }
-
-
     }
 
     [Serializable]
@@ -336,25 +326,16 @@ namespace MemberSuite.SDK.Manifests.Command
             Enabled = true;
         }
 
-
         [XmlAttribute]
         [DataMember]
         public string ID { get; set; }
-
-
 
         [XmlIgnore] // don't serialize this - we're goin to use ID
         [DataMember]
         public override string Name
         {
-            get
-            {
-                return base.Name;
-            }
-            set
-            {
-                base.Name = value;
-            }
+            get { return base.Name; }
+            set { base.Name = value; }
         }
 
         [XmlAttribute]
@@ -366,7 +347,7 @@ namespace MemberSuite.SDK.Manifests.Command
         public string DataSourceExpression { get; set; }
 
         /// <summary>
-        /// Gets or sets the acceptable values data source.
+        ///     Gets or sets the acceptable values data source.
         /// </summary>
         /// <value>The acceptable values data source.</value>
         [XmlAttribute]
@@ -374,7 +355,7 @@ namespace MemberSuite.SDK.Manifests.Command
         public string AcceptableValuesDataSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the acceptable values data source expression.
+        ///     Gets or sets the acceptable values data source expression.
         /// </summary>
         /// <value>The acceptable values data source expression.</value>
         [XmlAttribute]
@@ -410,8 +391,51 @@ namespace MemberSuite.SDK.Manifests.Command
         [DataMember]
         public string ErrorMessage_RequiredField { get; set; }
 
+        public ControlMetadata Clone()
+        {
+            return (ControlMetadata) MemberwiseClone();
+        }
+
+        public static ControlMetadata FromFieldMetadata(FieldMetadata fieldMetadata)
+        {
+            var result = new ControlMetadata
+            {
+                DisplayType = fieldMetadata.DisplayType,
+                DataType = fieldMetadata.DataType,
+                PickListEntries = fieldMetadata.PickListEntries,
+                Label = fieldMetadata.Label,
+                Name = fieldMetadata.Name,
+                HelpText = fieldMetadata.HelpText,
+                PortalPrompt = fieldMetadata.PortalPrompt,
+                DefaultValue = fieldMetadata.DefaultValue,
+                IsRequired = fieldMetadata.IsRequired,
+                IsRequiredInPortal = fieldMetadata.IsRequiredInPortal,
+                IsReadOnly = fieldMetadata.IsReadOnly,
+                PortalAccessibility = fieldMetadata.PortalAccessibility,
+                ReferenceType = fieldMetadata.ReferenceType,
+                ReferenceContext = fieldMetadata.ReferenceTypeContext,
+                DataSourceExpression = Formats.GetSafeFieldName(fieldMetadata.Name),
+                LookupTableID = fieldMetadata.LookupTableID
+                // MS-6019 (Modified 1/9/2015) Need to account for lookup tables
+            };
+            return result;
+        }
+
+        [Serializable]
+        [DataContract]
+        public class ControlProperty
+        {
+            [XmlAttribute]
+            [DataMember]
+            public string Name { get; set; }
+
+            [XmlText]
+            [DataMember]
+            public string Expression { get; set; }
+        }
+
         #region Nullable Serialization Overloads
- 
+
         public bool ShouldSerializeUseEntireRow()
         {
             return UseEntireRow;
@@ -431,7 +455,7 @@ namespace MemberSuite.SDK.Manifests.Command
             {
                 if (value == null)
                 {
-                    Enabled= true;
+                    Enabled = true;
                     return;
                 }
 
@@ -445,51 +469,7 @@ namespace MemberSuite.SDK.Manifests.Command
                 }
             }
         }
+
         #endregion
-
-        public ControlMetadata Clone()
-        {
-            return (ControlMetadata)MemberwiseClone();
-        }
-
-        [Serializable]
-        [DataContract]
-        public class ControlProperty
-        {
-            [XmlAttribute]
-            [DataMember]
-            public string Name { get; set; }
-
-            [XmlText]
-            [DataMember]
-            public string Expression { get; set; }
-        }
-
-        public static ControlMetadata FromFieldMetadata(FieldMetadata fieldMetadata)
-        {
-            ControlMetadata result = new ControlMetadata
-                                         {
-                                             DisplayType = fieldMetadata.DisplayType,
-                                             DataType = fieldMetadata.DataType,
-                                             PickListEntries = fieldMetadata.PickListEntries,
-                                             Label = fieldMetadata.Label,
-                                             Name = fieldMetadata.Name,
-                                             HelpText = fieldMetadata.HelpText,
-                                             PortalPrompt = fieldMetadata.PortalPrompt,
-                                             DefaultValue = fieldMetadata.DefaultValue,
-                                             IsRequired = fieldMetadata.IsRequired,
-                                             IsRequiredInPortal = fieldMetadata.IsRequiredInPortal,
-                                             IsReadOnly = fieldMetadata.IsReadOnly,
-                                             PortalAccessibility =  fieldMetadata.PortalAccessibility,
-                                             ReferenceType = fieldMetadata.ReferenceType,
-                                             ReferenceContext = fieldMetadata.ReferenceTypeContext,
-                                             DataSourceExpression = Formats.GetSafeFieldName(fieldMetadata.Name),
-                                             LookupTableID = fieldMetadata.LookupTableID    // MS-6019 (Modified 1/9/2015) Need to account for lookup tables
-                                         };
-            return result;
-        }
-
-       
-
     }
 }

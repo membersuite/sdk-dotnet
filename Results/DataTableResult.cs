@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using MemberSuite.SDK.Types;
-
-namespace MemberSuite.SDK.Results
+﻿namespace MemberSuite.SDK.Results
 {
     //public class SearchResult : ConciergeResult 
     //{

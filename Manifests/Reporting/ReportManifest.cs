@@ -1,9 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using MemberSuite.SDK.Types;
 
 namespace MemberSuite.SDK.Manifests.Reporting
 {
-    [System.Serializable]
+    [Serializable]
     [DataContract]
     public class ReportManifest
     {
@@ -11,7 +12,6 @@ namespace MemberSuite.SDK.Manifests.Reporting
         {
             Parameters = new SerializableDictionary<string, object>();
         }
-
 
         [DataMember]
         public string ReportSpecificationName { get; set; }

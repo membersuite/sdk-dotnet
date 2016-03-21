@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Text;
-
-namespace MemberSuite.SDK.Concierge
+﻿namespace MemberSuite.SDK.Concierge
 {
     //public static class IConciergeAPIProxyExtensions
     //{
@@ -19,8 +12,8 @@ namespace MemberSuite.SDK.Concierge
     //        OperationContext.Current.OutgoingMessageHeaders.Add(mhModified);
 
     //        return scope;
-           
-            
+
+
     //    }
     //}
 }

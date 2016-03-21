@@ -11,95 +11,98 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Security;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using MemberSuite.SDK.Utilities;
-using MemberSuite.SDK.WCF;
 
 namespace MemberSuite.SDK.Concierge
 {
     /// <summary>
-    /// Class ConciergeAPIProxyGenerator
+    ///     Class ConciergeAPIProxyGenerator
     /// </summary>
     public static class ConciergeAPIProxyGenerator
     {
-        static ConciergeAPIProxyGenerator()
-        {
-            // let's try to pull from the app settings
-            string accessKey = ConfigurationManager.AppSettings["MSAccessKey"];
-            string secretKey = ConfigurationManager.AppSettings["MSSecretKey"];
-            string associationID =  ConfigurationManager.AppSettings["MSAssociationID"];
-
-            if (!string.IsNullOrWhiteSpace(accessKey)) SetAccessKeyId(accessKey);
-            if (!string.IsNullOrWhiteSpace(secretKey)) SetSecretAccessKey(secretKey);
-            if (!string.IsNullOrWhiteSpace(associationID)) AssociationId =  (associationID);
-        }
-
         /// <summary>
-        /// The _channel factory
+        ///     The _channel factory
         /// </summary>
-        private static ConcurrentDictionary<string, ChannelFactory<IConciergeAPIService>> _channelFactory =
+        private static readonly ConcurrentDictionary<string, ChannelFactory<IConciergeAPIService>> _channelFactory =
             new ConcurrentDictionary<string, ChannelFactory<IConciergeAPIService>>();
 
         /// <summary>
-        /// Gets or sets the _session ID provider.
+        ///     The thread lock
+        /// </summary>
+        private static readonly object threadLock = new object();
+
+        /// <summary>
+        ///     The _mock
+        /// </summary>
+        [ThreadStatic] // used for a mock service
+        private static IConciergeAPIService _mock;
+
+        /// <summary>
+        ///     The _session ID
+        /// </summary>
+        [ThreadStatic] private static string _sessionID;
+
+        /// <summary>
+        ///     The _association id
+        /// </summary>
+        [ThreadStatic] private static string _associationId;
+
+        private static readonly object lockChannelCreation = new object();
+        private static SecureString _secretAccessKey;
+
+        static ConciergeAPIProxyGenerator()
+        {
+            // let's try to pull from the app settings
+            var accessKey = ConfigurationManager.AppSettings["MSAccessKey"];
+            var secretKey = ConfigurationManager.AppSettings["MSSecretKey"];
+            var associationID = ConfigurationManager.AppSettings["MSAssociationID"];
+
+            if (!string.IsNullOrWhiteSpace(accessKey)) SetAccessKeyId(accessKey);
+            if (!string.IsNullOrWhiteSpace(secretKey)) SetSecretAccessKey(secretKey);
+            if (!string.IsNullOrWhiteSpace(associationID)) AssociationId = (associationID);
+        }
+
+        /// <summary>
+        ///     Gets or sets the _session ID provider.
         /// </summary>
         /// <value>The _session ID provider.</value>
         private static IConciergeAPISessionIdProvider _sessionIDProvider { get; set; }
+
         /// <summary>
-        /// Gets or sets the _association id provider.
+        ///     Gets or sets the _association id provider.
         /// </summary>
         /// <value>The _association id provider.</value>
         private static IConciergeAPIAssociationIdProvider _associationIdProvider { get; set; }
+
         /// <summary>
-        /// Gets or sets the _browser id provider.
+        ///     Gets or sets the _browser id provider.
         /// </summary>
         /// <value>The _browser id provider.</value>
         private static IConciergeAPIBrowserIdProvider _browserIdProvider { get; set; }
+
         /// <summary>
-        /// Gets or sets the _access key id.
+        ///     Gets or sets the _access key id.
         /// </summary>
         /// <value>The _access key id.</value>
         private static string _accessKeyId { get; set; }
 
         /// <summary>
-        /// The thread lock
-        /// </summary>
-        private static object threadLock = new object();
-
-        /// <summary>
-        /// The _mock
-        /// </summary>
-        [ThreadStatic]  // used for a mock service
-        private static IConciergeAPIService _mock;
-        /// <summary>
-        /// Gets or sets the name of the configuration section to pull the
-        /// API information from - otherwise, this is generated automatically.
+        ///     Gets or sets the name of the configuration section to pull the
+        ///     API information from - otherwise, this is generated automatically.
         /// </summary>
         /// <value>The name of the configuration.</value>
         public static string ConfigurationName { get; set; }
 
         /// <summary>
-        /// The _session ID
-        /// </summary>
-        [ThreadStatic]
-        private static string _sessionID = null;
-
-        /// <summary>
-        /// The _association id
-        /// </summary>
-        [ThreadStatic]
-        private static string _associationId = null;
-
-        /// <summary>
-        /// Gets or sets the session ID.
+        ///     Gets or sets the session ID.
         /// </summary>
         /// <value>The session ID.</value>
         public static string SessionID
@@ -135,7 +138,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Gets or sets the session ID.
+        ///     Gets or sets the session ID.
         /// </summary>
         /// <value>The session ID.</value>
         public static string AssociationId
@@ -169,7 +172,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Gets or sets the browser ID.
+        ///     Gets or sets the browser ID.
         /// </summary>
         /// <value>The session ID.</value>
         public static string BrowserId
@@ -186,153 +189,13 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Gets or sets the default instance.
+        ///     Gets or sets the default instance.
         /// </summary>
         /// <value>The default instance.</value>
         public static string DefaultInstance { get; set; }
 
-        #region API Credentials
-
         /// <summary>
-        /// Gets or sets the secret access key.
-        /// </summary>
-        /// <value>The secret access key.</value>
-        private static SecureString SecretAccessKey
-        {
-            get { return _secretAccessKey; }
-            set
-            {
-                if (_secretAccessKey != null)
-                    throw new ApplicationException("You can only set the secret access key once.");
-                _secretAccessKey = value;
-            }
-        }
-
-        /// <summary>
-        /// Creates the request header.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>MessageHeader.</returns>
-        public static MessageHeader CreateRequestHeader(Message request)
-        {
-            var messageSignature = CryptoManager.GetMessageSignature(SecretAccessKey, request.Headers.Action, SessionID, AssociationId);
-
-           // if (messageSignature == null)
-               // throw new ApplicationException("No message signature was caluclated");
-
-            ConciergeRequestHeader headerValue = new ConciergeRequestHeader
-                                                    {
-                                                        AccessKeyId = _accessKeyId,
-                                                        Signature = 
-                                                            messageSignature, // Sign the message using the Secret Access Key - this will eventually be in a security token along with a signature from the STS
-                                                        AssociationId = AssociationId, // Add Association ID - this will eventually be moved to a claim on the security token
-                                                        SessionId = SessionID,
-                                                        BrowserId = BrowserId
-                                                    };
-
-            
-            
-            MessageHeader result = MessageHeader.CreateHeader(ConciergeRequestHeader.HeaderName,
-                                                              ConciergeRequestHeader.HeaderNamespace, headerValue);
-            return result;
-        }
-
-        public static bool IsSecretAccessKeySet
-        {
-            get { return _isSecretAccessKeySet; }
-             
-        }
-
-        /// <summary>
-        /// Sets the secret access key.
-        /// </summary>
-        /// <param name="secretAccessKey">The secret access key.</param>
-        /// <exception cref="System.ArgumentNullException">secretAccessKey</exception>
-        public static void SetSecretAccessKey(string secretAccessKey)
-        {
-            if (secretAccessKey == null) throw new ArgumentNullException("secretAccessKey");
-            lock (threadLock)
-            {
-                secretAccessKey = StringUtil.PadBase64String(secretAccessKey);
-
-                SecretAccessKey = new SecureString();
-                _isSecretAccessKeySet = true;
-
-                foreach (char c in secretAccessKey)
-                    SecretAccessKey.AppendChar(c);
-
-                SecretAccessKey.MakeReadOnly();
-            }
-        }
-
-        /// <summary>
-        /// Sets the access key id.
-        /// </summary>
-        /// <param name="accessKeyId">The access key id.</param>
-        /// <exception cref="System.ArgumentNullException">accessKeyId</exception>
-        public static void SetAccessKeyId(string accessKeyId)
-        {
-            if (accessKeyId == null) throw new ArgumentNullException("accessKeyId");
-            lock (threadLock)
-            {
-                string value = StringUtil.PadBase64String(accessKeyId);
-                _accessKeyId = value;
-            }
-        }
-
-        /// <summary>
-        /// Determines whether [has access key id].
-        /// </summary>
-        /// <returns><c>true</c> if [has access key id]; otherwise, <c>false</c>.</returns>
-        public static bool HasAccessKeyId()
-        {
-            lock (threadLock)
-            {
-                return !string.IsNullOrWhiteSpace(_accessKeyId);
-            }
-        }
-
-        /// <summary>
-        /// Determines whether [has secret access key].
-        /// </summary>
-        /// <returns><c>true</c> if [has secret access key]; otherwise, <c>false</c>.</returns>
-        public static bool HasSecretAccessKey()
-        {
-            lock (threadLock)
-            {
-                return SecretAccessKey != null && SecretAccessKey.Length > 0;
-            }
-        }
-
-        /// <summary>
-        /// Clears the access key id.
-        /// </summary>
-        public static void ClearAccessKeyId()
-        {
-            lock (threadLock)
-            {
-                _accessKeyId = null;
-            }
-        }
-
-        /// <summary>
-        /// Clears the secret access key.
-        /// </summary>
-        public static void ClearSecretAccessKey()
-        {
-            lock (threadLock)
-            {
-                if (SecretAccessKey != null)
-                    SecretAccessKey.Dispose();
-
-                SecretAccessKey = null;
-            }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Registers the mock.
+        ///     Registers the mock.
         /// </summary>
         /// <param name="mock">The mock.</param>
         public static void RegisterMock(IConciergeAPIService mock)
@@ -341,7 +204,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Registers the session ID provider.
+        ///     Registers the session ID provider.
         /// </summary>
         /// <param name="provider">The provider.</param>
         public static void RegisterSessionIDProvider(IConciergeAPISessionIdProvider provider)
@@ -350,7 +213,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Registers the association id provider.
+        ///     Registers the association id provider.
         /// </summary>
         /// <param name="provider">The provider.</param>
         public static void RegisterAssociationIdProvider(IConciergeAPIAssociationIdProvider provider)
@@ -359,7 +222,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Registers the browser id provider.
+        ///     Registers the browser id provider.
         /// </summary>
         /// <param name="provider">The provider.</param>
         public static void RegisterBrowserIdProvider(IConciergeAPIBrowserIdProvider provider)
@@ -368,7 +231,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Generates the proxy.
+        ///     Generates the proxy.
         /// </summary>
         /// <returns>IConciergeAPIService.</returns>
         public static IConciergeAPIService GenerateProxy()
@@ -376,9 +239,8 @@ namespace MemberSuite.SDK.Concierge
             return GenerateProxy(DefaultInstance ?? "Default");
         }
 
-
         /// <summary>
-        /// Generates the proxy.
+        ///     Generates the proxy.
         /// </summary>
         /// <param name="instanceName">Name of the Concierge Instance to use.</param>
         /// <returns>IConciergeAPIService.</returns>
@@ -391,16 +253,10 @@ namespace MemberSuite.SDK.Concierge
                 return _mock;
 
             return GetChannelFactory(instanceName).CreateChannel();
-
         }
 
-
-        private static object lockChannelCreation = new object();
-        private static SecureString _secretAccessKey;
-        private static bool _isSecretAccessKeySet;
-
         /// <summary>
-        /// Gets the channel factory.
+        ///     Gets the channel factory.
         /// </summary>
         /// <param name="instanceName">Name of the instance.</param>
         /// <returns>ChannelFactory{IConciergeAPIService}.</returns>
@@ -421,15 +277,11 @@ namespace MemberSuite.SDK.Concierge
                 _channelFactory.TryAdd(instanceName, cf);
 
                 return cf;
-
             }
-
-            
         }
 
-
         /// <summary>
-        /// _builds the channel factory.
+        ///     _builds the channel factory.
         /// </summary>
         /// <param name="instanceName">Name of the instance.</param>
         /// <returns>ChannelFactory{IConciergeAPIService}.</returns>
@@ -443,27 +295,28 @@ namespace MemberSuite.SDK.Concierge
             {
                 cf = new ChannelFactory<IConciergeAPIService>();
 
-                string ConciergeUri = ConfigurationManager.AppSettings[instanceName + "_ConciergeUri"];
+                var ConciergeUri = ConfigurationManager.AppSettings[instanceName + "_ConciergeUri"];
                 if (ConciergeUri == null)
                     ConciergeUri = "https://api.membersuite.com";
 
                 // we have to build it up - hard coded here
-                string upn = ConfigurationManager.AppSettings[instanceName + "_ConciergeUpn"];
-                EndpointAddress ea = string.IsNullOrWhiteSpace(upn) ? new EndpointAddress(ConciergeUri) : new EndpointAddress(new Uri(ConciergeUri), EndpointIdentity.CreateUpnIdentity(upn));
+                var upn = ConfigurationManager.AppSettings[instanceName + "_ConciergeUpn"];
+                var ea = string.IsNullOrWhiteSpace(upn)
+                    ? new EndpointAddress(ConciergeUri)
+                    : new EndpointAddress(new Uri(ConciergeUri), EndpointIdentity.CreateUpnIdentity(upn));
 
                 cf.Endpoint.Address = ea;
-                Binding binding = generateBindingFor(ConciergeUri);
+                var binding = generateBindingFor(ConciergeUri);
                 cf.Endpoint.Binding = binding;
-                cf.Endpoint.Contract.ContractType = typeof(IConciergeAPIService);
-
+                cf.Endpoint.Contract.ContractType = typeof (IConciergeAPIService);
             }
             cf.Endpoint.Behaviors.Add(new ConciergeClientExtensions());
             foreach (var op in cf.Endpoint.Contract.Operations)
                 op.Behaviors.Add(new ConciergeClientExtensions());
 
-            foreach (OperationDescription op in cf.Endpoint.Contract.Operations)
+            foreach (var op in cf.Endpoint.Contract.Operations)
             {
-                DataContractSerializerOperationBehavior dataContractBehavior = op.Behaviors.Find<DataContractSerializerOperationBehavior>();
+                var dataContractBehavior = op.Behaviors.Find<DataContractSerializerOperationBehavior>();
                 if (dataContractBehavior != null)
                 {
                     dataContractBehavior.MaxItemsInObjectGraph = 2096912;
@@ -475,7 +328,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Generates the binding for.
+        ///     Generates the binding for.
         /// </summary>
         /// <param name="conciergeUri">The concierge URI.</param>
         /// <returns>Binding.</returns>
@@ -490,7 +343,7 @@ namespace MemberSuite.SDK.Concierge
         }
 
         /// <summary>
-        /// Generates the TCP binding.
+        ///     Generates the TCP binding.
         /// </summary>
         /// <returns>Binding.</returns>
         private static Binding generateTcpBinding()
@@ -505,11 +358,10 @@ namespace MemberSuite.SDK.Concierge
             b.Security.Mode = SecurityMode.Transport;
 #endif
             return b;
-
         }
 
         /// <summary>
-        /// Generates the basic HTTP binding.
+        ///     Generates the basic HTTP binding.
         /// </summary>
         /// <returns>Binding.</returns>
         private static Binding generateBasicHttpBinding()
@@ -521,23 +373,162 @@ namespace MemberSuite.SDK.Concierge
 
             return b;
         }
+
+        #region API Credentials
+
+        /// <summary>
+        ///     Gets or sets the secret access key.
+        /// </summary>
+        /// <value>The secret access key.</value>
+        private static SecureString SecretAccessKey
+        {
+            get { return _secretAccessKey; }
+            set
+            {
+                if (_secretAccessKey != null)
+                    throw new ApplicationException("You can only set the secret access key once.");
+                _secretAccessKey = value;
+            }
+        }
+
+        /// <summary>
+        ///     Creates the request header.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>MessageHeader.</returns>
+        public static MessageHeader CreateRequestHeader(Message request)
+        {
+            var messageSignature = CryptoManager.GetMessageSignature(SecretAccessKey, request.Headers.Action, SessionID,
+                AssociationId);
+
+            // if (messageSignature == null)
+            // throw new ApplicationException("No message signature was caluclated");
+
+            var headerValue = new ConciergeRequestHeader
+            {
+                AccessKeyId = _accessKeyId,
+                Signature =
+                    messageSignature,
+                // Sign the message using the Secret Access Key - this will eventually be in a security token along with a signature from the STS
+                AssociationId = AssociationId,
+                // Add Association ID - this will eventually be moved to a claim on the security token
+                SessionId = SessionID,
+                BrowserId = BrowserId
+            };
+
+
+            var result = MessageHeader.CreateHeader(ConciergeRequestHeader.HeaderName,
+                ConciergeMessageHeader.HeaderNamespace, headerValue);
+            return result;
+        }
+
+        public static bool IsSecretAccessKeySet { get; private set; }
+
+        /// <summary>
+        ///     Sets the secret access key.
+        /// </summary>
+        /// <param name="secretAccessKey">The secret access key.</param>
+        /// <exception cref="System.ArgumentNullException">secretAccessKey</exception>
+        public static void SetSecretAccessKey(string secretAccessKey)
+        {
+            if (secretAccessKey == null) throw new ArgumentNullException("secretAccessKey");
+            lock (threadLock)
+            {
+                secretAccessKey = StringUtil.PadBase64String(secretAccessKey);
+
+                SecretAccessKey = new SecureString();
+                IsSecretAccessKeySet = true;
+
+                foreach (var c in secretAccessKey)
+                    SecretAccessKey.AppendChar(c);
+
+                SecretAccessKey.MakeReadOnly();
+            }
+        }
+
+        /// <summary>
+        ///     Sets the access key id.
+        /// </summary>
+        /// <param name="accessKeyId">The access key id.</param>
+        /// <exception cref="System.ArgumentNullException">accessKeyId</exception>
+        public static void SetAccessKeyId(string accessKeyId)
+        {
+            if (accessKeyId == null) throw new ArgumentNullException("accessKeyId");
+            lock (threadLock)
+            {
+                var value = StringUtil.PadBase64String(accessKeyId);
+                _accessKeyId = value;
+            }
+        }
+
+        /// <summary>
+        ///     Determines whether [has access key id].
+        /// </summary>
+        /// <returns><c>true</c> if [has access key id]; otherwise, <c>false</c>.</returns>
+        public static bool HasAccessKeyId()
+        {
+            lock (threadLock)
+            {
+                return !string.IsNullOrWhiteSpace(_accessKeyId);
+            }
+        }
+
+        /// <summary>
+        ///     Determines whether [has secret access key].
+        /// </summary>
+        /// <returns><c>true</c> if [has secret access key]; otherwise, <c>false</c>.</returns>
+        public static bool HasSecretAccessKey()
+        {
+            lock (threadLock)
+            {
+                return SecretAccessKey != null && SecretAccessKey.Length > 0;
+            }
+        }
+
+        /// <summary>
+        ///     Clears the access key id.
+        /// </summary>
+        public static void ClearAccessKeyId()
+        {
+            lock (threadLock)
+            {
+                _accessKeyId = null;
+            }
+        }
+
+        /// <summary>
+        ///     Clears the secret access key.
+        /// </summary>
+        public static void ClearSecretAccessKey()
+        {
+            lock (threadLock)
+            {
+                if (SecretAccessKey != null)
+                    SecretAccessKey.Dispose();
+
+                SecretAccessKey = null;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
-    /// This is a generalized interface used when outside classes are responsible for
-    /// resolving the current SessionID. For instance - a web application may store
-    /// session ID in Session state - they would use this interface to respond to the current session.
+    ///     This is a generalized interface used when outside classes are responsible for
+    ///     resolving the current SessionID. For instance - a web application may store
+    ///     session ID in Session state - they would use this interface to respond to the current session.
     /// </summary>
     public interface IConciergeAPISessionIdProvider
     {
         /// <summary>
-        /// Tries the get session id.
+        ///     Tries the get session id.
         /// </summary>
         /// <param name="sessionId">The session id.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         bool TryGetSessionId(out string sessionId);
+
         /// <summary>
-        /// Sets the session id.
+        ///     Sets the session id.
         /// </summary>
         /// <param name="sessionId">The session id.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
@@ -545,18 +536,19 @@ namespace MemberSuite.SDK.Concierge
     }
 
     /// <summary>
-    /// Interface IConciergeAPIAssociationIdProvider
+    ///     Interface IConciergeAPIAssociationIdProvider
     /// </summary>
     public interface IConciergeAPIAssociationIdProvider
     {
         /// <summary>
-        /// Tries the get association id.
+        ///     Tries the get association id.
         /// </summary>
         /// <param name="associationId">The association id.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
         bool TryGetAssociationId(out string associationId);
+
         /// <summary>
-        /// Sets the association id.
+        ///     Sets the association id.
         /// </summary>
         /// <param name="associationId">The association id.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
@@ -564,12 +556,12 @@ namespace MemberSuite.SDK.Concierge
     }
 
     /// <summary>
-    /// Interface IConciergeAPIBrowserIdProvider
+    ///     Interface IConciergeAPIBrowserIdProvider
     /// </summary>
     public interface IConciergeAPIBrowserIdProvider
     {
         /// <summary>
-        /// Tries the get browser id.
+        ///     Tries the get browser id.
         /// </summary>
         /// <param name="browserId">The browser id.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>

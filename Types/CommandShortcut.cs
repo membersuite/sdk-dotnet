@@ -15,7 +15,7 @@ namespace MemberSuite.SDK.Types
         {
         }
 
-        public CommandShortcut( string name, string context )
+        public CommandShortcut(string name, string context)
         {
             Name = name;
             Context = context;
@@ -23,7 +23,7 @@ namespace MemberSuite.SDK.Types
 
         [XmlAttribute]
         [DataMember]
-        public string ID {get;set;}
+        public string ID { get; set; }
 
         [XmlAttribute]
         [DataMember]
@@ -52,33 +52,33 @@ namespace MemberSuite.SDK.Types
         [XmlAttribute]
         [DataMember]
         public string Context { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string Arg1 { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string Arg2 { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string Arg3 { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string Arg4 { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string ConfirmWith { get; set; }
-        
+
         [XmlAttribute]
         [DataMember]
         public string AppliesIf { get; set; }
 
         /// <summary>
-        /// Gets or sets the command session ID.
+        ///     Gets or sets the command session ID.
         /// </summary>
         /// <value>The command session ID.</value>
         [XmlAttribute]
@@ -98,12 +98,12 @@ namespace MemberSuite.SDK.Types
 
         public string GetTransition()
         {
-            if ( Name == null )
+            if (Name == null)
                 return null;
 
             var m = Regex.Match(Name, RegularExpressions.TransitionRegex, RegexOptions.Compiled);
 
-            if ( ! m.Success )
+            if (!m.Success)
                 return null;
 
             return m.Groups[1].Value;
@@ -111,16 +111,16 @@ namespace MemberSuite.SDK.Types
 
         public CommandShortcut RedirectTo(string newState)
         {
-            CommandShortcut cmd = (CommandShortcut) this.MemberwiseClone();
+            var cmd = (CommandShortcut) MemberwiseClone();
 
-            cmd.State = newState ;
+            cmd.State = newState;
 
             return cmd;
         }
 
         public virtual CommandShortcut Copy()
         {
-            return (CommandShortcut)MemberwiseClone();
+            return (CommandShortcut) MemberwiseClone();
         }
 
         #endregion

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MemberSuite.SDK.Types
+﻿namespace MemberSuite.SDK.Types
 {
     public enum PaymentLineItemType
     {
         Invoice = 0,
-
-        Credit = 2,
-
+        
         OverPayment = 4
     }
 
@@ -24,10 +17,10 @@ namespace MemberSuite.SDK.Types
         Check = 20,
         MoneyOrder = 30,
         CashiersCheck = 40,
-        Refund = 50,
+        //Refund = 50,
         PurchaseOrder = 55,
         //   ACH = 50,
-        CustomerCredit = 60,
+        //CustomerCredit = 60,
         //WriteOff = 65,
         PayrollDeduction = 69,
         //PayPal = 70,
@@ -47,8 +40,7 @@ namespace MemberSuite.SDK.Types
         CashiersCheck = 40,
         PurchaseOrder = 55,
         PayrollDeduction = 69,
-        Other = 80,
-        
+        Other = 80
     }
 
     public enum CreditCardType
@@ -59,7 +51,13 @@ namespace MemberSuite.SDK.Types
         Discover = 30,
         MasterCard = 40,
         Visa = 50,
-         
+
         Other = 60
+    }
+
+    public enum BankAccountType
+    {
+        Checking = 0,
+        Savings = 1
     }
 }

@@ -2,11 +2,10 @@
 
 namespace MemberSuite.SDK.Manifests.Command.Views
 {
-    public interface ISectionLayoutMetadata  
+    public interface ISectionLayoutMetadata
     {
         string Name { get; set; }
         List<ViewMetadata.ControlSection> Sections { get; set; }
-
-        void Clean  ();
+        void Clean();
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Represents a serializable, transportable file structure
+    ///     Represents a serializable, transportable file structure
     /// </summary>
     [Serializable]
     [DataContract]

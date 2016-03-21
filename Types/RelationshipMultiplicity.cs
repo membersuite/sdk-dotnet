@@ -5,7 +5,6 @@
         ManyToMany = 0,
         OneToOne = 5,
         OneToMany = 10
-      //  ManyToOne = 15
-
+        //  ManyToOne = 15
     }
 }

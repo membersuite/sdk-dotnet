@@ -8,14 +8,14 @@ namespace MemberSuite.SDK.Types
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     public struct NameValueStringPair
     {
+        private string _name;
+        private string _value;
+
         public NameValueStringPair(string name, string val)
         {
             _name = name;
             _value = val;
         }
-
-        private string _name;
-        private string _value;
 
         [XmlAttribute]
         public string Name
@@ -33,19 +33,17 @@ namespace MemberSuite.SDK.Types
 
         public override string ToString()
         {
-            return _value != null ? _value.ToString() : null;
+            return _value != null ? _value : null;
         }
     }
 
     public class NameValueStringPairNameComparer : IEqualityComparer<NameValueStringPair>
     {
-       
-
         #region IEqualityComparer<NameValueStringPair> Members
 
         public bool Equals(NameValueStringPair x, NameValueStringPair y)
         {
-            return string.Equals(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase );
+            return string.Equals(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public int GetHashCode(NameValueStringPair obj)

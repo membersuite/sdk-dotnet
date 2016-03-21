@@ -1,14 +1,15 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace MemberSuite.SDK.Manifests.Resource
 {
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
-    [XmlRoot("Resource", Namespace = "http://membersuite.com/schemas/", 
+    [XmlRoot("Resource", Namespace = "http://membersuite.com/schemas/",
         IsNullable = false)]
-    [System.Serializable]
+    [Serializable]
     [DataContract]
-    public class StringResource  
+    public class StringResource
     {
         [XmlAttribute]
         [DataMember]

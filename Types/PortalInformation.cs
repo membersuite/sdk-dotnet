@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Types
 {
     /// <summary>
-    /// Packet of information returned to the client about a Portal
+    ///     Packet of information returned to the client about a Portal
     /// </summary>
     [Serializable]
     [DataContract]
@@ -29,7 +27,6 @@ namespace MemberSuite.SDK.Types
         [DataMember]
         public string DefaultPortalUrl { get; set; }
 
-        
         //Portal Configuration
         [DataMember]
         public PortalSkin PortalSkin { get; set; }
@@ -48,7 +45,7 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public string AssociationHomePageUrl { get; set; }
-        
+
         //Login Screen
         [DataMember]
         public string PortalLoginScreenText { get; set; }
@@ -84,7 +81,6 @@ namespace MemberSuite.SDK.Types
 
         [DataMember]
         public List<string> MembershipDirectoryDetailsFields { get; set; }
-
 
         //Online Storefront
         [DataMember]

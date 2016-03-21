@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -9,52 +8,54 @@ using MemberSuite.SDK.Manifests.Searching;
 using MemberSuite.SDK.Searching.Operations;
 using MemberSuite.SDK.Types;
 using MemberSuite.SDK.Utilities;
-using System.Transactions;
 
 namespace MemberSuite.SDK.Searching
 {
     /// <summary>
-    /// Encapsulates all of the elements of a MemberSuite "search" - used by the
-    /// search engine to execute a search upon a search type.
+    ///     Encapsulates all of the elements of a MemberSuite "search" - used by the
+    ///     search engine to execute a search upon a search type.
     /// </summary>
     [XmlType(Namespace = "http://membersuite.com/schemas/")]
     [XmlRoot("Search", Namespace = "http://membersuite.com/schemas/",
         IsNullable = false)]
+
     #region XML Includes
+
     [KnownType("registerKnownTypes")]
-    
-    [XmlInclude( typeof( WhereClause))]
-    [XmlInclude(typeof(Contains))]
-    [XmlInclude(typeof(DoesNotContain))]
-    [XmlInclude(typeof(ContainsOneOfTheFollowing))]
-    [XmlInclude(typeof(DoesNotContainOneOfTheFollowing))]
-    [XmlInclude(typeof(Equals))]
-    [XmlInclude(typeof(DoesNotEqual))]
-    [XmlInclude(typeof(IsBlank))]
-    [XmlInclude(typeof(IsNotBlank))]
-    [XmlInclude(typeof(IsBetween))]
-    [XmlInclude(typeof(IsNotBetween))]
-    [XmlInclude(typeof(IsOneOfTheFollowing))]
-    [XmlInclude(typeof(IsNotOneOfTheFollowing))]
-    [XmlInclude(typeof(Keyword))]
-    [XmlInclude(typeof(NoKeyword))]
-    [XmlInclude(typeof(SpecialOperation))]
-    [XmlInclude(typeof(IsGreaterThan))]
-    [XmlInclude(typeof(IsGreaterThanOrEqualTo))]
-    [XmlInclude(typeof(IsLessThan))]
-    [XmlInclude(typeof(IsLessThanOrEqual))]
-    [XmlInclude(typeof(RelativeDateTime))]
-    [XmlInclude( typeof( RelativeDateTimeReferencePointType) )]
-    [XmlInclude(typeof(RelativeDateTimeUnitType))]
-    [XmlInclude(typeof(StartsWith))]
-    [XmlInclude(typeof(DoesNotStartWith))]
-    [XmlInclude(typeof(EndsWith))]
-    [XmlInclude(typeof(DoesNotEndWith))]
-    [XmlInclude(typeof(EndsWithOneOfTheFollowing))]
-    [XmlInclude(typeof(DoesNotEndWithOneOfTheFollowing))]
-    [XmlInclude(typeof(StartsWithOneOfTheFollowing))]
-    [XmlInclude(typeof(DoesNotStartWithOneOfTheFollowing))]
+    [XmlInclude(typeof (WhereClause))]
+    [XmlInclude(typeof (Contains))]
+    [XmlInclude(typeof (DoesNotContain))]
+    [XmlInclude(typeof (ContainsOneOfTheFollowing))]
+    [XmlInclude(typeof (DoesNotContainOneOfTheFollowing))]
+    [XmlInclude(typeof (Equals))]
+    [XmlInclude(typeof (DoesNotEqual))]
+    [XmlInclude(typeof (IsBlank))]
+    [XmlInclude(typeof (IsNotBlank))]
+    [XmlInclude(typeof (IsBetween))]
+    [XmlInclude(typeof (IsNotBetween))]
+    [XmlInclude(typeof (IsOneOfTheFollowing))]
+    [XmlInclude(typeof (IsNotOneOfTheFollowing))]
+    [XmlInclude(typeof (Keyword))]
+    [XmlInclude(typeof (NoKeyword))]
+    [XmlInclude(typeof (SpecialOperation))]
+    [XmlInclude(typeof (IsGreaterThan))]
+    [XmlInclude(typeof (IsGreaterThanOrEqualTo))]
+    [XmlInclude(typeof (IsLessThan))]
+    [XmlInclude(typeof (IsLessThanOrEqual))]
+    [XmlInclude(typeof (RelativeDateTime))]
+    [XmlInclude(typeof (RelativeDateTimeReferencePointType))]
+    [XmlInclude(typeof (RelativeDateTimeUnitType))]
+    [XmlInclude(typeof (StartsWith))]
+    [XmlInclude(typeof (DoesNotStartWith))]
+    [XmlInclude(typeof (EndsWith))]
+    [XmlInclude(typeof (DoesNotEndWith))]
+    [XmlInclude(typeof (EndsWithOneOfTheFollowing))]
+    [XmlInclude(typeof (DoesNotEndWithOneOfTheFollowing))]
+    [XmlInclude(typeof (StartsWithOneOfTheFollowing))]
+    [XmlInclude(typeof (DoesNotStartWithOneOfTheFollowing))]
+
     #endregion
+
     [Serializable]
     [DataContract]
     public class Search : SearchOperationGroup, IMemberSuiteComponent
@@ -64,7 +65,7 @@ namespace MemberSuite.SDK.Searching
             OutputColumns = new List<SearchOutputColumn>();
             SortColumns = new List<SearchSortColumn>();
         }
-        
+
         public Search(string type)
             : this()
         {
@@ -92,7 +93,7 @@ namespace MemberSuite.SDK.Searching
         //}
 
         /// <summary>
-        /// Gets or sets the type of search - i.e., Individual, Events, etc.
+        ///     Gets or sets the type of search - i.e., Individual, Events, etc.
         /// </summary>
         /// <value>The type.</value>
         /// <remarks>The type must match up with a known Search Specification.</remarks>
@@ -109,12 +110,10 @@ namespace MemberSuite.SDK.Searching
         public string CountField { get; set; }
 
         /// <summary>
-        /// INTERNAL USE ONLY - gets or set a search hint that allows the search engine to bypass
-        /// search construction and metadata retrieval
+        ///     INTERNAL USE ONLY - gets or set a search hint that allows the search engine to bypass
+        ///     search construction and metadata retrieval
         /// </summary>
         /// <value>The search hint.</value>
-      
-
         [DataMember]
         [XmlAttribute]
         public string Module { get; set; }
@@ -123,73 +122,75 @@ namespace MemberSuite.SDK.Searching
         [XmlAttribute]
         public bool UniqueResult { get; set; }
 
-     
+        [DataMember]
+        [XmlAttribute]
+        public bool ConsistentRead { get; set; }
+
         /// <summary>
-        /// Gets or sets the output columns.
+        ///     Gets or sets the output columns.
         /// </summary>
         /// <value>The output columns.</value>
         [DataMember]
         [XmlArray("OutputColumns")]
         [XmlArrayItem("Column")]
-        public List<SearchOutputColumn> OutputColumns { get;  set; }
+        public List<SearchOutputColumn> OutputColumns { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort fields.
+        ///     Gets or sets the sort fields.
         /// </summary>
         /// <value>The sort fields.</value>
         [DataMember]
         [XmlArray("SortColumns")]
         [XmlArrayItem("Column")]
-        public List<SearchSortColumn> SortColumns { get;  set; }
+        public List<SearchSortColumn> SortColumns { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the output.
+        ///     Gets or sets the type of the output.
         /// </summary>
         /// <value>The type of the output.</value>
         [DataMember]
         public string OutputFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets the top N records to get.
+        ///     Gets or sets the top N records to get.
         /// </summary>
         /// <value>The top number of rows to retrieve.</value>
         [DataMember]
         public int? TopN { get; set; }
 
-
         /// <summary>
-        /// Gets or sets the label.
+        ///     Gets or sets the label.
         /// </summary>
         /// <value>The label.</value>
-       [XmlAttribute]
+        [XmlAttribute]
         [DataMember]
         public string Label { get; set; }
 
-       [XmlArrayItem("Command")]
-       [DataMember]
-       public List<CommandShortcut> RowLevelCommands { get; set; }
+        [XmlArrayItem("Command")]
+        [DataMember]
+        public List<CommandShortcut> RowLevelCommands { get; set; }
 
-       [XmlArrayItem("Command")]
-       [DataMember]
-       public List<CommandShortcut> Commands { get; set; }
+        [XmlArrayItem("Command")]
+        [DataMember]
+        public List<CommandShortcut> Commands { get; set; }
 
-       //public IsolationLevel? IsolationLevel { get; set; }
+        //public IsolationLevel? IsolationLevel { get; set; }
 
-       /// <summary>
-       /// Gets or sets a value indicating whether this <see cref="Search"/> is override.
-       /// For one-clicks in 360 metadata, this forces the system to use the specified search
-       /// </summary>
-       /// <value>
-       ///   <c>true</c> if override; otherwise, <c>false</c>.
-       /// </value>
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="Search" /> is override.
+        ///     For one-clicks in 360 metadata, this forces the system to use the specified search
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if override; otherwise, <c>false</c>.
+        /// </value>
         [XmlAttribute]
-       [DataMember]
-       public bool Override { get; set; }
+        [DataMember]
+        public bool Override { get; set; }
 
         public string CalculateSearchHint()
         {
-            string context = "";
-            string type = Type;
+            var context = "";
+            var type = Type;
             if (type != null)
                 type = type.ToLower();
 
@@ -215,20 +216,25 @@ namespace MemberSuite.SDK.Searching
         {
             var hashCode = base.CalculateSearchHashCode();
 
+            hashCode += UniqueResult.GetHashCode();
+
             if (Type != null)
                 hashCode += Type.GetHashCode();
-            
+
             if (OutputColumns != null)
                 OutputColumns.ForEach(x => hashCode += x.CalculateSearchHint());
 
             if (SortColumns != null)
                 SortColumns.ForEach(x => hashCode += x.CalculateSearchHint());
 
+            if(Criteria != null)
+                Criteria.ForEach(x => hashCode += x.CalculateSearchHashCode());
+
             return hashCode;
         }
 
         /// <summary>
-        /// Generates a default search based on the manifest.
+        ///     Generates a default search based on the manifest.
         /// </summary>
         /// <param name="searchManifest">The search manifest.</param>
         /// <returns></returns>
@@ -236,7 +242,7 @@ namespace MemberSuite.SDK.Searching
         {
             if (searchManifest == null) throw new ArgumentNullException("searchManifest");
 
-            Search s = new Search();
+            var s = new Search();
             s.Type = searchManifest.SearchType;
             s.Context = searchManifest.SearchContext;
 
@@ -250,29 +256,27 @@ namespace MemberSuite.SDK.Searching
                     s.SortColumns.Add(sf.Clone());
 
             return s;
-
         }
 
         public static Type[] registerKnownTypes()
         {
-            List<Type> types = new List<Type>();
+            var types = new List<Type>();
 
-            types.Add(typeof(List<SearchOutputColumn>));
+            types.Add(typeof (List<SearchOutputColumn>));
 
-            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
-                if (t.IsSubclassOf(typeof(SearchOperation)))
+            foreach (var t in Assembly.GetExecutingAssembly().GetTypes())
+                if (t.IsSubclassOf(typeof (SearchOperation)))
                     types.Add(t);
 
-            types.Add(typeof(RelativeDateTime));
-            types.Add(typeof(RelativeDateTimeReferencePointType));
-            types.Add(typeof(RelativeDateTimeUnitType));
+            types.Add(typeof (RelativeDateTime));
+            types.Add(typeof (RelativeDateTimeReferencePointType));
+            types.Add(typeof (RelativeDateTimeUnitType));
             return types.ToArray();
         }
 
-
         /// <summary>
-        /// Takes an order by string (i.e., FirstName DESC, ID) and 
-        /// converts it to sortcolumns
+        ///     Takes an order by string (i.e., FirstName DESC, ID) and
+        ///     converts it to sortcolumns
         /// </summary>
         /// <param name="orderBy">The order by.</param>
         public void ParseOrderBy(string orderBy)
@@ -284,17 +288,16 @@ namespace MemberSuite.SDK.Searching
                 SortColumns = new List<SearchSortColumn>();
             foreach (Match m in Regex.Matches(orderBy, RegularExpressions.OrderByParserRegex, RegexOptions.Compiled))
             {
-                SearchSortColumn ss = new SearchSortColumn();
+                var ss = new SearchSortColumn();
                 ss.Name = m.Groups[1].Value.Trim();
 
-                ss.IsDescending = m.Groups[2].Success ; // then there's a count match, because DESC was matched
+                ss.IsDescending = m.Groups[2].Success; // then there's a count match, because DESC was matched
                 SortColumns.Add(ss);
             }
-
         }
 
         /// <summary>
-        /// Clones this instance.
+        ///     Clones this instance.
         /// </summary>
         /// <returns></returns>
         public Search Clone()
@@ -302,32 +305,33 @@ namespace MemberSuite.SDK.Searching
             return Binary.Deserialize<Search>(Binary.Serialize(this));
         }
 
-        #region Syntactic Sugar
-        public void AddCriteria(SearchOperation op)
-        {
-            Criteria.Add(op);
-        }
-
-        public void AddSortColumn( string columnName)
-        {
-            AddSortColumn(columnName, false);
-        }
-
-        public void AddSortColumn( string columnName, bool isDescending)
-        {
-            SortColumns.Add(new SearchSortColumn { Name = columnName, IsDescending = isDescending  });
-        }
-
-        #endregion
-
         public void AddOutputColumn(string columnName)
         {
-            OutputColumns.Add(new SearchOutputColumn { Name = columnName });
+            OutputColumns.Add(new SearchOutputColumn {Name = columnName});
         }
 
         public override string ToString()
         {
             return string.Format("Search of type '{0}' with ID '{1}'", Type, ID);
         }
+
+        #region Syntactic Sugar
+
+        public void AddCriteria(SearchOperation op)
+        {
+            Criteria.Add(op);
+        }
+
+        public void AddSortColumn(string columnName)
+        {
+            AddSortColumn(columnName, false);
+        }
+
+        public void AddSortColumn(string columnName, bool isDescending)
+        {
+            SortColumns.Add(new SearchSortColumn {Name = columnName, IsDescending = isDescending});
+        }
+
+        #endregion
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace MemberSuite.SDK.Results
 {
@@ -12,9 +9,8 @@ namespace MemberSuite.SDK.Results
     {
         [DataMember]
         public int SuccessCount { get; set; }
-        
+
         [DataMember]
         public int ErrorCount { get; set; }
-        
     }
 }

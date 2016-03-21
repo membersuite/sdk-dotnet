@@ -5,14 +5,14 @@ using MemberSuite.SDK.Concierge;
 namespace MemberSuite.SDK.Results
 {
     /// <summary>
-    /// Base class for all return values for concierge services
+    ///     Base class for all return values for concierge services
     /// </summary>
     /// <remarks></remarks>
     [DataContract]
     public class ConciergeResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConciergeResult"/> class.
+        ///     Initializes a new instance of the <see cref="ConciergeResult" /> class.
         /// </summary>
         /// <remarks></remarks>
         public ConciergeResult()
@@ -22,7 +22,7 @@ namespace MemberSuite.SDK.Results
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="ConciergeResult"/> is success.
+        ///     Gets or sets a value indicating whether this <see cref="ConciergeResult" /> is success.
         /// </summary>
         /// <value><c>true</c> if success; otherwise, <c>false</c>.</value>
         /// <remarks></remarks>
@@ -30,7 +30,7 @@ namespace MemberSuite.SDK.Results
         public bool Success { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="ConciergeResult"/> is cacheable.
+        ///     Gets or sets a value indicating whether this <see cref="ConciergeResult" /> is cacheable.
         /// </summary>
         /// <value><c>true</c> if cacheable; otherwise, <c>false</c>.</value>
         /// <remarks></remarks>
@@ -38,7 +38,7 @@ namespace MemberSuite.SDK.Results
         public bool Cacheable { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [not modified].
+        ///     Gets or sets a value indicating whether [not modified].
         /// </summary>
         /// <value><c>true</c> if [not modified]; otherwise, <c>false</c>.</value>
         /// If a request was sent with an IfModifiedSince header, this value is set to true to indicate
@@ -48,7 +48,7 @@ namespace MemberSuite.SDK.Results
         public bool NotModified { get; set; }
 
         /// <summary>
-        /// Gets or sets the errors.
+        ///     Gets or sets the errors.
         /// </summary>
         /// <value>The errors.</value>
         /// <remarks></remarks>
@@ -56,21 +56,21 @@ namespace MemberSuite.SDK.Results
         public List<ConciergeError> Errors { get; set; }
 
         /// <summary>
-        /// If the request results in a workflow being run, this is the
-        /// workflow ID
+        ///     If the request results in a workflow being run, this is the
+        ///     workflow ID
         /// </summary>
-         [DataMember]
+        [DataMember]
         public string WorkflowExecutionID { get; set; }
 
         /// <summary>
-        /// If the request results in a workflow being run, this is the 
-        /// Run ID (a workflow may be run multiple times)
+        ///     If the request results in a workflow being run, this is the
+        ///     Run ID (a workflow may be run multiple times)
         /// </summary>
-         [DataMember]
+        [DataMember]
         public string WorkflowRunID { get; set; }
 
         /// <summary>
-        /// Gets the first error message.
+        ///     Gets the first error message.
         /// </summary>
         /// <remarks></remarks>
         public string FirstErrorMessage
@@ -83,7 +83,7 @@ namespace MemberSuite.SDK.Results
         }
 
         /// <summary>
-        /// Adds the error.
+        ///     Adds the error.
         /// </summary>
         /// <param name="errorCode">The error code.</param>
         /// <param name="msg">The MSG.</param>
@@ -94,20 +94,20 @@ namespace MemberSuite.SDK.Results
         }
 
         /// <summary>
-        /// Adds the error.
+        ///     Adds the error.
         /// </summary>
         /// <param name="errorCode">The error code.</param>
         /// <param name="msg">The MSG.</param>
         /// <param name="offendingField">The offending field.</param>
         /// <remarks></remarks>
         public void AddError(ConciergeErrorCode errorCode, string msg, string offendingField)
-       {
+        {
             Success = false;
-            Errors.Add(new ConciergeError(errorCode, msg, offendingField ));
+            Errors.Add(new ConciergeError(errorCode, msg, offendingField));
         }
 
         /// <summary>
-        /// Adds the error.
+        ///     Adds the error.
         /// </summary>
         /// <param name="err">The err.</param>
         /// <remarks></remarks>
@@ -118,11 +118,11 @@ namespace MemberSuite.SDK.Results
         }
 
         /// <summary>
-        /// Adds the error range.
+        ///     Adds the error range.
         /// </summary>
         /// <param name="errors">The errors.</param>
         /// <remarks></remarks>
-        public void AddErrorRange(IEnumerable<ConciergeError> errors )
+        public void AddErrorRange(IEnumerable<ConciergeError> errors)
         {
             Success = false;
             Errors.AddRange(errors);

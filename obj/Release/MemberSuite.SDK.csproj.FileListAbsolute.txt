@@ -1,0 +1,7 @@
+C:\Perforce\mss_main\assemblies\app.config.transform
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.dll.config
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.dll
+C:\Perforce\mss_main\assemblies\MemberSuite.SDK.pdb
+C:\Perforce\mss_main\shared\MemberSuite.SDK\obj\Release\MemberSuite.SDK.csprojResolveAssemblyReference.cache
+C:\Perforce\mss_main\shared\MemberSuite.SDK\obj\Release\MemberSuite.SDK.dll
+C:\Perforce\mss_main\shared\MemberSuite.SDK\obj\Release\MemberSuite.SDK.pdb
