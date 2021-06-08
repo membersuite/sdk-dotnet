@@ -18,18 +18,20 @@ namespace MemberSuite.SDK.Types
     [Serializable]
     public struct RelativeDateTime
     {
+        private bool _isDateTime;
         private RelativeDateTimeReferencePointType _referencePoint;
         private DateTime? _specificDate;
         private int _units;
         private RelativeDateTimeUnitType _unitType;
 
         public RelativeDateTime(int units, RelativeDateTimeUnitType unitType,
-            RelativeDateTimeReferencePointType referencePoint, DateTime? specificDate)
+            RelativeDateTimeReferencePointType referencePoint, DateTime? specificDate, bool isDateTime = true)
         {
             _units = units;
             _unitType = unitType;
             _referencePoint = referencePoint;
             _specificDate = specificDate;
+            _isDateTime = isDateTime;
         }
 
         public int Units
@@ -58,6 +60,12 @@ namespace MemberSuite.SDK.Types
         {
             get { return _specificDate; }
             set { _specificDate = value; }
+        }
+
+        public bool IsDateTime
+        {
+            get { return _isDateTime; }
+            set { _isDateTime = value; }
         }
 
         public override string ToString()
